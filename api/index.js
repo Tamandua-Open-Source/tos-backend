@@ -19,7 +19,7 @@ app.get('*', (req, res) => res.status(200).send({
 }));
 
 app.listen(port, () => {
-   console.log(`Server is running on PORT ${port}`);
+   console.log(`Server port: ${port}`);
 });
 
 export default app;
