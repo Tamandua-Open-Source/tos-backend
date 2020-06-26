@@ -11,7 +11,7 @@ config.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // when a random route is inputed
 app.get('*', (req, res) => res.status(200).send({
