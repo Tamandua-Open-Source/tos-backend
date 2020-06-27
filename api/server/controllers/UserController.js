@@ -1,6 +1,8 @@
-
 import UserService from '../services/UserService';
 import Util from '../utils/Utils';
+import jwt from 'jsonwebtoken';
+
+require('dotenv').config();
 
 const util = new Util();
 
@@ -112,6 +114,60 @@ class UserController {
         } catch (error) {
             util.setError(400, error);
             return util.send(res);
+        }
+    }
+
+    static async signInUser(req, res) {
+        const id = req.body.id;
+
+        if (!Number(id)) {
+            util.setError(400, 'Please provide a numeric value');
+            return util.send(res);
+        }
+
+        try {
+            const user = await UserService.getUser(id);
+
+            if (!user) {
+                util.setError(404, `Cannot find user with the id ${id}`);
+                return util.send(res);
+            }
+
+            jwt.sign({user}, process.env.JWT_SECRET, (error, token) => {
+
+                if(error) {
+                    util.setError(403, error);
+                } else {
+                    util.setSuccess(200, 'User Authenticated', token);
+                }
+    
+                util.send(res);
+            })
+
+        } catch (error) {
+            util.setError(404, error);
+            return util.send(res);
+        }
+
+    }
+
+    static async verifyToken(req, res, next) {
+        const bearerHeader = req.headers['authorization'];
+  
+        if (typeof bearerHeader !== 'undefined') {
+            const token = bearerHeader.split(' ')[1];
+
+            jwt.verify(token, process.env.JWT_SECRET, (err, authData) => {
+                if (err) {
+                    res.sendStatus(403);
+                } else {
+                    console.log(authData);
+                }
+            });
+
+            next();
+        } else {
+            res.sendStatus(403);
         }
     }
     
