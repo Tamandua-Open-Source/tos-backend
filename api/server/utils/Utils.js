@@ -1,3 +1,7 @@
+import jwt from "jsonwebtoken";
+
+require('dotenv').config();
+
 export default class Util {
     
     constructor() {
@@ -11,13 +15,13 @@ export default class Util {
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;
-        this.type = 'success';
+        this.type = 'Success';
     }
 
     setError(statusCode, message) {
         this.statusCode = statusCode;
         this.message = message;
-        this.type = 'error';
+        this.type = 'Error';
     }
 
     send(res) {
@@ -25,10 +29,10 @@ export default class Util {
         const result = {
             status: this.type,
             message: this.message,
-            data: this.data,
+            data: this.data
         };
 
-        if (this.type === 'success') {
+        if (this.type === 'Success') {
             return res.status(this.statusCode).json(result);
         }
 
@@ -38,4 +42,5 @@ export default class Util {
         });
         
     }
+
 }
