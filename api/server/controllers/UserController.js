@@ -1,8 +1,8 @@
+require('dotenv').config();
+
 import UserService from '../services/UserService';
 import Util from '../utils/Utils';
 import jwt from 'jsonwebtoken';
-
-require('dotenv').config();
 
 const util = new Util();
 
