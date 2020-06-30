@@ -1,20 +1,20 @@
 require('dotenv').config();
 
-import StretchingService from '../services/StretchingService';
+import BodyPartService from '../services/BodyPartService';
 import Util from '../utils/Utils';
 
 const util = new Util();
 
-class StretchingController {
+class BodyPartController {
 
-    static async getAllStretchings(req, res) {
+    static async getAllBodyParts(req, res) {
         try {
-            const allStretchings = await StretchingService.getAllStretchings();
+            const allBodyParts = await BodyPartService.getAllBodyParts();
 
-            if (allStretchings.length > 0) {
-                util.setSuccess(200, 'stretchings retrieved', allStretchings);
+            if (allBodyParts.length > 0) {
+                util.setSuccess(200, 'bodyparts retrieved', allBodyParts);
             } else {
-                util.setSuccess(200, 'no stretching found');
+                util.setSuccess(200, 'no bodypart found');
             }
 
             return util.send(res);
@@ -24,18 +24,18 @@ class StretchingController {
         }
     }
 
-    static async addStretching(req, res) {
+    static async addBodyPart(req, res) {
 
         if (!req.body.name) {
             util.setError(400, 'please provide complete details');
             return util.send(res);
         }
 
-        const newStretching = req.body;
+        const newBodyPart = req.body;
 
         try {
-            const createdStretching = await StretchingService.addStretching(newStretching);
-            util.setSuccess(201, 'stretching added', createdStretching);
+            const createdBodyPart = await BodyPartService.addBodyPart(newBodyPart);
+            util.setSuccess(201, 'bodypart added', createdBodyPart);
             return util.send(res);
         } catch (error) {
             util.setError(400, error.message);
@@ -43,8 +43,8 @@ class StretchingController {
         }
     }
 
-    static async updatedStretching(req, res) {
-        const alteredStretching = req.body;
+    static async updatedBodyPart(req, res) {
+        const alteredBodyPart = req.body;
         const { id } = req.params;
 
         if (!Number(id)) {
@@ -53,12 +53,12 @@ class StretchingController {
         }
 
         try {
-            const updateStretching = await StretchingService.updateStretching(id, alteredStretching);
+            const updateBodyPart = await BodyPartService.updateBodyPart(id, alteredBodyPart);
 
-            if (!updateStretching) {
-                util.setError(404, `cannot find stretching with the id: ${id}`);
+            if (!updateBodyPart) {
+                util.setError(404, `cannot find bodypart with the id: ${id}`);
             } else {
-                util.setSuccess(200, 'stretching updated', updateStretching);
+                util.setSuccess(200, 'bodypart updated', updateBodyPart);
             }
 
             return util.send(res);
@@ -68,7 +68,7 @@ class StretchingController {
         }
     }
 
-    static async getStretching(req, res) {
+    static async getBodyPart(req, res) {
         const { id } = req.params;
 
         if (!Number(id)) {
@@ -77,12 +77,12 @@ class StretchingController {
         }
 
         try {
-            const theStretching = await StretchingService.getStretching(id);
+            const theBodyPart = await BodyPartService.getBodyPart(id);
 
-            if (!theStretching) {
-                util.setError(404, `cannot find stretching with the id ${id}`);
+            if (!theBodyPart) {
+                util.setError(404, `cannot find bodypart with the id ${id}`);
             } else {
-                util.setSuccess(200, 'found Stretching', theStretching);
+                util.setSuccess(200, 'found bodypart', theBodyPart);
             }
 
             return util.send(res);
@@ -92,7 +92,7 @@ class StretchingController {
         }
     }
 
-    static async deleteStretching(req, res) {
+    static async deleteBodyPart(req, res) {
         const { id } = req.params;
 
         if (!Number(id)) {
@@ -101,12 +101,12 @@ class StretchingController {
         }
 
         try {
-            const stretchingToDelete = await StretchingService.deleteStretching(id);
+            const bodypartToDelete = await BodyPartService.deleteBodyPart(id);
 
-            if (stretchingToDelete) {
-                util.setSuccess(200, 'stretching deleted');
+            if (bodypartToDelete) {
+                util.setSuccess(200, 'bodypart deleted');
             } else {
-                util.setError(404, `stretching with the id ${id} cannot be found`);
+                util.setError(404, `bodypart with the id ${id} cannot be found`);
             }
 
             return util.send(res);
@@ -118,4 +118,4 @@ class StretchingController {
     
 }
 
-export default StretchingController;
+export default BodyPartController;
