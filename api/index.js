@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+
 import userRoutes from './server/routes/UserRoutes';
+import StretchingRoutes from './server/routes/StretchingRoutes';
 
 require('dotenv').config();
 
@@ -11,6 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/stretchings', StretchingRoutes);
 
 // when a random route is inputed
 app.get('*', (req, res) => res.status(200).send({

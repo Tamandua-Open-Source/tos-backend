@@ -55,7 +55,7 @@ class UserService {
         } catch (error) {
             throw error;
         }
-      }
+    }
 
 }
 
