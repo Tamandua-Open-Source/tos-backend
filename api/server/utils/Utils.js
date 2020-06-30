@@ -1,5 +1,3 @@
-import jwt from "jsonwebtoken";
-
 require('dotenv').config();
 
 export default class Util {
