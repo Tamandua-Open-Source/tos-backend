@@ -15,13 +15,13 @@ export default class Util {
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;
-        this.type = 'Success';
+        this.type = 'success';
     }
 
     setError(statusCode, message) {
         this.statusCode = statusCode;
         this.message = message;
-        this.type = 'Error';
+        this.type = 'error';
     }
 
     send(res) {
@@ -32,7 +32,7 @@ export default class Util {
             data: this.data
         };
 
-        if (this.type === 'Success') {
+        if (this.type === 'success') {
             return res.status(this.statusCode).json(result);
         }
 
