@@ -13,9 +13,9 @@ class UserController {
             const allUsers = await UserService.getAllUsers();
 
             if (allUsers.length > 0) {
-                util.setSuccess(200, 'Users retrieved', allUsers);
+                util.setSuccess(200, 'users retrieved', allUsers);
             } else {
-                util.setSuccess(200, 'No user found');
+                util.setSuccess(200, 'no user found');
             }
 
             return util.send(res);
@@ -28,7 +28,7 @@ class UserController {
     static async addUser(req, res) {
 
         if (!req.body.name || !req.body.email) {
-            util.setError(400, 'Please provide complete details');
+            util.setError(400, 'please provide complete details');
             return util.send(res);
         }
 
@@ -36,7 +36,7 @@ class UserController {
 
         try {
             const createdUser = await UserService.addUser(newUser);
-            util.setSuccess(201, 'User Added!', createdUser);
+            util.setSuccess(201, 'user added', createdUser);
             return util.send(res);
         } catch (error) {
             util.setError(400, error.message);
@@ -49,7 +49,7 @@ class UserController {
         const { id } = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, 'please input a valid numeric value');
             return util.send(res);
         }
 
@@ -57,9 +57,9 @@ class UserController {
             const updateUser = await UserService.updateUser(id, alteredUser);
 
             if (!updateUser) {
-                util.setError(404, `Cannot find user with the id: ${id}`);
+                util.setError(404, `cannot find user with the id: ${id}`);
             } else {
-                util.setSuccess(200, 'User updated', updateUser);
+                util.setSuccess(200, 'user updated', updateUser);
             }
 
             return util.send(res);
@@ -73,7 +73,7 @@ class UserController {
         const { id } = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please input a valid numeric value');
+            util.setError(400, 'please input a valid numeric value');
             return util.send(res);
         }
 
@@ -81,9 +81,9 @@ class UserController {
             const theUser = await UserService.getUser(id);
 
             if (!theUser) {
-                util.setError(404, `Cannot find user with the id ${id}`);
+                util.setError(404, `cannot find user with the id ${id}`);
             } else {
-                util.setSuccess(200, 'Found User', theUser);
+                util.setSuccess(200, 'found user', theUser);
             }
 
             return util.send(res);
@@ -97,7 +97,7 @@ class UserController {
         const { id } = req.params;
 
         if (!Number(id)) {
-            util.setError(400, 'Please provide a numeric value');
+            util.setError(400, 'please provide a numeric value');
             return util.send(res);
         }
 
@@ -105,9 +105,9 @@ class UserController {
             const userToDelete = await UserService.deleteUser(id);
 
             if (userToDelete) {
-                util.setSuccess(200, 'User deleted');
+                util.setSuccess(200, 'user deleted');
             } else {
-                util.setError(404, `User with the id ${id} cannot be found`);
+                util.setError(404, `user with the id ${id} cannot be found`);
             }
 
             return util.send(res);
@@ -121,7 +121,7 @@ class UserController {
         const id = req.body.id;
 
         if (!Number(id)) {
-            util.setError(400, 'Please provide a numeric value');
+            util.setError(400, 'please provide a numeric value');
             return util.send(res);
         }
 
@@ -129,7 +129,7 @@ class UserController {
             const user = await UserService.getUser(id);
 
             if (!user) {
-                util.setError(404, `Cannot find user with the id ${id}`);
+                util.setError(404, `cannot find user with the id ${id}`);
                 return util.send(res);
             }
 
@@ -138,7 +138,7 @@ class UserController {
                 if(error) {
                     util.setError(403, error);
                 } else {
-                    util.setSuccess(200, 'User Authenticated', token);
+                    util.setSuccess(200, 'user authenticated', token);
                 }
     
                 util.send(res);
