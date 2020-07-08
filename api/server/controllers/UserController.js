@@ -118,36 +118,39 @@ class UserController {
     }
 
     static async signInUser(req, res) {
-        const id = req.body.id;
+        console.log(process.env.SIGN_IN_SECRET);
 
-        if (!Number(id)) {
-            util.setError(400, 'please provide a numeric value');
+        if (!req.body.name || !req.body.email || !req.body.secret) {
+            util.setError(400, 'please provide complete details');
             return util.send(res);
         }
 
-        try {
-            const user = await UserService.getUser(id);
+        if (process.env.SIGN_IN_SECRET != req.body.secret) {
+            util.setError(400, 'please provide a valid secret key')
+            return util.send(res);
+        }
 
-            if (!user) {
-                util.setError(404, `cannot find user with the id ${id}`);
+        var user = await UserService.getUserByEmail(req.body.email);
+
+        if (!user) {
+            try {
+                user = await UserService.addUser({email: req.body.email, name: req.body.name});
+            } catch (error) {
+                util.setError(400, error.message);
                 return util.send(res);
             }
-
-            jwt.sign({user}, process.env.JWT_SECRET, (error, token) => {
-
-                if(error) {
-                    util.setError(403, error);
-                } else {
-                    util.setSuccess(200, 'user authenticated', token);
-                }
-    
-                util.send(res);
-            })
-
-        } catch (error) {
-            util.setError(404, error);
-            return util.send(res);
         }
+
+        jwt.sign({ user }, process.env.JWT_SECRET, (error, token) => {
+
+            if (error) {
+                util.setError(403, error);
+            } else {
+                util.setSuccess(200, 'user authenticated', token);
+            }
+
+            return util.send(res);
+        })
 
     }
 
