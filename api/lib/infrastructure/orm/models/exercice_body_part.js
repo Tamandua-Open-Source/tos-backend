@@ -1,8 +1,8 @@
 'use strict'
 
-import { Model } from 'sequelize'
+const { Model } = require('sequelize')
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class ExerciceBodyPart extends Model {}
   ExerciceBodyPart.init(
     {

@@ -1,8 +1,8 @@
 'use strict'
 
-import { Model } from 'sequelize'
+const { Model } = require('sequelize')
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {}
   }
@@ -21,7 +21,7 @@ export default (sequelize, DataTypes) => {
         },
       },
       fcmToken: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: true,
       },
     },
