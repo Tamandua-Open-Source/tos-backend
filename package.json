@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./api/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "database-setup": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
+    "build-server": "rm -rf build && babel -d ./build/Release ./api -s",
+    "build": "npm run database-setup && npm run build-server",
+    "dev": "npm run database-setup && nodemon --exec babel-node ./api/index.js",
+    "start": "node ./build/Release/index.js",
+    "precise-commits": "precise-commits",
+    "precommit": "npm run precise-commits",
+    "test": "mocha api/test --recursive"
   },
   "repository": {
     "type": "git",
@@ -22,11 +28,12 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
+    "firebase-admin": "^9.0.0",
     "path": "^0.12.7",
     "pg": "^8.2.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.1.0"
+    "sequelize": "^6.1.0",
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
@@ -36,6 +43,11 @@
     "@babel/preset-env": "^7.10.3",
     "@babel/register": "^7.10.3",
     "@babel/runtime": "^7.10.3",
-    "babel-loader": "^8.1.0"
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "husky": "^4.2.5",
+    "mocha": "^8.0.1",
+    "precise-commits": "^1.0.2",
+    "prettier": "^2.0.5"
   }
 }
