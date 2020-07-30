@@ -22,9 +22,9 @@ class UserController {
   }
 
   async updateUser(req) {
-    const { userName } = req.body
+    const { name } = req.body
     const { userId } = req.props
-    if (!userName) {
+    if (!name) {
       return HttpResponse.badRequest('Please provide the fields to be updated')
     }
     if (!userId) {
@@ -33,7 +33,7 @@ class UserController {
 
     try {
       const { updateUserUseCase } = this.useCases
-      const user = await updateUserUseCase(userId, { userName })
+      const user = await updateUserUseCase.execute(userId, { name })
 
       if (!user) {
         return HttpResponse.ok({ message: 'Cannot find user to update' })
@@ -78,9 +78,9 @@ class UserController {
       const user = await deleteUserUseCase.execute(userId)
 
       if (!user) {
-        return HttpResponse.ok({ message: 'User does not exist', user })
+        return HttpResponse.ok({ message: 'User does not exist', userId })
       } else {
-        return HttpResponse.ok({ message: 'User deleted', user })
+        return HttpResponse.ok({ message: 'User deleted', userId })
       }
     } catch (error) {
       console.error(error)
