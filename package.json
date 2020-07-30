@@ -11,7 +11,7 @@
     "start": "node ./build/Release/index.js",
     "precise-commits": "precise-commits",
     "precommit": "npm run precise-commits",
-    "test": "mocha --recursive"
+    "test": "mocha api/test --recursive"
   },
   "repository": {
     "type": "git",

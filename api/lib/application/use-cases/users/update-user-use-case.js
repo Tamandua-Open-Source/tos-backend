@@ -1,12 +1,11 @@
 class UpdateUserUseCase {
-    constructor({ userRepository }) {
-      this.userRepository = userRepository
-    }
-  
-    async execute(userId, { userName }) {
-      return await this.userRepository.updateUser(userId, { userName })
-    }
+  constructor({ userRepository }) {
+    this.userRepository = userRepository
   }
-  
-  export default UpdateUserUseCase
-  
+
+  async execute(userId, updatedFields) {
+    return await this.userRepository.updateUser(userId, updatedFields)
+  }
+}
+
+export default UpdateUserUseCase

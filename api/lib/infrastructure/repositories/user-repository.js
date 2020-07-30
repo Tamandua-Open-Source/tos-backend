@@ -22,13 +22,7 @@ class UserRepository extends IUserRepository {
     const user = await this.getUserById(userId)
 
     if (user) {
-      const updatedUser = await db.User.update(updatedFields, {
-        where: {
-          id: user.id,
-        },
-      })
-
-      return updatedUser
+      return await user.update(updatedFields)
     }
 
     return null
@@ -38,11 +32,7 @@ class UserRepository extends IUserRepository {
     const user = await this.getUserById(userId)
 
     if (user) {
-      return await db.User.destroy({
-        where: {
-          id: user.id,
-        },
-      })
+      return await user.destroy()
     }
 
     return null
