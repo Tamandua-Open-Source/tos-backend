@@ -88,6 +88,36 @@ class UserController {
     }
   }
 
+  async patchUserFcmToken(req) {
+    const { fcmToken } = req.body
+    const { userId } = req.props
+
+    if (!fcmToken) {
+      return HttpResponse.badRequest(
+        'Please provide the fcmToken to be patched'
+      )
+    }
+
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
+
+    try {
+      const { patchUserFcmTokenUseCase } = this.useCases
+
+      const user = await patchUserFcmTokenUseCase.execute(userId, fcmToken)
+
+      if (!user) {
+        return HttpResponse.ok({ message: 'Cannot find user to patch' })
+      } else {
+        return HttpResponse.ok({ message: 'User successfully patched', user })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+
   async signInUser(req) {
     const { name, email } = req.body
     const { userId } = req.props
