@@ -40,4 +40,10 @@ router.delete(
   ExpressRouterAdapter.adapt((req) => userController.deleteUser(req))
 )
 
+router.patch(
+  '/subscribe',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.patchUserFcmToken(req))
+)
+
 export default router
