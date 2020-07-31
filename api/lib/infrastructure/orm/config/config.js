@@ -19,4 +19,5 @@ export const test = {
 
 export const production = {
   use_env_variable: process.env.DATABASE_URL,
+  dialect: 'postgres',
 }
