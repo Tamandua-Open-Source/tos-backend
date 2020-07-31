@@ -20,6 +20,10 @@ class IUserRepository {
   deleteUser(userId) {
     throw new UnimplementedError()
   }
+
+  patchUserFcmToken(userId, fcmToken) {
+    throw new UnimplementedError()
+  }
 }
 
 export default IUserRepository
