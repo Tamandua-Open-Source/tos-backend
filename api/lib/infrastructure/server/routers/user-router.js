@@ -24,7 +24,7 @@ router.post(
 
 router.get(
   '/',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  // ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.getAllUsers(req))
 )
 
