@@ -37,6 +37,16 @@ class UserRepository extends IUserRepository {
 
     return null
   }
+
+  async patchUserFcmToken(userId, fcmToken) {
+    const user = await this.getUserById(userId)
+
+    if (user) {
+      return await user.update({ fcmToken })
+    }
+
+    return null
+  }
 }
 
 export default UserRepository

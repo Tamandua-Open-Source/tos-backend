@@ -6,6 +6,7 @@ import {
   GetUserUseCase,
   SignInUserUseCase,
   UpdateUserUseCase,
+  PatchUserFcmTokenUseCase,
 } from '../../../application/use-cases/users'
 
 class UserControllerComposer {
@@ -17,6 +18,9 @@ class UserControllerComposer {
     const getUserUseCase = new GetUserUseCase({ userRepository })
     const signInUserUseCase = new SignInUserUseCase({ userRepository })
     const updateUserUseCase = new UpdateUserUseCase({ userRepository })
+    const patchUserFcmTokenUseCase = new PatchUserFcmTokenUseCase({
+      userRepository,
+    })
 
     return new UserController({
       deleteUserUseCase,
@@ -24,6 +28,7 @@ class UserControllerComposer {
       getUserUseCase,
       signInUserUseCase,
       updateUserUseCase,
+      patchUserFcmTokenUseCase,
     })
   }
 }

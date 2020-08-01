@@ -12,7 +12,7 @@ const port = process.env.PORT || 8000
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use('/api/v1/users', UserRouter)
+app.use('/api/users', UserRouter)
 
 app.get('/', (_, res) =>
   res.status(200).send({

@@ -14,7 +14,7 @@ class FirebaseAdminFacade {
   }
 
   async verifyToken(idToken) {
-    decodedToken = await firebaseAdmin.auth().verifyIdToken(idToken)
+    const decodedToken = await firebaseAdmin.auth().verifyIdToken(idToken)
     return decodedToken.uid
   }
 }

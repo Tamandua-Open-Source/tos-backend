@@ -1,8 +1,5 @@
 'use strict'
 
-import * as dotenv from 'dotenv'
-dotenv.config()
-
 import fs from 'fs'
 import path from 'path'
 import { Sequelize, DataTypes } from 'sequelize'
@@ -16,8 +13,8 @@ const db = {}
 console.log(`Server enviroment: ${env}`)
 
 let sequelize
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config)
+if (config.url) {
+  sequelize = new Sequelize(config.url, config)
 } else {
   sequelize = new Sequelize(
     config.database,
