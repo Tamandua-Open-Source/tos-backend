@@ -9,11 +9,9 @@ const authMiddleware = AuthMiddlewareComposer.compose()
 
 const router = Router()
 
-//debug route
 router.get(
-  '/whoami',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => userController.getUser(req))
+  '/',
+  ExpressRouterAdapter.adapt((req) => userController.getAllUsers(req))
 )
 
 router.post(
@@ -23,27 +21,27 @@ router.post(
 )
 
 router.get(
-  '/',
-  // ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => userController.getAllUsers(req))
+  '/me',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.getUser(req))
+)
+
+router.patch(
+  '/me/subscribe',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.patchUserFcmToken(req))
 )
 
 router.put(
-  '/',
+  '/me',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.updateUser(req))
 )
 
 router.delete(
-  '/',
+  '/me',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.deleteUser(req))
-)
-
-router.patch(
-  '/subscribe',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => userController.patchUserFcmToken(req))
 )
 
 export default router
