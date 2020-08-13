@@ -34,12 +34,6 @@ export async function up(queryInterface, _) {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        id: 6,
-        name: 'leg',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
     ],
     {}
   )

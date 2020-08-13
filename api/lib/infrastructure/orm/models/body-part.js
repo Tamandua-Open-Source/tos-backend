@@ -5,8 +5,8 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class BodyPart extends Model {
     static associate(models) {
-      BodyPart.belongsToMany(models.Exercice, {
-        through: models.ExerciceBodyPart,
+      BodyPart.belongsToMany(models.StretchMovement, {
+        through: models.StretchMovementBodyPart,
       })
     }
   }
