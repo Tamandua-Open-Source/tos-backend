@@ -3,28 +3,24 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class Exercice extends Model {
+  class BodyPart extends Model {
     static associate(models) {
-      Exercice.belongsToMany(models.BodyPart, {
-        through: models.ExerciceBodyPart,
+      BodyPart.belongsToMany(models.StretchMovement, {
+        through: models.StretchMovementBodyPart,
       })
     }
   }
-  Exercice.init(
+  BodyPart.init(
     {
       name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'Exercice',
+      modelName: 'BodyPart',
     }
   )
-  return Exercice
+  return BodyPart
 }
