@@ -11,6 +11,7 @@ const router = Router()
 
 router.get(
   '/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.getAllUsers(req))
 )
 
