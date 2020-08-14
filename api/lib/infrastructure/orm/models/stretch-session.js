@@ -3,28 +3,36 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {}
+  class StretchSession extends Model {
+    static associate(models) {
+      StretchSession.belongsToMany(models.StretchMovement, {
+        through: models.StretchSessionStretchMovement,
+      })
+    }
   }
-  User.init(
+  StretchSession.init(
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      email: {
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      duration: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      imageFileUrl: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-      },
-      fcmToken: {
-        type: DataTypes.STRING,
-        allowNull: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -37,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'StretchSession',
     }
   )
-  return User
+  return StretchSession
 }

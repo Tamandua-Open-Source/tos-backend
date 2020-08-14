@@ -15,9 +15,6 @@ export async function up(queryInterface, Sequelize) {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true,
-      validade: {
-        isEmail: true,
-      },
     },
     fcmToken: {
       type: Sequelize.STRING,

@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import UserRouter from './routers/user-router'
+import StretchSessionRouter from './routers/stretch-session-router'
 import FirebaseAdminFacade from '../firebase/firebase-admin-facade'
 
 const firebaseAdminFacade = new FirebaseAdminFacade() //TODO: injetar dependencia
@@ -13,6 +14,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/api/users', UserRouter)
+app.use('/api/stretchSessions', StretchSessionRouter)
 
 app.get('/', (_, res) =>
   res.status(200).send({
