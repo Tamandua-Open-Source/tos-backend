@@ -27,6 +27,12 @@ router.get(
   ExpressRouterAdapter.adapt((req) => userController.getUser(req))
 )
 
+router.get(
+  '/me/preferences',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.getUserPreferences(req))
+)
+
 router.patch(
   '/me/subscribe',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),

@@ -3,30 +3,22 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class UserPreferenceTimeType extends Model {
     static associate(models) {
-      User.hasOne(models.UserPreference)
+      UserPreferenceTimeType.hasOne(models.UserPreference)
     }
   }
-  User.init(
+  UserPreferenceTimeType.init(
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      fcmToken: {
-        type: DataTypes.STRING,
-        allowNull: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -39,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'UserPreferenceTimeType',
     }
   )
-  return User
+  return UserPreferenceTimeType
 }
