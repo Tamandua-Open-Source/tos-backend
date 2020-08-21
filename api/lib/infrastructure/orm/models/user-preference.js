@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
   class UserPreference extends Model {
     static associate(models) {
       UserPreference.belongsTo(models.User)
-      UserPreference.hasOne(models.UserPreferenceTimeType)
-      UserPreference.hasOne(models.UserPreferenceStartPeriod)
       UserPreference.hasOne(models.UserPreferenceWeeklyWorkActivity)
       UserPreference.hasOne(models.UserPreferenceWeeklyStretchActivity)
+      UserPreference.belongsTo(models.UserPreferenceTimeType)
+      UserPreference.belongsTo(models.UserPreferenceStartPeriod)
     }
   }
   UserPreference.init(

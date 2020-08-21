@@ -5,7 +5,7 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class UserPreferenceStartPeriod extends Model {
     static associate(models) {
-      UserPreferenceStartPeriod.belongsTo(models.UserPreference)
+      UserPreferenceStartPeriod.hasOne(models.UserPreference)
     }
   }
   UserPreferenceStartPeriod.init(

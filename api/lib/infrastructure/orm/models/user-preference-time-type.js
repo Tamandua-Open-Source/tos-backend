@@ -5,7 +5,7 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class UserPreferenceTimeType extends Model {
     static associate(models) {
-      UserPreferenceTimeType.belongsTo(models.UserPreference)
+      UserPreferenceTimeType.hasOne(models.UserPreference)
     }
   }
   UserPreferenceTimeType.init(
