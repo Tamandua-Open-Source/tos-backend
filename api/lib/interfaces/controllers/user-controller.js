@@ -145,6 +145,27 @@ class UserController {
       return HttpResponse.serverError()
     }
   }
+
+  async getUserPreferences(req) {
+    const { userId } = req.props
+
+    try {
+      const { getUserPreferencesUseCase } = this.useCases
+      const preferences = await getUserPreferencesUseCase.execute(userId)
+
+      if (preferences.length == 0) {
+        return HttpResponse.ok({ message: 'No user preferences found' })
+      } else {
+        return HttpResponse.ok({
+          message: 'User preferences retrieved',
+          preferences,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
 }
 
 export default UserController
