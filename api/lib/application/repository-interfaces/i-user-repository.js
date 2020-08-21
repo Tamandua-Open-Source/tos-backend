@@ -24,6 +24,10 @@ class IUserRepository {
   patchUserFcmToken(userId, fcmToken) {
     throw new UnimplementedError()
   }
+
+  getUserPreferences(userId) {
+    throw new UnimplementedError()
+  }
 }
 
 export default IUserRepository
