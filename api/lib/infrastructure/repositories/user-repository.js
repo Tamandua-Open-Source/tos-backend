@@ -47,6 +47,55 @@ class UserRepository extends IUserRepository {
 
     return null
   }
+
+  async getUserPreferences(userId) {
+    const user = await this.getUserById(userId)
+
+    if (user) {
+      return db.UserPreference.findOne({
+        where: {
+          UserId: userId,
+        },
+        attributes: ['startTime', 'breakDuration', 'nextBreak'],
+        include: [
+          {
+            model: db.UserPreferenceWeeklyStretchActivity,
+            attributes: [
+              'monday',
+              'tuesday',
+              'wednesday',
+              'thursday',
+              'friday',
+              'saturday',
+              'sunday',
+            ],
+          },
+          {
+            model: db.UserPreferenceWeeklyWorkActivity,
+            attributes: [
+              'monday',
+              'tuesday',
+              'wednesday',
+              'thursday',
+              'friday',
+              'saturday',
+              'sunday',
+            ],
+          },
+          {
+            model: db.UserPreferenceTimeType,
+            attributes: ['id', 'name'],
+          },
+          {
+            model: db.UserPreferenceStartPeriod,
+            attributes: ['id', 'name', 'startsAt', 'endsAt'],
+          },
+        ],
+      })
+    }
+
+    return null
+  }
 }
 
 export default UserRepository
