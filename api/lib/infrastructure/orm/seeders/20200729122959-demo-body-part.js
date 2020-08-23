@@ -6,31 +6,19 @@ export async function up(queryInterface, _) {
     [
       {
         id: 1,
-        name: 'neck',
+        name: 'Arms',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         id: 2,
-        name: 'shoulder',
+        name: 'Legs',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         id: 3,
-        name: 'back',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: 4,
-        name: 'abdomen',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: 5,
-        name: 'arm',
+        name: 'Neck',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
