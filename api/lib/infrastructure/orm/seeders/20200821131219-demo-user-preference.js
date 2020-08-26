@@ -7,7 +7,7 @@ module.exports = {
       [
         {
           id: 1,
-          UserId: 'sbKnhMLSphQvD9gXLKPWXkPbAuu2',
+          UserId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
           UserPreferenceTimeTypeId: 1,
           UserPreferenceStartPeriodId: 1,
           startTime: new Date(),
