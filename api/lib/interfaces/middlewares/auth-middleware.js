@@ -10,7 +10,7 @@ class AuthMiddleware {
       //BYPASS
       return {
         response: 'ok',
-        props: { userId: 'sbKnhMLSphQvD9gXLKPWXkPbAuu2' },
+        props: { userId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1' },
       }
 
       const idToken = req.headers['authorization']
