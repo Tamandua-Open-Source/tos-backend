@@ -28,6 +28,14 @@ class IUserRepository {
   getUserPreferences(userId) {
     throw new UnimplementedError()
   }
+
+  createUserPreferences(_userId) {
+    throw new UnimplementedError()
+  }
+
+  deleteUserPreferences(userId) {
+    throw new UnimplementedError()
+  }
 }
 
 export default IUserRepository
