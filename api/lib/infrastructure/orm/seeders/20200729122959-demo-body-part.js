@@ -5,19 +5,19 @@ export async function up(queryInterface, _) {
     'BodyParts',
     [
       {
-        id: 1,
+        id: -1,
         name: 'Arms',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: 2,
+        id: -2,
         name: 'Legs',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: 3,
+        id: -3,
         name: 'Neck',
         createdAt: new Date(),
         updatedAt: new Date(),

@@ -12,7 +12,7 @@ module.exports = {
       UserPreferenceId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        unique: true,
       },
       monday: {
         type: Sequelize.BOOLEAN,

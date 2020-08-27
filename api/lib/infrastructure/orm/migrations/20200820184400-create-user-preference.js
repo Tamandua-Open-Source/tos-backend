@@ -12,7 +12,7 @@ module.exports = {
       UserId: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true,
+        unique: true,
       },
       UserPreferenceTimeTypeId: {
         type: Sequelize.INTEGER,
@@ -27,10 +27,10 @@ module.exports = {
         type: Sequelize.DATE,
       },
       breakDuration: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
       },
-      nextBreak: {
-        type: Sequelize.DATE,
+      workDuration: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         type: Sequelize.DATE,
