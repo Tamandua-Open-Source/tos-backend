@@ -150,10 +150,17 @@ class UserController {
     const { userId } = req.props
 
     try {
+      const { getUserUseCase } = this.useCases
+      const user = await getUserUseCase.execute(userId)
+
+      if (!user) {
+        return HttpResponse.serverError()
+      }
+
       const { getUserPreferencesUseCase } = this.useCases
       const preferences = await getUserPreferencesUseCase.execute(userId)
 
-      if (preferences.length == 0) {
+      if (!preferences || preferences.length == 0) {
         return HttpResponse.ok({ message: 'No user preferences found' })
       } else {
         return HttpResponse.ok({
