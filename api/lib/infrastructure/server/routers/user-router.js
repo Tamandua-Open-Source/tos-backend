@@ -42,6 +42,14 @@ router.patch(
 )
 
 router.patch(
+  '/me/preferences/wsa',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceWeeklyStretchActivity(req)
+  )
+)
+
+router.patch(
   '/me/subscribe',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.patchUserFcmToken(req))
