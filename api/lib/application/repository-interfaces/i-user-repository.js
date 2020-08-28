@@ -5,27 +5,27 @@ class IUserRepository {
     throw new UnimplementedError()
   }
 
-  getUserById(userId) {
+  getUserById(_userId) {
     throw new UnimplementedError()
   }
 
-  createUser(domainUser) {
+  createUser(_domainUser) {
     throw new UnimplementedError()
   }
 
-  updateUser(userId, updatedFields) {
+  updateUser(_userId, _updatedFields) {
     throw new UnimplementedError()
   }
 
-  deleteUser(userId) {
+  deleteUser(_userId) {
     throw new UnimplementedError()
   }
 
-  patchUserFcmToken(userId, fcmToken) {
+  patchUserFcmToken(_userId, _fcmToken) {
     throw new UnimplementedError()
   }
 
-  getUserPreferences(userId) {
+  getUserPreferences(_userId) {
     throw new UnimplementedError()
   }
 
@@ -33,7 +33,11 @@ class IUserRepository {
     throw new UnimplementedError()
   }
 
-  deleteUserPreferences(userId) {
+  deleteUserPreferences(_userId) {
+    throw new UnimplementedError()
+  }
+
+  patchUserPreferenceWeeklyWorkActivity(_userId, _updatedFields) {
     throw new UnimplementedError()
   }
 }
