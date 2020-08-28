@@ -180,6 +180,30 @@ class UserRepository extends IUserRepository {
 
     return await preference.destroy()
   }
+
+  async patchUserPreferenceWeeklyWorkActivity(userId, updatedFields) {
+    //desacoplar para um getId de WWA
+    const weeklyWorkActivityId = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+      attributes: ['id'],
+    })
+
+    if (!weeklyWorkActivityId) {
+      return null
+    }
+
+    const weeklyWorkActivity = await db.UserPreferenceWeeklyWorkActivity.findOne(
+      {
+        where: {
+          id: weeklyWorkActivityId.id,
+        },
+      }
+    )
+
+    return weeklyWorkActivity.update(updatedFields)
+  }
 }
 
 export default UserRepository
