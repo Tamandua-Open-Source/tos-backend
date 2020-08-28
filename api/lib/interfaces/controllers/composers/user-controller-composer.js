@@ -8,6 +8,7 @@ import {
   UpdateUserUseCase,
   PatchUserFcmTokenUseCase,
   GetUserPreferencesUseCase,
+  PatchUserPreferenceWeeklyWorkActivityUseCase,
 } from '../../../application/use-cases/users'
 
 class UserControllerComposer {
@@ -25,6 +26,11 @@ class UserControllerComposer {
     const getUserPreferencesUseCase = new GetUserPreferencesUseCase({
       userRepository,
     })
+    const patchUserPreferenceWeeklyWorkActivityUseCase = new PatchUserPreferenceWeeklyWorkActivityUseCase(
+      {
+        userRepository,
+      }
+    )
 
     return new UserController({
       deleteUserUseCase,
@@ -34,6 +40,7 @@ class UserControllerComposer {
       updateUserUseCase,
       patchUserFcmTokenUseCase,
       getUserPreferencesUseCase,
+      patchUserPreferenceWeeklyWorkActivityUseCase,
     })
   }
 }
