@@ -38,10 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
       },
       breakDuration: {
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
       },
-      nextBreak: {
-        type: DataTypes.DATE,
+      workDuration: {
+        type: DataTypes.INTEGER,
       },
       createdAt: {
         type: DataTypes.DATE,

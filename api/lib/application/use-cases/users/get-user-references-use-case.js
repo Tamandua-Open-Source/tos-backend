@@ -4,7 +4,11 @@ class GetUserPreferencesUseCase {
   }
 
   async execute(userId) {
-    return await this.userRepository.getUserPreferences(userId)
+    const preferences = await this.userRepository.getUserPreferences(userId)
+    if (!preferences) {
+      return await this.userRepository.createUserPreferences(userId)
+    }
+    return preferences
   }
 }
 

@@ -4,10 +4,14 @@ class SignInUserUseCase {
   }
 
   async execute({ userId, email, name }) {
-    const user = this.userRepository.getUserById(userId)
+    const user = await this.userRepository.getUserById(userId)
+    console.log(user)
     if (!user) {
-      const newUser = new User({ id: userId, email, name })
-      return await this.userRepository.createUser(newUser)
+      return await this.userRepository.createUser({
+        id: userId,
+        email: email,
+        name: name,
+      })
     }
     return user
   }

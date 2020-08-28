@@ -6,10 +6,10 @@ class ServerError extends Error {
 }
 
 class UnauthorizedError extends Error {
-  constructor() {
+  constructor(paramName) {
     super('Unauthorized')
     this.name = 'UnauthorizedError'
   }
 }
 
-export default { ServerError, UnauthorizedError }
+module.exports = { ServerError, UnauthorizedError }

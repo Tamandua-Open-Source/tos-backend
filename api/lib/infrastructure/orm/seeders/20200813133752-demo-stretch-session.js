@@ -6,7 +6,7 @@ module.exports = {
       'StretchSessions',
       [
         {
-          id: 1,
+          id: -1,
           name: 'Stretching of the day',
           description: 'Stretch Session description',
           duration: 60,
@@ -15,7 +15,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 2,
+          id: -2,
           name: 'Seated stretching',
           description: 'Stretch Session description',
           duration: 60,
@@ -24,7 +24,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 3,
+          id: -3,
           name: 'Stretching for a better sleep',
           description: 'Stretch Session description',
           duration: 60,
@@ -33,7 +33,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          id: 4,
+          id: -4,
           name: 'Upper body stretching',
           description: 'Stretch Session description',
           duration: 60,
