@@ -6,13 +6,13 @@ module.exports = {
       'UserPreferences',
       [
         {
-          id: 1,
+          id: -1,
           UserId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
-          UserPreferenceTimeTypeId: 1,
-          UserPreferenceStartPeriodId: 1,
+          UserPreferenceTimeTypeId: -1,
+          UserPreferenceStartPeriodId: -1,
           startTime: new Date(),
-          breakDuration: new Date(),
-          nextBreak: new Date(),
+          breakDuration: 7200,
+          workDuration: 1200,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

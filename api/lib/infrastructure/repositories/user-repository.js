@@ -51,50 +51,182 @@ class UserRepository extends IUserRepository {
   async getUserPreferences(userId) {
     const user = await this.getUserById(userId)
 
-    if (user) {
-      return db.UserPreference.findOne({
-        where: {
-          UserId: userId,
-        },
-        attributes: ['startTime', 'breakDuration', 'nextBreak'],
-        include: [
-          {
-            model: db.UserPreferenceWeeklyStretchActivity,
-            attributes: [
-              'monday',
-              'tuesday',
-              'wednesday',
-              'thursday',
-              'friday',
-              'saturday',
-              'sunday',
-            ],
-          },
-          {
-            model: db.UserPreferenceWeeklyWorkActivity,
-            attributes: [
-              'monday',
-              'tuesday',
-              'wednesday',
-              'thursday',
-              'friday',
-              'saturday',
-              'sunday',
-            ],
-          },
-          {
-            model: db.UserPreferenceTimeType,
-            attributes: ['id', 'name'],
-          },
-          {
-            model: db.UserPreferenceStartPeriod,
-            attributes: ['id', 'name', 'startsAt', 'endsAt'],
-          },
-        ],
-      })
+    if (!user) {
+      return null
     }
 
-    return null
+    return await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+      attributes: ['startTime', 'breakDuration', 'workDuration'],
+      include: [
+        {
+          model: db.UserPreferenceWeeklyStretchActivity,
+          attributes: [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday',
+          ],
+        },
+        {
+          model: db.UserPreferenceWeeklyWorkActivity,
+          attributes: [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday',
+          ],
+        },
+        {
+          model: db.UserPreferenceTimeType,
+          attributes: ['id', 'name'],
+        },
+        {
+          model: db.UserPreferenceStartPeriod,
+          attributes: ['id', 'name', 'startsAt', 'endsAt'],
+        },
+      ],
+    })
+  }
+
+  async createUserPreferences(userId) {
+    const preference = await db.UserPreference.create({
+      UserId: userId,
+      startTime: null,
+      breakDuration: 0,
+      workDuration: 0,
+      UserPreferenceTimeTypeId: 2,
+      UserPreferenceStartPeriodId: null,
+      createAt: new Date(),
+      updatedAt: new Date(),
+    })
+
+    if (!preference) {
+      return null
+    }
+
+    await db.UserPreferenceWeeklyStretchActivity.create({
+      UserPreferenceId: preference.id,
+      monday: false,
+      tuesday: false,
+      wednesday: false,
+      thursday: false,
+      friday: false,
+      saturday: false,
+      sunday: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+
+    await db.UserPreferenceWeeklyWorkActivity.create({
+      UserPreferenceId: preference.id,
+      monday: false,
+      tuesday: false,
+      wednesday: false,
+      thursday: false,
+      friday: false,
+      saturday: false,
+      sunday: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+
+    return await this.getUserPreferences(userId)
+  }
+
+  async deleteUserPreferences(userId) {
+    const user = await this.getUserById(userId)
+
+    if (!user) {
+      return null
+    }
+
+    const preference = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    if (!preference) {
+      return null
+    }
+
+    const weeklyStretchActivity = await db.UserPreferenceWeeklyStretchActivity.findOne(
+      {
+        where: {
+          id: preference.id,
+        },
+      }
+    )
+
+    const weeklyWorkActivity = await db.UserPreferenceWeeklyWorkActivity.findOne(
+      {
+        where: {
+          id: preference.id,
+        },
+      }
+    )
+
+    await weeklyStretchActivity.destroy()
+    await weeklyWorkActivity.destroy()
+
+    return await preference.destroy()
+  }
+
+  async patchUserPreferenceWeeklyWorkActivity(userId, updatedFields) {
+    //desacoplar para um getId de WWA
+    const weeklyWorkActivityId = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+      attributes: ['id'],
+    })
+
+    if (!weeklyWorkActivityId) {
+      return null
+    }
+
+    const weeklyWorkActivity = await db.UserPreferenceWeeklyWorkActivity.findOne(
+      {
+        where: {
+          id: weeklyWorkActivityId.id,
+        },
+      }
+    )
+
+    return weeklyWorkActivity.update(updatedFields)
+  }
+
+  async patchUserPreferenceWeeklyStretchActivity(userId, updatedFields) {
+    //desacoplar para um getId de WWA
+    const weeklyStretchActivityId = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+      attributes: ['id'],
+    })
+
+    if (!weeklyStretchActivityId) {
+      return null
+    }
+
+    const weeklyStretchActivity = await db.UserPreferenceWeeklyStretchActivity.findOne(
+      {
+        where: {
+          id: weeklyStretchActivityId.id,
+        },
+      }
+    )
+
+    return weeklyStretchActivity.update(updatedFields)
   }
 }
 

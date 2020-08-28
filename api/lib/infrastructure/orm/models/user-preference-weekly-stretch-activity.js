@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       UserPreferenceId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
+        unique: true,
       },
       monday: {
         type: DataTypes.BOOLEAN,

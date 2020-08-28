@@ -1,4 +1,5 @@
 import HttpResponse from '../core/http-response'
+import { use } from 'chai'
 
 class UserController {
   constructor(useCases) {
@@ -150,15 +151,109 @@ class UserController {
     const { userId } = req.props
 
     try {
+      const { getUserUseCase } = this.useCases
+      const user = await getUserUseCase.execute(userId)
+
+      if (!user) {
+        return HttpResponse.serverError()
+      }
+
       const { getUserPreferencesUseCase } = this.useCases
       const preferences = await getUserPreferencesUseCase.execute(userId)
 
-      if (preferences.length == 0) {
+      if (!preferences || preferences.length == 0) {
         return HttpResponse.ok({ message: 'No user preferences found' })
       } else {
         return HttpResponse.ok({
           message: 'User preferences retrieved',
           preferences,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async patchUserPreferenceWeeklyWorkActivity(req) {
+    const { userId } = req.props
+    const {
+      monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+      sunday,
+    } = req.body
+
+    try {
+      const { patchUserPreferenceWeeklyWorkActivityUseCase } = this.useCases
+      const userPreferenceWeeklyWorkActivity = await patchUserPreferenceWeeklyWorkActivityUseCase.execute(
+        userId,
+        {
+          monday,
+          tuesday,
+          wednesday,
+          thursday,
+          friday,
+          saturday,
+          sunday,
+        }
+      )
+
+      if (!userPreferenceWeeklyWorkActivity) {
+        return HttpResponse.ok({
+          message: 'Cannot find user preference to patch',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User preference weekly work activity successfully patched',
+          userPreferenceWeeklyWorkActivity,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async patchUserPreferenceWeeklyStretchActivity(req) {
+    const { userId } = req.props
+    const {
+      monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+      sunday,
+    } = req.body
+
+    try {
+      const { patchUserPreferenceWeeklyStretchActivityUseCase } = this.useCases
+      const userPreferenceWeeklyStretchActivity = await patchUserPreferenceWeeklyStretchActivityUseCase.execute(
+        userId,
+        {
+          monday,
+          tuesday,
+          wednesday,
+          thursday,
+          friday,
+          saturday,
+          sunday,
+        }
+      )
+
+      if (!userPreferenceWeeklyStretchActivity) {
+        return HttpResponse.ok({
+          message: 'Cannot find user preference to patch',
+        })
+      } else {
+        return HttpResponse.ok({
+          message:
+            'User preference weekly stretch activity successfully patched',
+          userPreferenceWeeklyStretchActivity,
         })
       }
     } catch (error) {

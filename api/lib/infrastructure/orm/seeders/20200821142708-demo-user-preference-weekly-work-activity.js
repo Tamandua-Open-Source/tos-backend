@@ -6,8 +6,8 @@ module.exports = {
       'UserPreferenceWeeklyWorkActivities',
       [
         {
-          id: 1,
-          UserPreferenceId: 1,
+          id: -1,
+          UserPreferenceId: -1,
           monday: true,
           tuesday: true,
           wednesday: true,

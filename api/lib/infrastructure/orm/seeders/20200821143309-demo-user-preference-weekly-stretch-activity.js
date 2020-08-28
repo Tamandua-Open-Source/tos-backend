@@ -6,8 +6,8 @@ module.exports = {
       'UserPreferenceWeeklyStretchActivities',
       [
         {
-          id: 1,
-          UserPreferenceId: 1,
+          id: -1,
+          UserPreferenceId: -1,
           monday: false,
           tuesday: true,
           wednesday: true,
