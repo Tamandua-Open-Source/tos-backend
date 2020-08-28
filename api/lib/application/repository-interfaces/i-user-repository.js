@@ -40,6 +40,10 @@ class IUserRepository {
   patchUserPreferenceWeeklyWorkActivity(_userId, _updatedFields) {
     throw new UnimplementedError()
   }
+
+  patchUserPreferenceWeeklyStretchActivity(_userId, _updatedFields) {
+    throw new UnimplementedError()
+  }
 }
 
 export default IUserRepository

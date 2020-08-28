@@ -1,4 +1,4 @@
-class PatchUserPreferenceWeeklyWorkActivityUseCase {
+class PatchUserPreferenceWeeklyStretchActivityUseCase {
   constructor({ userRepository }) {
     this.userRepository = userRepository
   }
@@ -9,11 +9,11 @@ class PatchUserPreferenceWeeklyWorkActivityUseCase {
       await this.userRepository.createUserPreferences(userId)
     }
 
-    return await this.userRepository.patchUserPreferenceWeeklyWorkActivity(
+    return await this.userRepository.patchUserPreferenceWeeklyStretchActivity(
       userId,
       updatedFields
     )
   }
 }
 
-export default PatchUserPreferenceWeeklyWorkActivityUseCase
+export default PatchUserPreferenceWeeklyStretchActivityUseCase

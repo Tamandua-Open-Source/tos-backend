@@ -6,6 +6,7 @@ import UpdateUserUseCase from './update-user-use-case'
 import PatchUserFcmTokenUseCase from './patch-user-fcm-token-use-case'
 import GetUserPreferencesUseCase from './get-user-references-use-case'
 import PatchUserPreferenceWeeklyWorkActivityUseCase from './patch-user-preference-weekly-work-activity-use-case'
+import PatchUserPreferenceWeeklyStretchActivityUseCase from './patch-user-preference-weekly-stretch-activity-use-case'
 
 export {
   DeleteUserUseCase,
@@ -16,4 +17,5 @@ export {
   PatchUserFcmTokenUseCase,
   GetUserPreferencesUseCase,
   PatchUserPreferenceWeeklyWorkActivityUseCase,
+  PatchUserPreferenceWeeklyStretchActivityUseCase,
 }
