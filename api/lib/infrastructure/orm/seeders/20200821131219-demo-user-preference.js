@@ -8,9 +8,9 @@ module.exports = {
         {
           id: -1,
           UserId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
-          UserPreferenceTimeTypeId: -1,
-          UserPreferenceStartPeriodId: -1,
-          startTime: new Date(),
+          UserPreferenceTimeTypeId: 2,
+          UserPreferenceStartPeriodId: 1,
+          startTime: null,
           breakDuration: 7200,
           workDuration: 1200,
           createdAt: new Date(),

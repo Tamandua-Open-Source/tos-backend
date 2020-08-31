@@ -44,6 +44,18 @@ class IUserRepository {
   patchUserPreferenceWeeklyStretchActivity(_userId, _updatedFields) {
     throw new UnimplementedError()
   }
+
+  patchUserPreferenceWeeklyStretchActivity(_userId, _updatedFields) {
+    throw new UnimplementedError()
+  }
+
+  patchUserPreferenceFixedStartTime(_userId, _startTime) {
+    throw new UnimplementedError()
+  }
+
+  patchUserPreferenceFixedStartPeriod(_userId, _startPeriodId) {
+    throw new UnimplementedError()
+  }
 }
 
 export default IUserRepository

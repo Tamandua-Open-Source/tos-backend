@@ -261,6 +261,68 @@ class UserController {
       return HttpResponse.serverError()
     }
   }
+
+  async patchUserPreferenceFixedStartTime(req) {
+    const { userId } = req.props
+    const { startTime } = req.body
+
+    if (!startTime) {
+      return HttpResponse.badRequest('Please provide start time')
+    }
+
+    try {
+      const { patchUserPreferenceFixedStartTimeUseCase } = this.useCases
+      const preferences = await patchUserPreferenceFixedStartTimeUseCase.execute(
+        userId,
+        startTime
+      )
+
+      if (!preferences) {
+        return HttpResponse.ok({
+          message: 'Cannot find user preference to patch',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User preference start time type successfully patched',
+          preferences,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async patchUserPreferenceFixedStartPeriod(req) {
+    const { userId } = req.props
+    const { startPeriodId } = req.body
+
+    if (!startPeriodId) {
+      return HttpResponse.badRequest('Please provide start period id')
+    }
+
+    try {
+      const { patchUserPreferenceFixedStartPeriodUseCase } = this.useCases
+      const preferences = await patchUserPreferenceFixedStartPeriodUseCase.execute(
+        userId,
+        startPeriodId
+      )
+
+      if (!preferences) {
+        return HttpResponse.ok({
+          message: 'Cannot find user preference to patch',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User preference start time type successfully patched',
+          preferences,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
 }
 
 export default UserController
