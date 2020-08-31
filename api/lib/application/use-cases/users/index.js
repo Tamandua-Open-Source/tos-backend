@@ -7,6 +7,8 @@ import PatchUserFcmTokenUseCase from './patch-user-fcm-token-use-case'
 import GetUserPreferencesUseCase from './get-user-references-use-case'
 import PatchUserPreferenceWeeklyWorkActivityUseCase from './patch-user-preference-weekly-work-activity-use-case'
 import PatchUserPreferenceWeeklyStretchActivityUseCase from './patch-user-preference-weekly-stretch-activity-use-case'
+import PatchUserPreferenceFixedStartPeriodUseCase from './patch-user-preference-fixed-start-period-use-case'
+import PatchUserPreferenceFixedStartTimeUseCase from './patch-user-preference-fixed-start-time-use-case'
 
 export {
   DeleteUserUseCase,
@@ -18,4 +20,6 @@ export {
   GetUserPreferencesUseCase,
   PatchUserPreferenceWeeklyWorkActivityUseCase,
   PatchUserPreferenceWeeklyStretchActivityUseCase,
+  PatchUserPreferenceFixedStartPeriodUseCase,
+  PatchUserPreferenceFixedStartTimeUseCase,
 }
