@@ -10,6 +10,8 @@ import {
   GetUserPreferencesUseCase,
   PatchUserPreferenceWeeklyWorkActivityUseCase,
   PatchUserPreferenceWeeklyStretchActivityUseCase,
+  PatchUserPreferenceFixedStartTimeUseCase,
+  PatchUserPreferenceFixedStartPeriodUseCase,
 } from '../../../application/use-cases/users'
 
 class UserControllerComposer {
@@ -37,6 +39,16 @@ class UserControllerComposer {
         userRepository,
       }
     )
+    const patchUserPreferenceFixedStartTimeUseCase = new PatchUserPreferenceFixedStartTimeUseCase(
+      {
+        userRepository,
+      }
+    )
+    const patchUserPreferenceFixedStartPeriodUseCase = new PatchUserPreferenceFixedStartPeriodUseCase(
+      {
+        userRepository,
+      }
+    )
 
     return new UserController({
       deleteUserUseCase,
@@ -48,6 +60,8 @@ class UserControllerComposer {
       getUserPreferencesUseCase,
       patchUserPreferenceWeeklyWorkActivityUseCase,
       patchUserPreferenceWeeklyStretchActivityUseCase,
+      patchUserPreferenceFixedStartTimeUseCase,
+      patchUserPreferenceFixedStartPeriodUseCase,
     })
   }
 }

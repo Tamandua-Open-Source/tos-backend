@@ -50,6 +50,22 @@ router.patch(
 )
 
 router.patch(
+  '/me/preferences/fst',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceFixedStartTime(req)
+  )
+)
+
+router.patch(
+  '/me/preferences/fsp',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceFixedStartPeriod(req)
+  )
+)
+
+router.patch(
   '/me/subscribe',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.patchUserFcmToken(req))
