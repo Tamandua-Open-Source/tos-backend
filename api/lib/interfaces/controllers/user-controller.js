@@ -323,6 +323,34 @@ class UserController {
       return HttpResponse.serverError()
     }
   }
+
+  async patchUserPreferenceCycleDuration(req) {
+    const { userId } = req.props
+    const { workDuration, breakDuration } = req.body
+
+    try {
+      const { patchUserPreferenceCycleDurationUseCase } = this.useCases
+      const preferences = await patchUserPreferenceCycleDurationUseCase.execute(
+        userId,
+        workDuration,
+        breakDuration
+      )
+
+      if (!preferences) {
+        return HttpResponse.ok({
+          message: 'Cannot find user preference to patch',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User preference cycle duration successfully patched',
+          preferences,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
 }
 
 export default UserController

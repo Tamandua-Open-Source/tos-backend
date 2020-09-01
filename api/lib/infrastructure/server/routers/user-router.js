@@ -66,6 +66,14 @@ router.patch(
 )
 
 router.patch(
+  '/me/preferences/wbd',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceCycleDuration(req)
+  )
+)
+
+router.patch(
   '/me/subscribe',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.patchUserFcmToken(req))

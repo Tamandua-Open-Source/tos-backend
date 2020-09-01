@@ -56,6 +56,10 @@ class IUserRepository {
   patchUserPreferenceFixedStartPeriod(_userId, _startPeriodId) {
     throw new UnimplementedError()
   }
+
+  patchUserPreferenceCycleDuration(_userId, _workDuration, _breakDuration) {
+    throw new UnimplementedError()
+  }
 }
 
 export default IUserRepository

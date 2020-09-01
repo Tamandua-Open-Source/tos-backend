@@ -261,7 +261,26 @@ class UserRepository extends IUserRepository {
     return await preference.update({
       startTime: null,
       UserPreferenceTimeTypeId: 2,
-      UserPreferenceStartPeriodId: parseInt(startPeriodId),
+      UserPreferenceStartPeriodId: startPeriodId
+        ? parseInt(startPeriodId)
+        : undefined,
+    })
+  }
+
+  async patchUserPreferenceCycleDuration(userId, workDuration, breakDuration) {
+    const preference = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    if (!preference) {
+      return null
+    }
+
+    return await preference.update({
+      workDuration: workDuration ? parseInt(workDuration) : undefined,
+      breakDuration: breakDuration ? parseInt(breakDuration) : undefined,
     })
   }
 }
