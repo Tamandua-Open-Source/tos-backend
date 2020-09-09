@@ -60,6 +60,10 @@ class IUserRepository {
   patchUserPreferenceCycleDuration(_userId, _workDuration, _breakDuration) {
     throw new UnimplementedError()
   }
+
+  patchUserGoal(_userId, _updatedFields) {
+    throw new UnimplementedError()
+  }
 }
 
 export default IUserRepository
