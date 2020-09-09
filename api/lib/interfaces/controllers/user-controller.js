@@ -262,6 +262,34 @@ class UserController {
     }
   }
 
+  async patchUserGoal(req) {
+    const { userId } = req.props
+    const { criticalPain, painFromWork, futurePain } = req.body
+
+    try {
+      const { patchUserGoalUseCase } = this.useCases
+      const userPreferenceGoal = await patchUserGoalUseCase.execute(userId, {
+        criticalPain,
+        painFromWork,
+        futurePain,
+      })
+
+      if (!userPreferenceGoal) {
+        return HttpResponse.ok({
+          message: 'Cannot find user preference to patch',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User preference goal successfully patched',
+          userPreferenceGoal,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+
   async patchUserPreferenceFixedStartTime(req) {
     const { userId } = req.props
     const { startTime } = req.body

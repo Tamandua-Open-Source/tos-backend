@@ -10,6 +10,7 @@ import PatchUserPreferenceWeeklyStretchActivityUseCase from './patch-user-prefer
 import PatchUserPreferenceFixedStartPeriodUseCase from './patch-user-preference-fixed-start-period-use-case'
 import PatchUserPreferenceFixedStartTimeUseCase from './patch-user-preference-fixed-start-time-use-case'
 import PatchUserPreferenceCycleDurationUseCase from './patch-user-preference-cycle-duration-use-case'
+import PatchUserGoalUseCase from './patch-user-goal-use-case'
 
 export {
   DeleteUserUseCase,
@@ -24,4 +25,5 @@ export {
   PatchUserPreferenceFixedStartPeriodUseCase,
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceCycleDurationUseCase,
+  PatchUserGoalUseCase,
 }
