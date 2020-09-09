@@ -13,6 +13,7 @@ import {
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceFixedStartPeriodUseCase,
   PatchUserPreferenceCycleDurationUseCase,
+  PatchUserGoalUseCase,
 } from '../../../application/use-cases/users'
 
 class UserControllerComposer {
@@ -55,6 +56,9 @@ class UserControllerComposer {
         userRepository,
       }
     )
+    const patchUserGoalUseCase = new PatchUserGoalUseCase({
+      userRepository,
+    })
 
     return new UserController({
       deleteUserUseCase,
@@ -69,6 +73,7 @@ class UserControllerComposer {
       patchUserPreferenceFixedStartTimeUseCase,
       patchUserPreferenceFixedStartPeriodUseCase,
       patchUserPreferenceCycleDurationUseCase,
+      patchUserGoalUseCase,
     })
   }
 }
