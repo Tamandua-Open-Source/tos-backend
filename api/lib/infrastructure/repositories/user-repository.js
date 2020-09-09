@@ -86,6 +86,10 @@ class UserRepository extends IUserRepository {
           ],
         },
         {
+          model: db.UserPreferenceGoal,
+          attributes: ['criticalPain', 'painFromWork', 'futurePain'],
+        },
+        {
           model: db.UserPreferenceTimeType,
           attributes: ['id', 'name'],
         },
@@ -139,6 +143,15 @@ class UserRepository extends IUserRepository {
       updatedAt: new Date(),
     })
 
+    await db.UserPreferenceGoal.create({
+      UserPreferenceId: preference.id,
+      criticalPain: false,
+      painFromWork: false,
+      futurePain: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+
     return await this.getUserPreferences(userId)
   }
 
@@ -162,7 +175,7 @@ class UserRepository extends IUserRepository {
     const weeklyStretchActivity = await db.UserPreferenceWeeklyStretchActivity.findOne(
       {
         where: {
-          id: preference.id,
+          UserPreferenceId: preference.id,
         },
       }
     )
@@ -170,34 +183,40 @@ class UserRepository extends IUserRepository {
     const weeklyWorkActivity = await db.UserPreferenceWeeklyWorkActivity.findOne(
       {
         where: {
-          id: preference.id,
+          UserPreferenceId: preference.id,
         },
       }
     )
 
+    const goal = await db.UserPreferenceGoal.findOne({
+      where: {
+        UserPreferenceId: preference.id,
+      },
+    })
+
     await weeklyStretchActivity.destroy()
     await weeklyWorkActivity.destroy()
+    await goal.destroy()
 
     return await preference.destroy()
   }
 
   async patchUserPreferenceWeeklyWorkActivity(userId, updatedFields) {
-    //desacoplar para um getId de WWA
-    const weeklyWorkActivityId = await db.UserPreference.findOne({
+    const preference = await db.UserPreference.findOne({
       where: {
         UserId: userId,
       },
       attributes: ['id'],
     })
 
-    if (!weeklyWorkActivityId) {
+    if (!preference) {
       return null
     }
 
     const weeklyWorkActivity = await db.UserPreferenceWeeklyWorkActivity.findOne(
       {
         where: {
-          id: weeklyWorkActivityId.id,
+          UserPreferenceId: preference.id,
         },
       }
     )
@@ -206,7 +225,6 @@ class UserRepository extends IUserRepository {
   }
 
   async patchUserPreferenceWeeklyStretchActivity(userId, updatedFields) {
-    //desacoplar para um getId de WWA
     const weeklyStretchActivityId = await db.UserPreference.findOne({
       where: {
         UserId: userId,
@@ -221,12 +239,33 @@ class UserRepository extends IUserRepository {
     const weeklyStretchActivity = await db.UserPreferenceWeeklyStretchActivity.findOne(
       {
         where: {
-          id: weeklyStretchActivityId.id,
+          UserPreferenceId: weeklyStretchActivityId.id,
         },
       }
     )
 
     return weeklyStretchActivity.update(updatedFields)
+  }
+
+  async patchUserGoal(userId, updatedFields) {
+    const preference = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+      attributes: ['id'],
+    })
+
+    if (!preference) {
+      return null
+    }
+
+    const goal = await db.UserPreferenceGoal.findOne({
+      where: {
+        UserPreferenceId: preference.id,
+      },
+    })
+
+    return goal.update(updatedFields)
   }
 
   async patchUserPreferenceFixedStartTime(userId, startTime) {

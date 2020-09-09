@@ -50,6 +50,12 @@ router.patch(
 )
 
 router.patch(
+  '/me/preferences/goal',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.patchUserGoal(req))
+)
+
+router.patch(
   '/me/preferences/fst',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>

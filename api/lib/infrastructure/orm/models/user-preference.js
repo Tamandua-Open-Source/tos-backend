@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       UserPreference.belongsTo(models.User)
       UserPreference.hasOne(models.UserPreferenceWeeklyWorkActivity)
       UserPreference.hasOne(models.UserPreferenceWeeklyStretchActivity)
+      UserPreference.hasOne(models.UserPreferenceGoal)
       UserPreference.belongsTo(models.UserPreferenceTimeType)
       UserPreference.belongsTo(models.UserPreferenceStartPeriod)
     }
