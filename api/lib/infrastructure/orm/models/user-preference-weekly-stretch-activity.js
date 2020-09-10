@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      startTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       monday: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
