@@ -8,6 +8,7 @@ module.exports = {
         {
           id: -1,
           UserPreferenceId: -1,
+          startTime: new Date(),
           monday: false,
           tuesday: true,
           wednesday: true,

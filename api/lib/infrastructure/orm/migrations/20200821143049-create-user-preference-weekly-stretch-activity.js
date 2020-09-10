@@ -14,6 +14,10 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      startTime: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
       monday: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

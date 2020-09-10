@@ -59,11 +59,27 @@ class UserRepository extends IUserRepository {
       where: {
         UserId: userId,
       },
-      attributes: ['startTime', 'breakDuration', 'workDuration'],
+      attributes: [
+        'startTime',
+        'breakDuration',
+        'breakLimitDuration',
+        'breakIdleLimitDuration',
+        'lastBreakStartTime',
+        'workDuration',
+        'workLimitDuration',
+        'workIdleLimitDuration',
+        'lastWorkStartTime',
+        'pauseLimitDuration',
+        'pauseIdleLimitDuration',
+        'lastPauseStartTime',
+        'currentState',
+        'lastState',
+      ],
       include: [
         {
           model: db.UserPreferenceWeeklyStretchActivity,
           attributes: [
+            'startTime',
             'monday',
             'tuesday',
             'wednesday',
