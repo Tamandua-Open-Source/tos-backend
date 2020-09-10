@@ -221,6 +221,7 @@ class UserController {
   async patchUserPreferenceWeeklyStretchActivity(req) {
     const { userId } = req.props
     const {
+      startTime,
       monday,
       tuesday,
       wednesday,
@@ -235,6 +236,7 @@ class UserController {
       const userPreferenceWeeklyStretchActivity = await patchUserPreferenceWeeklyStretchActivityUseCase.execute(
         userId,
         {
+          startTime,
           monday,
           tuesday,
           wednesday,
