@@ -10,6 +10,7 @@ module.exports = {
           UserId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
           UserPreferenceTimeTypeId: 2,
           UserPreferenceStartPeriodId: 1,
+          fcmToken: null,
           startTime: null,
           breakDuration: 900,
           breakLimitDuration: 1200,

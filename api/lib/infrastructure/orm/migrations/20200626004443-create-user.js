@@ -16,10 +16,6 @@ export async function up(queryInterface, Sequelize) {
       allowNull: false,
       unique: true,
     },
-    fcmToken: {
-      type: Sequelize.STRING,
-      allowNull: true,
-    },
     createdAt: {
       type: Sequelize.DATE,
       allowNull: false,
