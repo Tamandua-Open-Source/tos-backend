@@ -23,6 +23,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         unique: true,
       },
+      fcmToken: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       startTime: {
         type: Sequelize.DATE,
       },

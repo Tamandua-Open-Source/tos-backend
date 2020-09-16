@@ -106,12 +106,18 @@ class UserController {
     try {
       const { patchUserFcmTokenUseCase } = this.useCases
 
-      const user = await patchUserFcmTokenUseCase.execute(userId, fcmToken)
+      const preferences = await patchUserFcmTokenUseCase.execute(
+        userId,
+        fcmToken
+      )
 
-      if (!user) {
+      if (!preferences) {
         return HttpResponse.ok({ message: 'Cannot find user to patch' })
       } else {
-        return HttpResponse.ok({ message: 'User successfully patched', user })
+        return HttpResponse.ok({
+          message: 'User Preferences successfully patched',
+          preferences,
+        })
       }
     } catch (error) {
       console.error(error)

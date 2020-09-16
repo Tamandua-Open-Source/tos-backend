@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         unique: true,
       },
+      fcmToken: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       startTime: {
         type: DataTypes.DATE,
       },

@@ -39,13 +39,20 @@ class UserRepository extends IUserRepository {
   }
 
   async patchUserFcmToken(userId, fcmToken) {
-    const user = await this.getUserById(userId)
+    const preference = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+      attributes: ['id'],
+    })
 
-    if (user) {
-      return await user.update({ fcmToken })
+    if (!preference) {
+      return null
     }
 
-    return null
+    return await preference.update({
+      fcmToken: fcmToken,
+    })
   }
 
   async getUserPreferences(userId) {
@@ -60,6 +67,7 @@ class UserRepository extends IUserRepository {
         UserId: userId,
       },
       attributes: [
+        'fcmToken',
         'startTime',
         'breakDuration',
         'breakLimitDuration',
