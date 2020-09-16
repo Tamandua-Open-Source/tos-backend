@@ -4,6 +4,11 @@ class PatchUserFcmTokenUseCase {
   }
 
   async execute(userId, fcmToken) {
+    const preferences = await this.userRepository.getUserPreferences(userId)
+    if (!preferences) {
+      await this.userRepository.createUserPreferences(userId)
+    }
+
     return await this.userRepository.patchUserFcmToken(userId, fcmToken)
   }
 }
