@@ -7,14 +7,14 @@ class AuthMiddleware {
 
   async verifyToken(req) {
     try {
-      //BYPASS
-      return {
-        response: 'ok',
-        props: { userId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1' },
-      }
-
       const idToken = req.headers['authorization']
       if (!idToken) {
+        //BYPASS
+        return {
+          response: 'ok',
+          props: { userId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1' },
+        }
+
         return {
           response: 'error',
           error: HttpResponse.badRequest('Please provide user idToken'),

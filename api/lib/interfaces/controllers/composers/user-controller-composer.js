@@ -6,14 +6,14 @@ import {
   GetUserUseCase,
   SignInUserUseCase,
   UpdateUserUseCase,
-  PatchUserFcmTokenUseCase,
   GetUserPreferencesUseCase,
+  PatchUserPreferenceFcmTokenUseCase,
   PatchUserPreferenceWeeklyWorkActivityUseCase,
   PatchUserPreferenceWeeklyStretchActivityUseCase,
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceFixedStartPeriodUseCase,
   PatchUserPreferenceCycleDurationUseCase,
-  PatchUserGoalUseCase,
+  PatchUserPreferenceGoalUseCase,
 } from '../../../application/use-cases/users'
 
 class UserControllerComposer {
@@ -25,12 +25,14 @@ class UserControllerComposer {
     const getUserUseCase = new GetUserUseCase({ userRepository })
     const signInUserUseCase = new SignInUserUseCase({ userRepository })
     const updateUserUseCase = new UpdateUserUseCase({ userRepository })
-    const patchUserFcmTokenUseCase = new PatchUserFcmTokenUseCase({
-      userRepository,
-    })
     const getUserPreferencesUseCase = new GetUserPreferencesUseCase({
       userRepository,
     })
+    const patchUserPreferenceFcmTokenUseCase = new PatchUserPreferenceFcmTokenUseCase(
+      {
+        userRepository,
+      }
+    )
     const patchUserPreferenceWeeklyWorkActivityUseCase = new PatchUserPreferenceWeeklyWorkActivityUseCase(
       {
         userRepository,
@@ -56,7 +58,7 @@ class UserControllerComposer {
         userRepository,
       }
     )
-    const patchUserGoalUseCase = new PatchUserGoalUseCase({
+    const patchUserPreferenceGoalUseCase = new PatchUserPreferenceGoalUseCase({
       userRepository,
     })
 
@@ -66,14 +68,14 @@ class UserControllerComposer {
       getUserUseCase,
       signInUserUseCase,
       updateUserUseCase,
-      patchUserFcmTokenUseCase,
       getUserPreferencesUseCase,
+      patchUserPreferenceFcmTokenUseCase,
       patchUserPreferenceWeeklyWorkActivityUseCase,
       patchUserPreferenceWeeklyStretchActivityUseCase,
       patchUserPreferenceFixedStartTimeUseCase,
       patchUserPreferenceFixedStartPeriodUseCase,
       patchUserPreferenceCycleDurationUseCase,
-      patchUserGoalUseCase,
+      patchUserPreferenceGoalUseCase,
     })
   }
 }
