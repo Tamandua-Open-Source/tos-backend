@@ -15,7 +15,14 @@ class UserRepository extends IUserRepository {
   }
 
   async createUser(domainUser) {
-    return await db.User.create(domainUser)
+    const user = await db.User.create(domainUser)
+
+    if (!user) {
+      return null
+    }
+
+    await this.createUserPreferences(user.id)
+    return user
   }
 
   async updateUser(userId, updatedFields) {
@@ -31,37 +38,15 @@ class UserRepository extends IUserRepository {
   async deleteUser(userId) {
     const user = await this.getUserById(userId)
 
-    if (user) {
-      return await user.destroy()
-    }
-
-    return null
-  }
-
-  async patchUserFcmToken(userId, fcmToken) {
-    const preference = await db.UserPreference.findOne({
-      where: {
-        UserId: userId,
-      },
-      attributes: ['id'],
-    })
-
-    if (!preference) {
-      return null
-    }
-
-    return await preference.update({
-      fcmToken: fcmToken,
-    })
-  }
-
-  async getUserPreferences(userId) {
-    const user = await this.getUserById(userId)
-
     if (!user) {
       return null
     }
 
+    await this.deleteUserPreferences(userId)
+    return await user.destroy()
+  }
+
+  async getUserPreferences(userId) {
     return await db.UserPreference.findOne({
       where: {
         UserId: userId,
@@ -126,23 +111,36 @@ class UserRepository extends IUserRepository {
   }
 
   async createUserPreferences(userId) {
-    const preference = await db.UserPreference.create({
+    const preferences = await db.UserPreference.create({
       UserId: userId,
-      startTime: null,
-      breakDuration: 0,
-      workDuration: 0,
       UserPreferenceTimeTypeId: 2,
-      UserPreferenceStartPeriodId: null,
-      createAt: new Date(),
+      UserPreferenceStartPeriodId: 1,
+      fcmToken: null,
+      startTime: null,
+      breakDuration: 30000,
+      breakLimitDuration: 40000,
+      breakIdleLimitDuration: 10000,
+      lastBreakStartTime: new Date(),
+      workDuration: 60000,
+      workLimitDuration: 70000,
+      workIdleLimitDuration: 10000,
+      lastWorkStartTime: new Date(),
+      pauseLimitDuration: 120000,
+      pauseIdleLimitDuration: 10000,
+      lastPauseStartTime: new Date(),
+      currentState: 'INACTIVE',
+      lastState: 'INACTIVE',
+      createdAt: new Date(),
       updatedAt: new Date(),
     })
 
-    if (!preference) {
+    if (!preferences) {
       return null
     }
 
     await db.UserPreferenceWeeklyStretchActivity.create({
-      UserPreferenceId: preference.id,
+      UserPreferenceId: preferences.id,
+      startTime: new Date(),
       monday: false,
       tuesday: false,
       wednesday: false,
@@ -155,7 +153,7 @@ class UserRepository extends IUserRepository {
     })
 
     await db.UserPreferenceWeeklyWorkActivity.create({
-      UserPreferenceId: preference.id,
+      UserPreferenceId: preferences.id,
       monday: false,
       tuesday: false,
       wednesday: false,
@@ -168,7 +166,7 @@ class UserRepository extends IUserRepository {
     })
 
     await db.UserPreferenceGoal.create({
-      UserPreferenceId: preference.id,
+      UserPreferenceId: preferences.id,
       criticalPain: false,
       painFromWork: false,
       futurePain: false,
@@ -176,53 +174,56 @@ class UserRepository extends IUserRepository {
       updatedAt: new Date(),
     })
 
-    return await this.getUserPreferences(userId)
+    return preferences
   }
 
   async deleteUserPreferences(userId) {
-    const user = await this.getUserById(userId)
+    const preferences = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+    })
 
-    if (!user) {
+    if (!preferences) {
       return null
     }
 
+    await db.UserPreferenceWeeklyStretchActivity.destroy({
+      where: {
+        UserPreferenceId: preferences.id,
+      },
+    })
+
+    await db.UserPreferenceWeeklyWorkActivity.destroy({
+      where: {
+        UserPreferenceId: preferences.id,
+      },
+    })
+
+    await db.UserPreferenceGoal.destroy({
+      where: {
+        UserPreferenceId: preferences.id,
+      },
+    })
+
+    return await preferences.destroy()
+  }
+
+  async patchUserPreferenceFcmToken(userId, fcmToken) {
     const preference = await db.UserPreference.findOne({
       where: {
         UserId: userId,
       },
+      attributes: ['id'],
     })
 
     if (!preference) {
       return null
     }
 
-    const weeklyStretchActivity = await db.UserPreferenceWeeklyStretchActivity.findOne(
-      {
-        where: {
-          UserPreferenceId: preference.id,
-        },
-      }
-    )
-
-    const weeklyWorkActivity = await db.UserPreferenceWeeklyWorkActivity.findOne(
-      {
-        where: {
-          UserPreferenceId: preference.id,
-        },
-      }
-    )
-
-    const goal = await db.UserPreferenceGoal.findOne({
-      where: {
-        UserPreferenceId: preference.id,
-      },
+    return await preference.update({
+      fcmToken: fcmToken,
     })
-
-    await weeklyStretchActivity.destroy()
-    await weeklyWorkActivity.destroy()
-    await goal.destroy()
-
-    return await preference.destroy()
   }
 
   async patchUserPreferenceWeeklyWorkActivity(userId, updatedFields) {
@@ -271,7 +272,7 @@ class UserRepository extends IUserRepository {
     return weeklyStretchActivity.update(updatedFields)
   }
 
-  async patchUserGoal(userId, updatedFields) {
+  async patchUserPreferenceGoal(userId, updatedFields) {
     const preference = await db.UserPreference.findOne({
       where: {
         UserId: userId,

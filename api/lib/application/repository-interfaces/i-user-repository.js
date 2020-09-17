@@ -21,10 +21,6 @@ class IUserRepository {
     throw new UnimplementedError()
   }
 
-  patchUserFcmToken(_userId, _fcmToken) {
-    throw new UnimplementedError()
-  }
-
   getUserPreferences(_userId) {
     throw new UnimplementedError()
   }
@@ -34,6 +30,10 @@ class IUserRepository {
   }
 
   deleteUserPreferences(_userId) {
+    throw new UnimplementedError()
+  }
+
+  patchUserPreferenceFcmToken(_userId, _fcmToken) {
     throw new UnimplementedError()
   }
 
@@ -61,7 +61,7 @@ class IUserRepository {
     throw new UnimplementedError()
   }
 
-  patchUserGoal(_userId, _updatedFields) {
+  patchUserPreferenceGoal(_userId, _updatedFields) {
     throw new UnimplementedError()
   }
 }

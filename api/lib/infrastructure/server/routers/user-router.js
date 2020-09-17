@@ -27,10 +27,30 @@ router.get(
   ExpressRouterAdapter.adapt((req) => userController.getUser(req))
 )
 
+router.put(
+  '/me',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.updateUser(req))
+)
+
+router.delete(
+  '/me',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.deleteUser(req))
+)
+
 router.get(
   '/me/preferences',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.getUserPreferences(req))
+)
+
+router.patch(
+  '/me/preferences/fcm',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceFcmToken(req)
+  )
 )
 
 router.patch(
@@ -52,7 +72,9 @@ router.patch(
 router.patch(
   '/me/preferences/goal',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => userController.patchUserGoal(req))
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceGoal(req)
+  )
 )
 
 router.patch(
@@ -77,24 +99,6 @@ router.patch(
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceCycleDuration(req)
   )
-)
-
-router.patch(
-  '/me/subscribe',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => userController.patchUserFcmToken(req))
-)
-
-router.put(
-  '/me',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => userController.updateUser(req))
-)
-
-router.delete(
-  '/me',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => userController.deleteUser(req))
 )
 
 export default router
