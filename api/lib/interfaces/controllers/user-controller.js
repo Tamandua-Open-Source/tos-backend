@@ -1,5 +1,4 @@
 import HttpResponse from '../core/http-response'
-import { use } from 'chai'
 
 class UserController {
   constructor(useCases) {
@@ -89,53 +88,12 @@ class UserController {
     }
   }
 
-  async patchUserFcmToken(req) {
-    const { fcmToken } = req.body
-    const { userId } = req.props
-
-    if (!fcmToken) {
-      return HttpResponse.badRequest(
-        'Please provide the fcmToken to be patched'
-      )
-    }
-
-    if (!userId) {
-      return HttpResponse.serverError()
-    }
-
-    try {
-      const { patchUserFcmTokenUseCase } = this.useCases
-
-      const preferences = await patchUserFcmTokenUseCase.execute(
-        userId,
-        fcmToken
-      )
-
-      if (!preferences) {
-        return HttpResponse.ok({ message: 'Cannot find user to patch' })
-      } else {
-        return HttpResponse.ok({
-          message: 'User Preferences successfully patched',
-          preferences,
-        })
-      }
-    } catch (error) {
-      console.error(error)
-      return HttpResponse.serverError()
-    }
-  }
-
   async signInUser(req) {
-    const { name, email } = req.body
     const { userId } = req.props
-    if (!name) {
-      return HttpResponse.badRequest('Please provide user name')
-    }
-    if (!email) {
-      return HttpResponse.badRequest('Please provide email')
-    }
-    if (!userId) {
-      return HttpResponse.serverError()
+    const { name, email } = req.body
+
+    if (!name || !email) {
+      return HttpResponse.badRequest('Please provide complete details')
     }
 
     try {
@@ -172,6 +130,36 @@ class UserController {
       } else {
         return HttpResponse.ok({
           message: 'User preferences retrieved',
+          preferences,
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async patchUserPreferenceFcmToken(req) {
+    const { userId } = req.props
+    const { fcmToken } = req.body
+
+    if (!fcmToken) {
+      return HttpResponse.badRequest('Please provide complete details')
+    }
+
+    try {
+      const { patchUserPreferenceFcmTokenUseCase } = this.useCases
+
+      const preferences = await patchUserPreferenceFcmTokenUseCase.execute(
+        userId,
+        fcmToken
+      )
+
+      if (!preferences) {
+        return HttpResponse.ok({ message: 'Cannot find user to patch' })
+      } else {
+        return HttpResponse.ok({
+          message: 'User Preferences successfully patched',
           preferences,
         })
       }
@@ -270,17 +258,20 @@ class UserController {
     }
   }
 
-  async patchUserGoal(req) {
+  async patchUserPreferenceGoal(req) {
     const { userId } = req.props
     const { criticalPain, painFromWork, futurePain } = req.body
 
     try {
-      const { patchUserGoalUseCase } = this.useCases
-      const userPreferenceGoal = await patchUserGoalUseCase.execute(userId, {
-        criticalPain,
-        painFromWork,
-        futurePain,
-      })
+      const { patchUserPreferenceGoalUseCase } = this.useCases
+      const userPreferenceGoal = await patchUserPreferenceGoalUseCase.execute(
+        userId,
+        {
+          criticalPain,
+          painFromWork,
+          futurePain,
+        }
+      )
 
       if (!userPreferenceGoal) {
         return HttpResponse.ok({
