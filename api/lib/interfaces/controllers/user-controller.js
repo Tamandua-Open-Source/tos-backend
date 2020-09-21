@@ -22,7 +22,7 @@ class UserController {
   }
 
   async updateUser(req) {
-    const { name } = req.body
+    const { name, email } = req.body
     const { userId } = req.props
     if (!name) {
       return HttpResponse.badRequest('Please provide the fields to be updated')
@@ -33,7 +33,7 @@ class UserController {
 
     try {
       const { updateUserUseCase } = this.useCases
-      const user = await updateUserUseCase.execute(userId, { name })
+      const user = await updateUserUseCase.execute(userId, { name, email })
 
       if (!user) {
         return HttpResponse.ok({ message: 'Cannot find user to update' })
