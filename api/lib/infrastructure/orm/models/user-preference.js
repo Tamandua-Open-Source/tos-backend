@@ -29,11 +29,9 @@ module.exports = (sequelize, DataTypes) => {
       UserPreferenceTimeTypeId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
       },
       UserPreferenceStartPeriodId: {
         type: DataTypes.INTEGER,
-        unique: true,
       },
       fcmToken: {
         type: DataTypes.STRING,
