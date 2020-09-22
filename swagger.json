@@ -48,7 +48,9 @@
                 },
                 "users": {
                   "type": "array",
-                  "$ref": "#/definitions/user"
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
                 }
               }
             }
@@ -97,7 +99,7 @@
                 },
                 "user": {
                   "type": "object",
-                  "$ref": "#/definitions/user"
+                  "$ref": "#/definitions/User"
                 }
               }
             }
@@ -131,7 +133,7 @@
                 },
                 "user": {
                   "type": "object",
-                  "$ref": "#/definitions/user"
+                  "$ref": "#/definitions/User"
                 }
               }
             }
@@ -209,7 +211,7 @@
                 },
                 "user": {
                   "type": "object",
-                  "$ref": "#/definitions/user"
+                  "$ref": "#/definitions/User"
                 }
               }
             }
@@ -243,7 +245,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -289,7 +291,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -353,7 +355,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -420,7 +422,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -466,7 +468,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -512,7 +514,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -561,7 +563,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -613,7 +615,7 @@
                 },
                 "preferences": {
                   "type": "object",
-                  "$ref": "#/definitions/userPreferences"
+                  "$ref": "#/definitions/User Preferences"
                 }
               }
             }
@@ -641,7 +643,17 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "stretchSessions": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Stretch Session"
+                  }
+                }
+              }
             }
           }
         }
@@ -675,7 +687,15 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "stretchSession": {
+                  "type": "object",
+                  "$ref": "#/definitions/Stretch Session"
+                }
+              }
             }
           }
         }
@@ -684,7 +704,8 @@
   },
 
   "definitions": {
-    "user": {
+    "User": {
+      "type": "object",
       "properties": {
         "id": {
           "type": "string"
@@ -704,7 +725,8 @@
       }
     },
 
-    "userPreferences": {
+    "User Preferences": {
+      "type": "object",
       "properties": {
         "fcmToken": {
           "type": "string"
@@ -753,99 +775,193 @@
         },
         "UserPreferenceWeeklyStretchActivity": {
           "type": "object",
-          "properties": {
-            "startTime": {
-              "type": "string"
-            },
-            "monday": {
-              "type": "boolean"
-            },
-            "tuesday": {
-              "type": "boolean"
-            },
-            "wednesday": {
-              "type": "boolean"
-            },
-            "thursday": {
-              "type": "boolean"
-            },
-            "friday": {
-              "type": "boolean"
-            },
-            "saturday": {
-              "type": "boolean"
-            },
-            "sunday": {
-              "type": "boolean"
-            }
-          }
+          "$ref": "#/definitions/Weekly Stretch Activity"
         },
         "UserPreferenceWeeklyWorkActivity": {
           "type": "object",
-          "properties": {
-            "monday": {
-              "type": "boolean"
-            },
-            "tuesday": {
-              "type": "boolean"
-            },
-            "wednesday": {
-              "type": "boolean"
-            },
-            "thursday": {
-              "type": "boolean"
-            },
-            "friday": {
-              "type": "boolean"
-            },
-            "saturday": {
-              "type": "boolean"
-            },
-            "sunday": {
-              "type": "boolean"
-            }
-          }
+          "$ref": "#/definitions/Weekly Work Activity"
         },
         "UserPreferenceGoal": {
           "type": "object",
-          "properties": {
-            "criticalPain": {
-              "type": "boolean"
-            },
-            "painFromWork": {
-              "type": "boolean"
-            },
-            "futurePain": {
-              "type": "boolean"
-            }
-          }
+          "$ref": "#/definitions/Goal"
         },
         "UserPreferenceTimeType": {
           "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer"
-            },
-            "name": {
-              "type": "string"
-            }
-          }
+          "$ref": "#/definitions/Time Type"
         },
         "UserPreferenceStartPeriod": {
           "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer"
-            },
-            "name": {
-              "type": "string"
-            },
-            "startsAt": {
-              "type": "string"
-            },
-            "endsAt": {
-              "type": "string"
-            }
+          "$ref": "#/definitions/Start Period"
+        }
+      }
+    },
+
+    "Weekly Stretch Activity": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string"
+        },
+        "monday": {
+          "type": "boolean"
+        },
+        "tuesday": {
+          "type": "boolean"
+        },
+        "wednesday": {
+          "type": "boolean"
+        },
+        "thursday": {
+          "type": "boolean"
+        },
+        "friday": {
+          "type": "boolean"
+        },
+        "saturday": {
+          "type": "boolean"
+        },
+        "sunday": {
+          "type": "boolean"
+        }
+      }
+    },
+
+    "Weekly Work Activity": {
+      "type": "object",
+      "properties": {
+        "monday": {
+          "type": "boolean"
+        },
+        "tuesday": {
+          "type": "boolean"
+        },
+        "wednesday": {
+          "type": "boolean"
+        },
+        "thursday": {
+          "type": "boolean"
+        },
+        "friday": {
+          "type": "boolean"
+        },
+        "saturday": {
+          "type": "boolean"
+        },
+        "sunday": {
+          "type": "boolean"
+        }
+      }
+    },
+
+    "Goal": {
+      "type": "object",
+      "properties": {
+        "criticalPain": {
+          "type": "boolean"
+        },
+        "painFromWork": {
+          "type": "boolean"
+        },
+        "futurePain": {
+          "type": "boolean"
+        }
+      }
+    },
+
+    "Time Type": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+
+    "Start Period": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startsAt": {
+          "type": "string"
+        },
+        "endsAt": {
+          "type": "string"
+        }
+      }
+    },
+
+    "Body Part": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+
+    "Stretch Movement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "imageFileUrl": {
+          "type": "string"
+        },
+        "videoFileUrl": {
+          "type": "string"
+        },
+        "BodyParts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Body Part"
+          }
+        }
+      }
+    },
+
+    "Stretch Session": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "imageFileUrl": {
+          "type": "integer"
+        },
+        "StretchMovements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Stretch Movement"
           }
         }
       }
