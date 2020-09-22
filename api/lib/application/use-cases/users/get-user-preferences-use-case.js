@@ -4,11 +4,7 @@ class GetUserPreferencesUseCase {
   }
 
   async execute(userId) {
-    const preferences = await this.userRepository.getUserPreferences(userId)
-    if (!preferences) {
-      return await this.userRepository.createUserPreferences(userId)
-    }
-    return preferences
+    return await this.userRepository.getUserPreferences(userId)
   }
 }
 

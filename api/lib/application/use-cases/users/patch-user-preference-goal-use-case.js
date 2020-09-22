@@ -4,10 +4,9 @@ class PatchUserPreferenceGoalsUseCase {
   }
 
   async execute(userId, updatedFields) {
-    return await this.userRepository.patchUserPreferenceGoal(
-      userId,
-      updatedFields
-    )
+    await this.userRepository.patchUserPreferenceGoal(userId, updatedFields)
+
+    return await this.userRepository.getUserPreferences(userId)
   }
 }
 
