@@ -4,10 +4,12 @@ class PatchUserPreferenceWeeklyWorkActivityUseCase {
   }
 
   async execute(userId, updatedFields) {
-    return await this.userRepository.patchUserPreferenceWeeklyWorkActivity(
+    await this.userRepository.patchUserPreferenceWeeklyWorkActivity(
       userId,
       updatedFields
     )
+
+    return await this.userRepository.getUserPreferences(userId)
   }
 }
 

@@ -4,10 +4,9 @@ class PatchUserPreferenceFcmTokenUseCase {
   }
 
   async execute(userId, fcmToken) {
-    return await this.userRepository.patchUserPreferenceFcmToken(
-      userId,
-      fcmToken
-    )
+    await this.userRepository.patchUserPreferenceFcmToken(userId, fcmToken)
+
+    return await this.userRepository.getUserPreferences(userId)
   }
 }
 
