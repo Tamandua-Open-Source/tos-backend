@@ -4,11 +4,13 @@ class PatchUserPreferenceCycleDurationUseCase {
   }
 
   async execute(userId, workDuration, breakDuration) {
-    return await this.userRepository.patchUserPreferenceCycleDuration(
+    await this.userRepository.patchUserPreferenceCycleDuration(
       userId,
       workDuration,
       breakDuration
     )
+
+    return await this.userRepository.getUserPreferences(userId)
   }
 }
 

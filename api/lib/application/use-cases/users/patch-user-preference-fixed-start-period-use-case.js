@@ -4,10 +4,12 @@ class PatchUserPreferenceFixedStartPeriodUseCase {
   }
 
   async execute(userId, startPeriodId) {
-    return await this.userRepository.patchUserPreferenceFixedStartPeriod(
+    await this.userRepository.patchUserPreferenceFixedStartPeriod(
       userId,
       startPeriodId
     )
+
+    return await this.userRepository.getUserPreferences(userId)
   }
 }
 
