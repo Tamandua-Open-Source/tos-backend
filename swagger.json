@@ -26,11 +26,80 @@
       "get": {
         "tags": ["User"],
         "summary": "Show all users",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "users": {
+                  "type": "array",
+                  "$ref": "#/definitions/user"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Authenticates the user and creates if there is no database record",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "object",
+                  "$ref": "#/definitions/user"
+                }
+              }
             }
           }
         }
@@ -39,36 +108,110 @@
     "/api/users/me": {
       "get": {
         "tags": ["User"],
-        "summary": "Show user",
+        "summary": "Shows the logged in user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "object",
+                  "$ref": "#/definitions/user"
+                }
+              }
             }
           }
         }
       },
       "delete": {
         "tags": ["User"],
-        "summary": "Delete user",
+        "summary": "Delete the logged in user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "userId": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
       },
       "put": {
         "tags": ["User"],
-        "summary": "Update user",
+        "summary": "updates the logged in user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "object",
+                  "$ref": "#/definitions/user"
+                }
+              }
             }
           }
         }
@@ -77,12 +220,32 @@
     "/api/users/me/preferences": {
       "get": {
         "tags": ["User"],
-        "summary": "Show user preferences",
+        "summary": "Shows user preferences",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -91,12 +254,44 @@
     "/api/users/me/preferences/fcm": {
       "patch": {
         "tags": ["User"],
-        "summary": "Update User preference",
+        "summary": "Updates fcmToken in user preferences",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fcmToken": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -105,12 +300,62 @@
     "/api/users/me/preferences/wwa": {
       "patch": {
         "tags": ["User"],
-        "summary": "Update User preference",
+        "summary": "Updates weekly work activity in user preferences",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "monday": {
+                  "type": "boolean"
+                },
+                "tuesday": {
+                  "type": "boolean"
+                },
+                "wednesday": {
+                  "type": "boolean"
+                },
+                "thursday": {
+                  "type": "boolean"
+                },
+                "friday": {
+                  "type": "boolean"
+                },
+                "saturday": {
+                  "type": "boolean"
+                },
+                "sunday": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -119,12 +364,65 @@
     "/api/users/me/preferences/wsa": {
       "patch": {
         "tags": ["User"],
-        "summary": "Update User preference",
+        "summary": "Updates weekly stretch activity in user preferences",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "startTime": {
+                  "type": "string"
+                },
+                "monday": {
+                  "type": "boolean"
+                },
+                "tuesday": {
+                  "type": "boolean"
+                },
+                "wednesday": {
+                  "type": "boolean"
+                },
+                "thursday": {
+                  "type": "boolean"
+                },
+                "friday": {
+                  "type": "boolean"
+                },
+                "saturday": {
+                  "type": "boolean"
+                },
+                "sunday": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -133,12 +431,44 @@
     "/api/users/me/preferences/fst": {
       "patch": {
         "tags": ["User"],
-        "summary": "Update User preference",
+        "summary": "Updates to fixed start time in user preferences",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "startTime": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -147,12 +477,44 @@
     "/api/users/me/preferences/fsp": {
       "patch": {
         "tags": ["User"],
-        "summary": "Update User preference",
+        "summary": "Updates to fixed start period in user preferences",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "startPeriodId": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -161,12 +523,47 @@
     "/api/users/me/preferences/wbd": {
       "patch": {
         "tags": ["User"],
-        "summary": "Update User preference",
+        "summary": "Update work duration and break duration in user preference",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "workDuration": {
+                  "type": "integer"
+                },
+                "breakDuration": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -175,12 +572,50 @@
     "/api/users/me/preferences/goal": {
       "patch": {
         "tags": ["User"],
-        "summary": "Update User preference",
+        "summary": "Updates goals in user preferences",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "Info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "criticalPain": {
+                  "type": "boolean"
+                },
+                "painFromWork": {
+                  "type": "boolean"
+                },
+                "futurePain": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "preferences": {
+                  "type": "object",
+                  "$ref": "#/definitions/userPreferences"
+                }
+              }
             }
           }
         }
@@ -189,7 +624,19 @@
     "/api/stretchSessions": {
       "get": {
         "tags": ["Stretch Sessions"],
-        "summary": "Show all stretch sessions",
+        "summary": "Show all stretch sessions (WIP)",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
@@ -203,7 +650,27 @@
     "/api/stretchSessions/{stretchSessionId}": {
       "get": {
         "tags": ["Stretch Sessions"],
-        "summary": "Show stretch session by id",
+        "summary": "Show stretch session by id (WIP)",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "Token used to authenticate the user",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "stretchSessionId",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK",
@@ -213,90 +680,175 @@
           }
         }
       }
-    },
-    "/test/users": {
-      "get": {
-        "tags": ["User"],
-        "summary": "Get all users in system",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Usersx"
-            }
-          }
-        }
-      }
-    },
-    "/test/addUser": {
-      "post": {
-        "tags": ["User"],
-        "description": "Create new user in system",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "User that we want to create",
-            "schema": {
-              "$ref": "#/definitions/Userx"
-            }
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "New user is created",
-            "schema": {
-              "$ref": "#/definitions/Userx"
-            }
-          }
-        }
-      }
     }
   },
 
   "definitions": {
-    "Users": "",
-
-    "Userx": {
-      "required": ["name", "_id", "companies"],
+    "user": {
       "properties": {
-        "_id": {
-          "type": "integer",
-          "uniqueItems": true
-        },
-        "isPublic": {
-          "type": "boolean"
+        "id": {
+          "type": "string"
         },
         "name": {
           "type": "string"
         },
-        "books": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "amount": {
-                "type": "number"
-              }
-            }
-          }
+        "email": {
+          "type": "string"
         },
-        "companies": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
         }
       }
     },
 
-    "Usersx": {
-      "type": "array",
-      "$ref": "#/definitions/Userx"
+    "userPreferences": {
+      "properties": {
+        "fcmToken": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "breakDuration": {
+          "type": "integer"
+        },
+        "breakLimitDuration": {
+          "type": "integer"
+        },
+        "breakIdleLimitDuration": {
+          "type": "integer"
+        },
+        "lastBreakStartTime": {
+          "type": "string"
+        },
+        "workDuration": {
+          "type": "integer"
+        },
+        "workLimitDuration": {
+          "type": "integer"
+        },
+        "workIdleLimitDuration": {
+          "type": "integer"
+        },
+        "lastWorkStartTime": {
+          "type": "string"
+        },
+        "pauseLimitDuration": {
+          "type": "integer"
+        },
+        "pauseIdleLimitDuration": {
+          "type": "integer"
+        },
+        "lastPauseStartTime": {
+          "type": "string"
+        },
+        "currentState": {
+          "type": "string"
+        },
+        "lastState": {
+          "type": "string"
+        },
+        "UserPreferenceWeeklyStretchActivity": {
+          "type": "object",
+          "properties": {
+            "startTime": {
+              "type": "string"
+            },
+            "monday": {
+              "type": "boolean"
+            },
+            "tuesday": {
+              "type": "boolean"
+            },
+            "wednesday": {
+              "type": "boolean"
+            },
+            "thursday": {
+              "type": "boolean"
+            },
+            "friday": {
+              "type": "boolean"
+            },
+            "saturday": {
+              "type": "boolean"
+            },
+            "sunday": {
+              "type": "boolean"
+            }
+          }
+        },
+        "UserPreferenceWeeklyWorkActivity": {
+          "type": "object",
+          "properties": {
+            "monday": {
+              "type": "boolean"
+            },
+            "tuesday": {
+              "type": "boolean"
+            },
+            "wednesday": {
+              "type": "boolean"
+            },
+            "thursday": {
+              "type": "boolean"
+            },
+            "friday": {
+              "type": "boolean"
+            },
+            "saturday": {
+              "type": "boolean"
+            },
+            "sunday": {
+              "type": "boolean"
+            }
+          }
+        },
+        "UserPreferenceGoal": {
+          "type": "object",
+          "properties": {
+            "criticalPain": {
+              "type": "boolean"
+            },
+            "painFromWork": {
+              "type": "boolean"
+            },
+            "futurePain": {
+              "type": "boolean"
+            }
+          }
+        },
+        "UserPreferenceTimeType": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "UserPreferenceStartPeriod": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "startsAt": {
+              "type": "string"
+            },
+            "endsAt": {
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   }
 }
