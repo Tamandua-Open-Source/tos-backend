@@ -627,7 +627,7 @@ export default {
     '/api/stretchSessions': {
       get: {
         tags: ['Stretch Sessions'],
-        summary: 'Show all stretch sessions (WIP)',
+        summary: 'Show all stretch sessions',
         parameters: [
           {
             in: 'header',
@@ -663,7 +663,7 @@ export default {
     '/api/stretchSessions/{stretchSessionId}': {
       get: {
         tags: ['Stretch Sessions'],
-        summary: 'Show stretch session by id (WIP)',
+        summary: 'Show stretch session by id',
         parameters: [
           {
             in: 'header',
