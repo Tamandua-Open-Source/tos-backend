@@ -17,7 +17,7 @@ export default {
     },
   ],
 
-  schemes: ['http'],
+  schemes: ['https', 'http'],
   consumes: ['application/json'],
   produces: ['application/json'],
 
