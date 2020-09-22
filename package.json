@@ -8,7 +8,6 @@
     "build-server": "rm -rf build && babel -d ./build/Release ./api -s",
     "build": "npm run database-setup && npm run build-server",
     "dev": "npm run database-setup && nodemon --exec babel-node ./api/index.js",
-    "dev-no-seed": "sequelize db:migrate:undo:all && sequelize db:migrate && nodemon --exec babel-node ./api/index.js",
     "start": "node ./build/Release/index.js",
     "precise-commits": "precise-commits",
     "precommit": "npm run precise-commits",
