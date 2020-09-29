@@ -24,19 +24,24 @@ class UserController {
   async updateUser(req) {
     const { name, email } = req.body
     const { userId } = req.props
-    if (!name) {
-      return HttpResponse.badRequest('Please provide the fields to be updated')
-    }
+
     if (!userId) {
       return HttpResponse.serverError()
     }
 
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { updateUserUseCase } = this.useCases
       const user = await updateUserUseCase.execute(userId, { name, email })
 
       if (!user) {
-        return HttpResponse.ok({ message: 'Cannot find user to update' })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({ message: 'User successfully updated', user })
       }
@@ -48,6 +53,7 @@ class UserController {
 
   async getUser(req) {
     const { userId } = req.props
+
     if (!userId) {
       return HttpResponse.serverError()
     }
@@ -57,7 +63,7 @@ class UserController {
       const user = await getUserUseCase.execute(userId)
 
       if (!user) {
-        return HttpResponse.ok({ message: 'Cannot find user' })
+        return HttpResponse.unauthorizedError()
       } else {
         return HttpResponse.ok({ message: 'User retrieved', user })
       }
@@ -69,16 +75,24 @@ class UserController {
 
   async deleteUser(req) {
     const { userId } = req.props
+
     if (!userId) {
       return HttpResponse.serverError()
     }
 
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { deleteUserUseCase } = this.useCases
       const user = await deleteUserUseCase.execute(userId)
 
       if (!user) {
-        return HttpResponse.ok({ message: 'User does not exist', userId })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({ message: 'User deleted', userId })
       }
@@ -89,11 +103,15 @@ class UserController {
   }
 
   async signInUser(req) {
-    const { userId } = req.props
     const { name, email } = req.body
+    const { userId } = req.props
 
     if (!name || !email) {
       return HttpResponse.badRequest('Please provide complete details')
+    }
+
+    if (!userId) {
+      return HttpResponse.serverError()
     }
 
     try {
@@ -104,7 +122,11 @@ class UserController {
         name: name,
       })
 
-      return HttpResponse.ok({ message: 'User logged in', user })
+      if (!user) {
+        return HttpResponse.serverError()
+      } else {
+        return HttpResponse.ok({ message: 'User logged in', user })
+      }
     } catch (error) {
       console.error(error)
       return HttpResponse.serverError()
@@ -114,19 +136,23 @@ class UserController {
   async getUserPreferences(req) {
     const { userId } = req.props
 
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
+
     try {
       const { getUserUseCase } = this.useCases
-      const user = await getUserUseCase.execute(userId)
+      const availableUser = await getUserUseCase.execute(userId)
 
-      if (!user) {
-        return HttpResponse.serverError()
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
       }
 
       const { getUserPreferencesUseCase } = this.useCases
       const preferences = await getUserPreferencesUseCase.execute(userId)
 
-      if (!preferences || preferences.length == 0) {
-        return HttpResponse.ok({ message: 'No user preferences found' })
+      if (!preferences) {
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preferences retrieved',
@@ -140,23 +166,33 @@ class UserController {
   }
 
   async patchUserPreferenceFcmToken(req) {
-    const { userId } = req.props
     const { fcmToken } = req.body
+    const { userId } = req.props
 
     if (!fcmToken) {
       return HttpResponse.badRequest('Please provide complete details')
     }
 
-    try {
-      const { patchUserPreferenceFcmTokenUseCase } = this.useCases
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
 
+    try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
+      const { patchUserPreferenceFcmTokenUseCase } = this.useCases
       const preferences = await patchUserPreferenceFcmTokenUseCase.execute(
         userId,
         fcmToken
       )
 
       if (!preferences) {
-        return HttpResponse.ok({ message: 'Cannot find user to patch' })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User Preferences successfully patched',
@@ -170,7 +206,6 @@ class UserController {
   }
 
   async patchUserPreferenceWeeklyWorkActivity(req) {
-    const { userId } = req.props
     const {
       monday,
       tuesday,
@@ -180,8 +215,20 @@ class UserController {
       saturday,
       sunday,
     } = req.body
+    const { userId } = req.props
+
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
 
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { patchUserPreferenceWeeklyWorkActivityUseCase } = this.useCases
       const userPreferenceWeeklyWorkActivity = await patchUserPreferenceWeeklyWorkActivityUseCase.execute(
         userId,
@@ -197,9 +244,7 @@ class UserController {
       )
 
       if (!userPreferenceWeeklyWorkActivity) {
-        return HttpResponse.ok({
-          message: 'Cannot find user preference to patch',
-        })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference weekly work activity successfully patched',
@@ -213,7 +258,6 @@ class UserController {
   }
 
   async patchUserPreferenceWeeklyStretchActivity(req) {
-    const { userId } = req.props
     const {
       startTime,
       monday,
@@ -224,8 +268,20 @@ class UserController {
       saturday,
       sunday,
     } = req.body
+    const { userId } = req.props
+
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
 
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { patchUserPreferenceWeeklyStretchActivityUseCase } = this.useCases
       const userPreferenceWeeklyStretchActivity = await patchUserPreferenceWeeklyStretchActivityUseCase.execute(
         userId,
@@ -242,9 +298,7 @@ class UserController {
       )
 
       if (!userPreferenceWeeklyStretchActivity) {
-        return HttpResponse.ok({
-          message: 'Cannot find user preference to patch',
-        })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message:
@@ -259,10 +313,21 @@ class UserController {
   }
 
   async patchUserPreferenceGoal(req) {
-    const { userId } = req.props
     const { criticalPain, painFromWork, futurePain } = req.body
+    const { userId } = req.props
+
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
 
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { patchUserPreferenceGoalUseCase } = this.useCases
       const userPreferenceGoal = await patchUserPreferenceGoalUseCase.execute(
         userId,
@@ -274,9 +339,7 @@ class UserController {
       )
 
       if (!userPreferenceGoal) {
-        return HttpResponse.ok({
-          message: 'Cannot find user preference to patch',
-        })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference goal successfully patched',
@@ -290,14 +353,25 @@ class UserController {
   }
 
   async patchUserPreferenceFixedStartTime(req) {
-    const { userId } = req.props
     const { startTime } = req.body
+    const { userId } = req.props
 
     if (!startTime) {
       return HttpResponse.badRequest('Please provide start time')
     }
 
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
+
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { patchUserPreferenceFixedStartTimeUseCase } = this.useCases
       const preferences = await patchUserPreferenceFixedStartTimeUseCase.execute(
         userId,
@@ -305,9 +379,7 @@ class UserController {
       )
 
       if (!preferences) {
-        return HttpResponse.ok({
-          message: 'Cannot find user preference to patch',
-        })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference start time type successfully patched',
@@ -321,14 +393,25 @@ class UserController {
   }
 
   async patchUserPreferenceFixedStartPeriod(req) {
-    const { userId } = req.props
     const { startPeriodId } = req.body
+    const { userId } = req.props
 
     if (!startPeriodId) {
       return HttpResponse.badRequest('Please provide start period id')
     }
 
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
+
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { patchUserPreferenceFixedStartPeriodUseCase } = this.useCases
       const preferences = await patchUserPreferenceFixedStartPeriodUseCase.execute(
         userId,
@@ -336,9 +419,7 @@ class UserController {
       )
 
       if (!preferences) {
-        return HttpResponse.ok({
-          message: 'Cannot find user preference to patch',
-        })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference start time type successfully patched',
@@ -352,10 +433,21 @@ class UserController {
   }
 
   async patchUserPreferenceCycleDuration(req) {
-    const { userId } = req.props
     const { workDuration, breakDuration } = req.body
+    const { userId } = req.props
+
+    if (!userId) {
+      return HttpResponse.serverError()
+    }
 
     try {
+      const { getUserUseCase } = this.useCases
+      const availableUser = await getUserUseCase.execute(userId)
+
+      if (!availableUser) {
+        return HttpResponse.unauthorizedError()
+      }
+
       const { patchUserPreferenceCycleDurationUseCase } = this.useCases
       const preferences = await patchUserPreferenceCycleDurationUseCase.execute(
         userId,
@@ -364,9 +456,7 @@ class UserController {
       )
 
       if (!preferences) {
-        return HttpResponse.ok({
-          message: 'Cannot find user preference to patch',
-        })
+        return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference cycle duration successfully patched',
