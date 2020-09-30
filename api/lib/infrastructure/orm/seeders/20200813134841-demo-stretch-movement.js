@@ -12,7 +12,8 @@ module.exports = {
             'Duis ut mattis orci, vitae placerat est. Duis a libero convallis, luctus est et, porttitor lorem. Cras blandit sed mauris eget sollicitudin. Suspendisse blandit id metus a pretium. Suspendisse fermentum nisi tortor, vel pulvinar lectus lacinia ac.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/O01jWeW.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -24,7 +25,8 @@ module.exports = {
             'Pellentesque vitae mauris rutrum, placerat ante ac, placerat orci. Morbi pellentesque metus et dui vestibulum tincidunt. Mauris vel ornare tortor, et bibendum mi. Vivamus justo magna, lacinia et felis in, lobortis congue felis.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/fWEEYlX.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -36,7 +38,8 @@ module.exports = {
             'Etiam facilisis sagittis orci sed congue. Curabitur vestibulum porta pellentesque. Proin eget volutpat sapien. Integer eget metus sem. Ut in tempor nisi, in pulvinar velit. Aliquam erat volutpat. Integer a neque dui.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/v5gwc04.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -48,7 +51,8 @@ module.exports = {
             'Ut fringilla vel augue eget finibus. Suspendisse aliquam tellus a felis porttitor, nec condimentum purus vulputate. Quisque ultrices lacus et scelerisque consectetur.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/Rh5rcP4.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -60,7 +64,8 @@ module.exports = {
             'Duis sed quam dui. Praesent a porttitor elit. Mauris molestie diam eget ultrices mattis. Proin consectetur lobortis mi, sit amet pellentesque purus gravida nec.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/XdfPmWZ.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -72,7 +77,8 @@ module.exports = {
             'Nullam venenatis fringilla nisl sit amet laoreet. Maecenas pulvinar sapien id nulla sollicitudin vestibulum. Maecenas convallis euismod faucibus. Praesent placerat eu libero eu dictum.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/Rv7ygS2.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -84,7 +90,8 @@ module.exports = {
             'Fusce sed neque vitae ligula egestas cursus. Proin vulputate quam sed lorem molestie lacinia. Nunc fringilla sollicitudin turpis ut egestas. In eu varius ligula. Duis in orci tincidunt, feugiat nisl non, vestibulum leo.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/LfaqBkU.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -96,7 +103,8 @@ module.exports = {
             'Nam bibendum enim id nisi malesuada, ut aliquam quam lacinia. Nunc hendrerit velit at auctor rhoncus. Pellentesque sit amet ex finibus, fermentum quam eget, lobortis turpis.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/iobCld1.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -108,7 +116,8 @@ module.exports = {
             'Mauris scelerisque diam in ligula varius, in rutrum orci luctus. Quisque consequat, augue a condimentum imperdiet, tortor tellus ullamcorper tellus, sed feugiat orci erat et turpis.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/codihln.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -120,7 +129,8 @@ module.exports = {
             'Proin vel suscipit metus. Ut a quam gravida, ultrices neque sit amet, varius lectus. In hac habitasse platea dictumst. Donec id faucibus dui, non ultricies dui.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/Jah9eT7.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -133,7 +143,8 @@ module.exports = {
             'On your knees, stretch both of your arms and rotate them as you breathe deeply.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/3Sanu1C.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -145,7 +156,8 @@ module.exports = {
             'On your knees, stretch your arm down reaching the floor. Move your opposite arm upwards and bring it to your side while stretching the side of your upper body.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/Vd0Elfn.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -157,7 +169,8 @@ module.exports = {
             'On your knees, stretch your arm down reaching the floor. Move your opposite arm upwards and bring it to your side while stretching the side of your upper body.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/0jqEAtE.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -169,7 +182,8 @@ module.exports = {
             'With your hands and knees on the floor, place your knees under your hips. Arch your back up while looking down. After a few seconds arch your back downwards, lift your head and glutes up. Repeat.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/9zmhtEs.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -181,7 +195,8 @@ module.exports = {
             'Place your feet apart from each other. Stretch and raise your arms on the line of your sholders and away from your chest. Turn one foot to the right, aligning with your arm and slighlty flex your leg.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/bvm3oTm.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -193,7 +208,8 @@ module.exports = {
             'In the warrior position, bend your upper body down trying to reach the floor with your hand on the same side of your flexed leg, while bringing your opposite hand up.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/HzYKrkX.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -205,7 +221,8 @@ module.exports = {
             'Place your feet apart from each other. Stretch and raise your arms on the line of your sholders and away from your chest. Turn one foot to the right, aligning with your arm and slighlty flex your leg.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/GSQGZpP.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -217,7 +234,8 @@ module.exports = {
             'In the warrior position, bend your upper body down trying to reach the floor with your hand on the same side of your flexed leg, while bringing your opposite hand up.',
           duration: 60,
           imageFileUrl: 'https://i.imgur.com/D2OYJ32.png',
-          videoFileUrl: 'https://www.youtube.com/embed/luCCqjJnBvk',
+          videoFileUrl:
+            'https://firebasestorage.googleapis.com/v0/b/flexibe-macro.appspot.com/o/stretch-to-liven-up-your-day-less-than-10-minutes.mp4?alt=media&token=e3a1c61d-bde4-4a0a-a3a4-f13f21d7eee9',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
