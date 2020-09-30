@@ -248,6 +248,57 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+
+        //a partir daqui apresentação 30/09
+
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -11,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -12,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -13,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -14,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -15,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -16,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -17,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchSessionId: -5,
+          StretchMovementId: -18,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     )
