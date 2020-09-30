@@ -41,6 +41,16 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        //a partir daqui apresentação 30/09
+        {
+          id: -5,
+          name: 'Liven up your day',
+          description: 'Liven up your day',
+          duration: 690,
+          imageFileUrl: 'https://i.imgur.com/bgWNDYj.png',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     )

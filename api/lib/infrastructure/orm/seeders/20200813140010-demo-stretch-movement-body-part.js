@@ -65,6 +65,160 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+
+        //a partir daqui apresentação 30/09
+
+        {
+          StretchMovementId: -11,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -11,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -11,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          StretchMovementId: -12,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -12,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -12,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          StretchMovementId: -13,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -13,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -13,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          StretchMovementId: -14,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -14,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -14,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          StretchMovementId: -15,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -15,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -15,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          StretchMovementId: -16,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -16,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -16,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          StretchMovementId: -17,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -17,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -17,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          StretchMovementId: -18,
+          BodyPartId: -1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -18,
+          BodyPartId: -2,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          StretchMovementId: -18,
+          BodyPartId: -3,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     )
