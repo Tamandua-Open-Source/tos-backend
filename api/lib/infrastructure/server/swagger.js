@@ -2,7 +2,7 @@ export default {
   swagger: '2.0',
   info: {
     version: '1.0.0',
-    title: 'TOS data server',
+    title: 'Data API',
     description: 'Tamandua Open Source project',
   },
 
@@ -523,55 +523,6 @@ export default {
         },
       },
     },
-    '/api/users/me/preferences/wbd': {
-      patch: {
-        tags: ['User'],
-        summary: 'Update work duration and break duration in user preference',
-        parameters: [
-          {
-            in: 'header',
-            name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
-            schema: {
-              type: 'string',
-            },
-          },
-          {
-            in: 'body',
-            name: 'Info',
-            schema: {
-              type: 'object',
-              properties: {
-                workDuration: {
-                  type: 'integer',
-                },
-                breakDuration: {
-                  type: 'integer',
-                },
-              },
-            },
-          },
-        ],
-        produces: ['application/json'],
-        responses: {
-          '200': {
-            description: 'OK',
-            schema: {
-              properties: {
-                message: {
-                  type: 'string',
-                },
-                preferences: {
-                  type: 'object',
-                  $ref: '#/definitions/User Preferences',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
     '/api/users/me/preferences/goal': {
       patch: {
         tags: ['User'],
@@ -733,45 +684,6 @@ export default {
           type: 'string',
         },
         startTime: {
-          type: 'string',
-        },
-        breakDuration: {
-          type: 'integer',
-        },
-        breakLimitDuration: {
-          type: 'integer',
-        },
-        breakIdleLimitDuration: {
-          type: 'integer',
-        },
-        lastBreakStartTime: {
-          type: 'string',
-        },
-        workDuration: {
-          type: 'integer',
-        },
-        workLimitDuration: {
-          type: 'integer',
-        },
-        workIdleLimitDuration: {
-          type: 'integer',
-        },
-        lastWorkStartTime: {
-          type: 'string',
-        },
-        pauseLimitDuration: {
-          type: 'integer',
-        },
-        pauseIdleLimitDuration: {
-          type: 'integer',
-        },
-        lastPauseStartTime: {
-          type: 'string',
-        },
-        currentState: {
-          type: 'string',
-        },
-        lastState: {
           type: 'string',
         },
         UserPreferenceWeeklyStretchActivity: {

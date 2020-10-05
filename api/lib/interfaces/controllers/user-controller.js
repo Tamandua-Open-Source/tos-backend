@@ -431,43 +431,6 @@ class UserController {
       return HttpResponse.serverError()
     }
   }
-
-  async patchUserPreferenceCycleDuration(req) {
-    const { workDuration, breakDuration } = req.body
-    const { userId } = req.props
-
-    if (!userId) {
-      return HttpResponse.serverError()
-    }
-
-    try {
-      const { getUserUseCase } = this.useCases
-      const availableUser = await getUserUseCase.execute(userId)
-
-      if (!availableUser) {
-        return HttpResponse.unauthorizedError()
-      }
-
-      const { patchUserPreferenceCycleDurationUseCase } = this.useCases
-      const preferences = await patchUserPreferenceCycleDurationUseCase.execute(
-        userId,
-        workDuration,
-        breakDuration
-      )
-
-      if (!preferences) {
-        return HttpResponse.serverError()
-      } else {
-        return HttpResponse.ok({
-          message: 'User preference cycle duration successfully patched',
-          preferences,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
-  }
 }
 
 export default UserController
