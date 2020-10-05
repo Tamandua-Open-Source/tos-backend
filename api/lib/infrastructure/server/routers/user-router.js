@@ -93,12 +93,4 @@ router.patch(
   )
 )
 
-router.patch(
-  '/me/preferences/wbd',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) =>
-    userController.patchUserPreferenceCycleDuration(req)
-  )
-)
-
 export default router

@@ -12,7 +12,6 @@ import {
   PatchUserPreferenceWeeklyStretchActivityUseCase,
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceFixedStartPeriodUseCase,
-  PatchUserPreferenceCycleDurationUseCase,
   PatchUserPreferenceGoalUseCase,
 } from '../../../application/use-cases/users'
 
@@ -53,11 +52,6 @@ class UserControllerComposer {
         userRepository,
       }
     )
-    const patchUserPreferenceCycleDurationUseCase = new PatchUserPreferenceCycleDurationUseCase(
-      {
-        userRepository,
-      }
-    )
     const patchUserPreferenceGoalUseCase = new PatchUserPreferenceGoalUseCase({
       userRepository,
     })
@@ -74,7 +68,6 @@ class UserControllerComposer {
       patchUserPreferenceWeeklyStretchActivityUseCase,
       patchUserPreferenceFixedStartTimeUseCase,
       patchUserPreferenceFixedStartPeriodUseCase,
-      patchUserPreferenceCycleDurationUseCase,
       patchUserPreferenceGoalUseCase,
     })
   }
