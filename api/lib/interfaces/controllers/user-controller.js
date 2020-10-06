@@ -89,7 +89,7 @@ class UserController {
       }
 
       const { deleteUserUseCase } = this.useCases
-      const user = await deleteUserUseCase.execute(userId)
+      const user = await deleteUserUseCase.execute({ idToken, userId })
 
       if (!user) {
         return HttpResponse.serverError()
@@ -117,6 +117,7 @@ class UserController {
     try {
       const { signInUserUseCase } = this.useCases
       const user = await signInUserUseCase.execute({
+        idToken: idToken,
         userId: userId,
         email: email,
         name: name,
@@ -374,8 +375,11 @@ class UserController {
 
       const { patchUserPreferenceFixedStartTimeUseCase } = this.useCases
       const preferences = await patchUserPreferenceFixedStartTimeUseCase.execute(
-        userId,
-        startTime
+        {
+          idToken: idToken,
+          userId: userId,
+          startTime: startTime,
+        }
       )
 
       if (!preferences) {
@@ -413,9 +417,13 @@ class UserController {
       }
 
       const { patchUserPreferenceFixedStartPeriodUseCase } = this.useCases
+
       const preferences = await patchUserPreferenceFixedStartPeriodUseCase.execute(
-        userId,
-        startPeriodId
+        {
+          idToken: idToken,
+          userId: userId,
+          startPeriodId: startPeriodId,
+        }
       )
 
       if (!preferences) {
