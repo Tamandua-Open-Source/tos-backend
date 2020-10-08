@@ -74,7 +74,7 @@ class UserController {
   }
 
   async deleteUser(req) {
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!userId) {
       return HttpResponse.serverError()
@@ -89,7 +89,7 @@ class UserController {
       }
 
       const { deleteUserUseCase } = this.useCases
-      const user = await deleteUserUseCase.execute(userId)
+      const user = await deleteUserUseCase.execute({ idToken, userId })
 
       if (!user) {
         return HttpResponse.serverError()
@@ -104,7 +104,7 @@ class UserController {
 
   async signInUser(req) {
     const { name, email } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!name || !email) {
       return HttpResponse.badRequest('Please provide complete details')
@@ -117,6 +117,7 @@ class UserController {
     try {
       const { signInUserUseCase } = this.useCases
       const user = await signInUserUseCase.execute({
+        idToken: idToken,
         userId: userId,
         email: email,
         name: name,
@@ -354,7 +355,7 @@ class UserController {
 
   async patchUserPreferenceFixedStartTime(req) {
     const { startTime } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!startTime) {
       return HttpResponse.badRequest('Please provide start time')
@@ -374,8 +375,11 @@ class UserController {
 
       const { patchUserPreferenceFixedStartTimeUseCase } = this.useCases
       const preferences = await patchUserPreferenceFixedStartTimeUseCase.execute(
-        userId,
-        startTime
+        {
+          idToken: idToken,
+          userId: userId,
+          startTime: startTime,
+        }
       )
 
       if (!preferences) {
@@ -394,7 +398,7 @@ class UserController {
 
   async patchUserPreferenceFixedStartPeriod(req) {
     const { startPeriodId } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!startPeriodId) {
       return HttpResponse.badRequest('Please provide start period id')
@@ -413,9 +417,13 @@ class UserController {
       }
 
       const { patchUserPreferenceFixedStartPeriodUseCase } = this.useCases
+
       const preferences = await patchUserPreferenceFixedStartPeriodUseCase.execute(
-        userId,
-        startPeriodId
+        {
+          idToken: idToken,
+          userId: userId,
+          startPeriodId: startPeriodId,
+        }
       )
 
       if (!preferences) {
@@ -423,43 +431,6 @@ class UserController {
       } else {
         return HttpResponse.ok({
           message: 'User preference start time type successfully patched',
-          preferences,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
-  }
-
-  async patchUserPreferenceCycleDuration(req) {
-    const { workDuration, breakDuration } = req.body
-    const { userId } = req.props
-
-    if (!userId) {
-      return HttpResponse.serverError()
-    }
-
-    try {
-      const { getUserUseCase } = this.useCases
-      const availableUser = await getUserUseCase.execute(userId)
-
-      if (!availableUser) {
-        return HttpResponse.unauthorizedError()
-      }
-
-      const { patchUserPreferenceCycleDurationUseCase } = this.useCases
-      const preferences = await patchUserPreferenceCycleDurationUseCase.execute(
-        userId,
-        workDuration,
-        breakDuration
-      )
-
-      if (!preferences) {
-        return HttpResponse.serverError()
-      } else {
-        return HttpResponse.ok({
-          message: 'User preference cycle duration successfully patched',
           preferences,
         })
       }

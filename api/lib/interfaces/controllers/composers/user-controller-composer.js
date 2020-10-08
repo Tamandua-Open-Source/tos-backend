@@ -1,5 +1,6 @@
 import UserRepository from '../../../infrastructure/repositories/user-repository'
 import UserController from '../user-controller'
+import TimerServiceFacade from '../../../infrastructure/facades/timer-service-facade'
 import {
   DeleteUserUseCase,
   GetAllUsersUseCase,
@@ -12,7 +13,6 @@ import {
   PatchUserPreferenceWeeklyStretchActivityUseCase,
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceFixedStartPeriodUseCase,
-  PatchUserPreferenceCycleDurationUseCase,
   PatchUserPreferenceGoalUseCase,
 } from '../../../application/use-cases/users'
 
@@ -20,10 +20,18 @@ class UserControllerComposer {
   static compose() {
     const userRepository = new UserRepository()
 
-    const deleteUserUseCase = new DeleteUserUseCase({ userRepository })
+    const timerServiceFacade = new TimerServiceFacade()
+
+    const deleteUserUseCase = new DeleteUserUseCase({
+      userRepository,
+      timerServiceFacade,
+    })
     const getAllUsersUseCase = new GetAllUsersUseCase({ userRepository })
     const getUserUseCase = new GetUserUseCase({ userRepository })
-    const signInUserUseCase = new SignInUserUseCase({ userRepository })
+    const signInUserUseCase = new SignInUserUseCase({
+      userRepository,
+      timerServiceFacade,
+    })
     const updateUserUseCase = new UpdateUserUseCase({ userRepository })
     const getUserPreferencesUseCase = new GetUserPreferencesUseCase({
       userRepository,
@@ -46,16 +54,13 @@ class UserControllerComposer {
     const patchUserPreferenceFixedStartTimeUseCase = new PatchUserPreferenceFixedStartTimeUseCase(
       {
         userRepository,
+        timerServiceFacade,
       }
     )
     const patchUserPreferenceFixedStartPeriodUseCase = new PatchUserPreferenceFixedStartPeriodUseCase(
       {
         userRepository,
-      }
-    )
-    const patchUserPreferenceCycleDurationUseCase = new PatchUserPreferenceCycleDurationUseCase(
-      {
-        userRepository,
+        timerServiceFacade,
       }
     )
     const patchUserPreferenceGoalUseCase = new PatchUserPreferenceGoalUseCase({
@@ -74,7 +79,6 @@ class UserControllerComposer {
       patchUserPreferenceWeeklyStretchActivityUseCase,
       patchUserPreferenceFixedStartTimeUseCase,
       patchUserPreferenceFixedStartPeriodUseCase,
-      patchUserPreferenceCycleDurationUseCase,
       patchUserPreferenceGoalUseCase,
     })
   }

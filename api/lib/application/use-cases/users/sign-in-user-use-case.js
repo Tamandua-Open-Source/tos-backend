@@ -1,10 +1,13 @@
 class SignInUserUseCase {
-  constructor({ userRepository }) {
+  constructor({ userRepository, timerServiceFacade }) {
     this.userRepository = userRepository
+    this.timerServiceFacade = timerServiceFacade
   }
 
-  async execute({ userId, email, name }) {
+  async execute({ idToken, userId, email, name }) {
     const user = await this.userRepository.getUserById(userId)
+
+    await this.timerServiceFacade.subscribe(idToken)
 
     if (user) {
       return user

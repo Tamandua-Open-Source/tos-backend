@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
-import FirebaseAdminFacade from './lib/infrastructure/firebase/firebase-admin-facade'
-
 dotenv.config()
+
+import FirebaseAdminFacade from './lib/infrastructure/firebase/firebase-admin-facade'
 
 const firebaseAdminFacade = new FirebaseAdminFacade()
 firebaseAdminFacade.initialize()

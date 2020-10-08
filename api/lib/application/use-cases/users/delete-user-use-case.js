@@ -1,10 +1,16 @@
 class DeleteUserUseCase {
-  constructor({ userRepository }) {
+  constructor({ userRepository, timerServiceFacade }) {
     this.userRepository = userRepository
+    this.timerServiceFacade = timerServiceFacade
   }
 
-  async execute(userId) {
-    return await this.userRepository.deleteUser(userId)
+  async execute({ idToken, userId }) {
+    const user = await this.userRepository.deleteUser(userId)
+    console.log(idToken)
+
+    await this.timerServiceFacade.unsubscribe(idToken)
+
+    return user
   }
 }
 
