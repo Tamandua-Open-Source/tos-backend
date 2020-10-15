@@ -39,6 +39,7 @@ class UserControllerComposer {
     const patchUserPreferenceFcmTokenUseCase = new PatchUserPreferenceFcmTokenUseCase(
       {
         userRepository,
+        timerServiceFacade,
       }
     )
     const patchUserPreferenceWeeklyWorkActivityUseCase = new PatchUserPreferenceWeeklyWorkActivityUseCase(
