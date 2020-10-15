@@ -168,7 +168,7 @@ class UserController {
 
   async patchUserPreferenceFcmToken(req) {
     const { fcmToken } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!fcmToken) {
       return HttpResponse.badRequest('Please provide complete details')
@@ -187,10 +187,11 @@ class UserController {
       }
 
       const { patchUserPreferenceFcmTokenUseCase } = this.useCases
-      const preferences = await patchUserPreferenceFcmTokenUseCase.execute(
-        userId,
-        fcmToken
-      )
+      const preferences = await patchUserPreferenceFcmTokenUseCase.execute({
+        fcmToken: fcmToken,
+        userId: userId,
+        idToken: idToken,
+      })
 
       if (!preferences) {
         return HttpResponse.serverError()
