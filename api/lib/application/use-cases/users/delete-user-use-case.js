@@ -6,7 +6,6 @@ class DeleteUserUseCase {
 
   async execute({ idToken, userId }) {
     const user = await this.userRepository.deleteUser(userId)
-    console.log(idToken)
 
     await this.timerServiceFacade.unsubscribe(idToken)
 
