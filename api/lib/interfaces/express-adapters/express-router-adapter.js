@@ -6,6 +6,7 @@ class ExpressRouterAdapter {
         headers: req.headers,
         body: req.body,
         props: req.props,
+        query: req.query,
       }
 
       const httpResponse = await route(httpRequest)
