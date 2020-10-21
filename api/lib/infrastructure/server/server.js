@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use('/api/users', UserRouter)
-app.use('/api/stretchSessions', StretchSessionRouter)
+app.use('/api', StretchSessionRouter)
 
 app.get('/', (_req, res) =>
   res.status(200).send({

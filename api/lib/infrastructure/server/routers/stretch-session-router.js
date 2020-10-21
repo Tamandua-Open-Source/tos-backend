@@ -10,7 +10,7 @@ const authMiddleware = AuthMiddlewareComposer.compose()
 const router = Router()
 
 router.get(
-  '/',
+  '/stretchSessions/',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     stretchSessionController.getAllStretchSessions(req)
@@ -18,10 +18,26 @@ router.get(
 )
 
 router.get(
-  '/:stretchSessionId',
+  '/stretchSessions/:stretchSessionId',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     stretchSessionController.getStretchSession(req)
+  )
+)
+
+router.get(
+  '/bodyParts/:bodyPartId/stretchMovements/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.getStretchMovementByBodyPartId(req)
+  )
+)
+
+router.get(
+  '/bodyParts/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.getAllBodyParts(req)
   )
 )
 
