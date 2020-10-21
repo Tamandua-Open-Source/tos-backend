@@ -3,6 +3,8 @@ import StretchSessionController from '../stretch-session-controller'
 import {
   GetAllStretchSessionsUseCase,
   GetStretchSessionByIdUseCase,
+  GetStretchMovementByBodyPartIdUseCase,
+  GetAllBodyPartsUseCase,
 } from '../../../application/use-cases/stretch-sessions'
 
 class StretchSessionControllerComposer {
@@ -17,9 +19,21 @@ class StretchSessionControllerComposer {
       stretchSessionRepository,
     })
 
+    const getStretchMovementByBodyPartIdUseCase = new GetStretchMovementByBodyPartIdUseCase(
+      {
+        stretchSessionRepository,
+      }
+    )
+
+    const getAllBodyPartsUseCase = new GetAllBodyPartsUseCase({
+      stretchSessionRepository,
+    })
+
     return new StretchSessionController({
       getAllStretchSessionsUseCase,
       getStretchSessionByIdUseCase,
+      getStretchMovementByBodyPartIdUseCase,
+      getAllBodyPartsUseCase,
     })
   }
 }

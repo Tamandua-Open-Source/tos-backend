@@ -52,6 +52,52 @@ class StretchSessionController {
       return HttpResponse.serverError()
     }
   }
+
+  async getStretchMovementByBodyPartId(req) {
+    const { bodyPartId } = req.params
+
+    try {
+      if (!bodyPartId || !Number(bodyPartId)) {
+        return HttpResponse.badRequest('Please provide a valid body part ID')
+      }
+
+      const { getStretchMovementByBodyPartIdUseCase } = this.useCases
+      const stretchMovements = await getStretchMovementByBodyPartIdUseCase.execute(
+        bodyPartId
+      )
+
+      if (!stretchMovements) {
+        return HttpResponse.ok({ message: 'Cannot find stretch movements' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch movements retrieved',
+          stretchMovements,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async getAllBodyParts(_req) {
+    try {
+      const { getAllBodyPartsUseCase } = this.useCases
+      const bodyParts = await getAllBodyPartsUseCase.execute()
+
+      if (!bodyParts) {
+        return HttpResponse.ok({ message: 'Cannot find body parts' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Body parts retrieved',
+          bodyParts,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
 }
 
 export default StretchSessionController
