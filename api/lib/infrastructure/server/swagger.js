@@ -653,6 +653,86 @@ export default {
         },
       },
     },
+    '/api/bodyParts/{bodyPartId}/stretchMovements': {
+      get: {
+        tags: ['Stretch Sessions'],
+        summary: 'Show stretch movements that have body part id',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'bodyPartId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Movement',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/bodyParts': {
+      get: {
+        tags: ['Stretch Sessions'],
+        summary: 'Show all body parts',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                bodyParts: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Body Part',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
 
   definitions: {
