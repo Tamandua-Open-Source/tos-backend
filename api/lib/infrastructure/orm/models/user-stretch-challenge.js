@@ -3,16 +3,20 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class StretchSessionStretchMovement extends Model {
+  class UserStretchChallenge extends Model {
     static associate(models) {}
   }
-  StretchSessionStretchMovement.init(
+  UserStretchChallenge.init(
     {
-      StretchSessionId: {
+      UserId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      StretchChallengeId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      StretchMovementId: {
+      progress: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -27,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'StretchSessionStretchMovement',
+      modelName: 'UserStretchChallenge',
     }
   )
-  return StretchSessionStretchMovement
+  return UserStretchChallenge
 }

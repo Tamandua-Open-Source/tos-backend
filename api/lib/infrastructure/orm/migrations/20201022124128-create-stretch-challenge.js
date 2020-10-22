@@ -2,13 +2,19 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('StretchMovementBodyParts', {
-      StretchMovementId: {
+    await queryInterface.createTable('StretchChallenges', {
+      id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
       },
-      BodyPartId: {
-        type: Sequelize.INTEGER,
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
@@ -22,6 +28,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('StretchMovementBodyParts')
+    await queryInterface.dropTable('StretchChallenges')
   },
 }
