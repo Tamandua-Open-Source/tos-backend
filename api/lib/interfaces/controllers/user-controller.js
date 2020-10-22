@@ -232,7 +232,7 @@ class UserController {
       }
 
       const { patchUserPreferenceWeeklyWorkActivityUseCase } = this.useCases
-      const userPreferenceWeeklyWorkActivity = await patchUserPreferenceWeeklyWorkActivityUseCase.execute(
+      const preferences = await patchUserPreferenceWeeklyWorkActivityUseCase.execute(
         userId,
         {
           monday,
@@ -245,12 +245,12 @@ class UserController {
         }
       )
 
-      if (!userPreferenceWeeklyWorkActivity) {
+      if (!preferences) {
         return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference weekly work activity successfully patched',
-          userPreferenceWeeklyWorkActivity,
+          preferences,
         })
       }
     } catch (error) {
@@ -285,7 +285,7 @@ class UserController {
       }
 
       const { patchUserPreferenceWeeklyStretchActivityUseCase } = this.useCases
-      const userPreferenceWeeklyStretchActivity = await patchUserPreferenceWeeklyStretchActivityUseCase.execute(
+      const preferences = await patchUserPreferenceWeeklyStretchActivityUseCase.execute(
         userId,
         {
           startTime,
@@ -299,13 +299,13 @@ class UserController {
         }
       )
 
-      if (!userPreferenceWeeklyStretchActivity) {
+      if (!preferences) {
         return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message:
             'User preference weekly stretch activity successfully patched',
-          userPreferenceWeeklyStretchActivity,
+          preferences,
         })
       }
     } catch (error) {
@@ -331,21 +331,18 @@ class UserController {
       }
 
       const { patchUserPreferenceGoalUseCase } = this.useCases
-      const userPreferenceGoal = await patchUserPreferenceGoalUseCase.execute(
-        userId,
-        {
-          criticalPain,
-          painFromWork,
-          futurePain,
-        }
-      )
+      const preferences = await patchUserPreferenceGoalUseCase.execute(userId, {
+        criticalPain,
+        painFromWork,
+        futurePain,
+      })
 
-      if (!userPreferenceGoal) {
+      if (!preferences) {
         return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference goal successfully patched',
-          userPreferenceGoal,
+          preferences,
         })
       }
     } catch (error) {
