@@ -5,6 +5,12 @@ import {
   GetStretchSessionByIdUseCase,
   GetStretchMovementByBodyPartIdUseCase,
   GetAllBodyPartsUseCase,
+  GetAllStretchChallengesUseCase,
+  GetStretchChallengeByIdUseCase,
+  GetStretchChallengesByUserIdUseCase,
+  AddUserStretchChallengeUseCase,
+  DeleteUserStretchChallengeUseCase,
+  UpdateUserStretchChallengeUseCase,
 } from '../../../application/use-cases/stretch-sessions'
 
 class StretchSessionControllerComposer {
@@ -29,11 +35,47 @@ class StretchSessionControllerComposer {
       stretchSessionRepository,
     })
 
+    const getAllStretchChallengesUseCase = new GetAllStretchChallengesUseCase({
+      stretchSessionRepository,
+    })
+
+    const getStretchChallengeByIdUseCase = new GetStretchChallengeByIdUseCase({
+      stretchSessionRepository,
+    })
+
+    const getStretchChallengesByUserIdUseCase = new GetStretchChallengesByUserIdUseCase(
+      {
+        stretchSessionRepository,
+      }
+    )
+
+    const addUserStretchChallengeUseCase = new AddUserStretchChallengeUseCase({
+      stretchSessionRepository,
+    })
+
+    const deleteUserStretchChallengeUseCase = new DeleteUserStretchChallengeUseCase(
+      {
+        stretchSessionRepository,
+      }
+    )
+
+    const updateUserStretchChallengeUseCase = new UpdateUserStretchChallengeUseCase(
+      {
+        stretchSessionRepository,
+      }
+    )
+
     return new StretchSessionController({
       getAllStretchSessionsUseCase,
       getStretchSessionByIdUseCase,
       getStretchMovementByBodyPartIdUseCase,
       getAllBodyPartsUseCase,
+      getAllStretchChallengesUseCase,
+      getStretchChallengeByIdUseCase,
+      getStretchChallengesByUserIdUseCase,
+      addUserStretchChallengeUseCase,
+      deleteUserStretchChallengeUseCase,
+      updateUserStretchChallengeUseCase,
     })
   }
 }

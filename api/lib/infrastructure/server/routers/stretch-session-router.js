@@ -41,4 +41,52 @@ router.get(
   )
 )
 
+router.get(
+  '/stretchChallenges/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.getAllStretchChallenges(req)
+  )
+)
+
+router.get(
+  '/stretchChallenges/:stretchChallengeId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.getStretchChallengeById(req)
+  )
+)
+
+router.get(
+  '/users/me/stretchChallenges/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.getStretchChallengesByUserId(req)
+  )
+)
+
+router.post(
+  '/users/me/stretchChallenges/:stretchChallengeId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.addUserStretchChallenge(req)
+  )
+)
+
+router.delete(
+  '/users/me/stretchChallenges/:stretchChallengeId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.deleteUserStretchChallenge(req)
+  )
+)
+
+router.patch(
+  '/users/me/stretchChallenges/:stretchChallengeId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    stretchSessionController.updateUserStretchChallenge(req)
+  )
+)
+
 export default router

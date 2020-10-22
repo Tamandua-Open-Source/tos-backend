@@ -2,12 +2,16 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('StretchMovementBodyParts', {
-      StretchMovementId: {
+    await queryInterface.createTable('UserStretchChallenges', {
+      UserId: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      StretchChallengeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      BodyPartId: {
+      progress: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -22,6 +26,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('StretchMovementBodyParts')
+    await queryInterface.dropTable('UserStretchChallenges')
   },
 }

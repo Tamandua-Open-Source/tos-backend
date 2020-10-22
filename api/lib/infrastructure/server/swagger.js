@@ -733,6 +733,250 @@ export default {
         },
       },
     },
+    '/api/stretchChallenges': {
+      get: {
+        tags: ['Stretch Sessions'],
+        summary: 'Show all stretch challenges',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenges: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Challenge',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/stretchChallenges/{stretchChallengeId}': {
+      get: {
+        tags: ['Stretch Sessions'],
+        summary: 'Show all stretch challenges',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenge: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Challenge',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchChallenges': {
+      get: {
+        tags: ['Stretch Sessions'],
+        summary: 'Show all users stretch challenges',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenges: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Challenge',
+                  },
+                },
+                relations: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/User Stretch Challenge',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchChallenges/{stretchChallengeId}': {
+      post: {
+        tags: ['Stretch Sessions'],
+        summary: 'Add users stretch challenge relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Stretch Sessions'],
+        summary: 'Delete users stretch challenge relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Stretch Sessions'],
+        summary: 'Add users stretch challenge relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                progress: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 100,
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
 
   definitions: {
@@ -956,6 +1200,48 @@ export default {
           items: {
             $ref: '#/definitions/Stretch Movement',
           },
+        },
+      },
+    },
+
+    'Stretch Challenge': {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        name: {
+          type: 'integer',
+        },
+        description: {
+          type: 'integer',
+        },
+        StretchSessions: {
+          type: 'array',
+          items: {
+            $ref: '#/definitions/Stretch Session',
+          },
+        },
+      },
+    },
+
+    'User Stretch Challenge': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        StretchChallengeId: {
+          type: 'integer',
+        },
+        progress: {
+          type: 'integer',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+        createdAt: {
+          type: 'string',
         },
       },
     },
