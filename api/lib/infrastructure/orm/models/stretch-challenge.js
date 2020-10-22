@@ -3,17 +3,17 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class StretchSession extends Model {
+  class StretchChallenge extends Model {
     static associate(models) {
-      StretchSession.belongsToMany(models.StretchMovement, {
-        through: models.StretchSessionStretchMovement,
-      })
-      StretchSession.belongsToMany(models.StretchChallenge, {
+      StretchChallenge.belongsToMany(models.StretchSession, {
         through: models.StretchChallengeStretchSession,
+      })
+      StretchChallenge.belongsToMany(models.User, {
+        through: models.UserStretchChallenge,
       })
     }
   }
-  StretchSession.init(
+  StretchChallenge.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -26,14 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      duration: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      imageFileUrl: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -48,8 +40,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'StretchSession',
+      modelName: 'StretchChallenge',
     }
   )
-  return StretchSession
+  return StretchChallenge
 }
