@@ -29,7 +29,13 @@ class AuthMiddleware {
 
       const userId = await this.verifyTokenUseCase.execute(idToken)
 
-      return { response: 'ok', props: { userId } }
+      return {
+        response: 'ok',
+        props: {
+          userId,
+          idToken,
+        },
+      }
     } catch (error) {
       console.log(error)
       return {
