@@ -8,6 +8,10 @@ export default {
 
   tags: [
     {
+      name: 'Configuration',
+      description: 'Server configuration',
+    },
+    {
       name: 'User',
       description: 'API for user data',
     },
@@ -977,9 +981,45 @@ export default {
         },
       },
     },
+    '/api/configurations': {
+      get: {
+        tags: ['Configuration'],
+        summary: 'Show all configuration',
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              $ref: '#/definitions/Configuration',
+            },
+          },
+        },
+      },
+    },
   },
 
   definitions: {
+    Configuration: {
+      type: 'object',
+      properties: {
+        version: {
+          type: 'string',
+        },
+        lastCompatibleVersion: {
+          type: 'string',
+        },
+        status: {
+          type: 'string',
+        },
+        website: {
+          type: 'string',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+      },
+    },
+
     User: {
       type: 'object',
       properties: {
