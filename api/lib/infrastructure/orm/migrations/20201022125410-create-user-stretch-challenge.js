@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
       },
       progress: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
         allowNull: false,
       },
       createdAt: {
