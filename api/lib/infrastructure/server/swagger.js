@@ -932,7 +932,7 @@ export default {
       },
       patch: {
         tags: ['Stretch Sessions'],
-        summary: 'Add users stretch challenge relation',
+        summary: 'Update users stretch challenge progress',
         parameters: [
           {
             in: 'header',
