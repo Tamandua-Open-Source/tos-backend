@@ -1,11 +1,13 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import UserRouter from './routers/user-router'
-import StretchSessionRouter from './routers/stretch-session-router'
 import compression from 'compression'
 import logger from 'morgan'
 import swaggerUI from 'swagger-ui-express'
 import swaggerDocument from './swagger.js'
+
+import UserRouter from './routers/user-router'
+import StretchSessionRouter from './routers/stretch-session-router'
+import ConfigurationRouter from './routers/configuration-router'
 
 const app = express()
 const port = process.env.PORT || 8000
@@ -18,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use('/api/users', UserRouter)
 app.use('/api', StretchSessionRouter)
+app.use('/api/configurations', ConfigurationRouter)
 
 app.get('/', (_req, res) =>
   res.status(200).send({
