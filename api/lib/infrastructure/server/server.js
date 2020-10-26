@@ -6,7 +6,7 @@ import swaggerUI from 'swagger-ui-express'
 import swaggerDocument from './swagger.js'
 
 import UserRouter from './routers/user-router'
-import StretchSessionRouter from './routers/stretch-session-router'
+import WorkoutRouter from './routers/workout-router'
 import ConfigurationRouter from './routers/configuration-router'
 
 const app = express()
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use('/api/users', UserRouter)
-app.use('/api', StretchSessionRouter)
+app.use('/api', WorkoutRouter)
 app.use('/api/configurations', ConfigurationRouter)
 
 app.get('/', (_req, res) =>

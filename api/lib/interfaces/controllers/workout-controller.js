@@ -1,6 +1,6 @@
 import HttpResponse from '../core/http-response'
 
-class StretchSessionController {
+class WorkoutController {
   constructor(useCases) {
     this.useCases = useCases
   }
@@ -256,4 +256,4 @@ class StretchSessionController {
   }
 }
 
-export default StretchSessionController
+export default WorkoutController

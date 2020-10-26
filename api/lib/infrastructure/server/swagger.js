@@ -1,5 +1,6 @@
 export default {
   swagger: '2.0',
+
   info: {
     version: '1.0.0',
     title: 'Data API',
@@ -16,8 +17,19 @@ export default {
       description: 'API for user data',
     },
     {
-      name: 'Stretch Sessions',
-      description: 'API for stretch session data',
+      name: 'Body Part',
+    },
+    {
+      name: 'Stretch Movement',
+    },
+    {
+      name: 'Stretch Session',
+    },
+    {
+      name: 'Stretch Challenge',
+    },
+    {
+      name: 'User - Stretch Challenge',
     },
   ],
 
@@ -26,6 +38,24 @@ export default {
   produces: ['application/json'],
 
   paths: {
+    //configuration
+    '/api/configurations': {
+      get: {
+        tags: ['Configuration'],
+        summary: 'Show all configuration',
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              $ref: '#/definitions/Configuration',
+            },
+          },
+        },
+      },
+    },
+
+    //user
     '/api/users': {
       get: {
         tags: ['User'],
@@ -579,10 +609,12 @@ export default {
         },
       },
     },
-    '/api/stretchSessions': {
+
+    //body part
+    '/api/bodyParts': {
       get: {
-        tags: ['Stretch Sessions'],
-        summary: 'Show all stretch sessions',
+        tags: ['Body Part'],
+        summary: 'Show all body parts',
         parameters: [
           {
             in: 'header',
@@ -603,10 +635,10 @@ export default {
                 message: {
                   type: 'string',
                 },
-                stretchSessions: {
+                bodyParts: {
                   type: 'array',
                   items: {
-                    $ref: '#/definitions/Stretch Session',
+                    $ref: '#/definitions/Body Part',
                   },
                 },
               },
@@ -615,51 +647,11 @@ export default {
         },
       },
     },
-    '/api/stretchSessions/{stretchSessionId}': {
-      get: {
-        tags: ['Stretch Sessions'],
-        summary: 'Show stretch session by id',
-        parameters: [
-          {
-            in: 'header',
-            name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
-            schema: {
-              type: 'string',
-            },
-          },
-          {
-            in: 'path',
-            name: 'stretchSessionId',
-            schema: {
-              type: 'integer',
-              minimum: 1,
-            },
-          },
-        ],
-        produces: ['application/json'],
-        responses: {
-          '200': {
-            description: 'OK',
-            schema: {
-              properties: {
-                message: {
-                  type: 'string',
-                },
-                stretchSession: {
-                  type: 'object',
-                  $ref: '#/definitions/Stretch Session',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+
+    //stretch movement
     '/api/bodyParts/{bodyPartId}/stretchMovements': {
       get: {
-        tags: ['Stretch Sessions'],
+        tags: ['Stretch Movement'],
         summary: 'Show stretch movements that have body part id',
         parameters: [
           {
@@ -701,10 +693,12 @@ export default {
         },
       },
     },
-    '/api/bodyParts': {
+
+    //stretch session
+    '/api/stretchSessions': {
       get: {
-        tags: ['Stretch Sessions'],
-        summary: 'Show all body parts',
+        tags: ['Stretch Session'],
+        summary: 'Show all stretch sessions',
         parameters: [
           {
             in: 'header',
@@ -725,10 +719,10 @@ export default {
                 message: {
                   type: 'string',
                 },
-                bodyParts: {
+                stretchSessions: {
                   type: 'array',
                   items: {
-                    $ref: '#/definitions/Body Part',
+                    $ref: '#/definitions/Stretch Session',
                   },
                 },
               },
@@ -737,9 +731,53 @@ export default {
         },
       },
     },
+    '/api/stretchSessions/{stretchSessionId}': {
+      get: {
+        tags: ['Stretch Session'],
+        summary: 'Show stretch session by id',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchSession: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Session',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    //stretch challenge
     '/api/stretchChallenges': {
       get: {
-        tags: ['Stretch Sessions'],
+        tags: ['Stretch Challenge'],
         summary: 'Show all stretch challenges',
         parameters: [
           {
@@ -775,8 +813,8 @@ export default {
     },
     '/api/stretchChallenges/{stretchChallengeId}': {
       get: {
-        tags: ['Stretch Sessions'],
-        summary: 'Show all stretch challenges',
+        tags: ['Stretch Challenge'],
+        summary: 'Show stretch challenge by id',
         parameters: [
           {
             in: 'header',
@@ -815,9 +853,11 @@ export default {
         },
       },
     },
+
+    //user - stretch Challenge
     '/api/users/me/stretchChallenges': {
       get: {
-        tags: ['Stretch Sessions'],
+        tags: ['User - Stretch Challenge'],
         summary: 'Show all users stretch challenges',
         parameters: [
           {
@@ -859,7 +899,7 @@ export default {
     },
     '/api/users/me/stretchChallenges/{stretchChallengeId}': {
       post: {
-        tags: ['Stretch Sessions'],
+        tags: ['User - Stretch Challenge'],
         summary: 'Add users stretch challenge relation',
         parameters: [
           {
@@ -895,7 +935,7 @@ export default {
         },
       },
       delete: {
-        tags: ['Stretch Sessions'],
+        tags: ['User - Stretch Challenge'],
         summary: 'Delete users stretch challenge relation',
         parameters: [
           {
@@ -931,7 +971,7 @@ export default {
         },
       },
       patch: {
-        tags: ['Stretch Sessions'],
+        tags: ['User - Stretch Challenge'],
         summary: 'Update users stretch challenge progress',
         parameters: [
           {
@@ -976,21 +1016,6 @@ export default {
                   type: 'string',
                 },
               },
-            },
-          },
-        },
-      },
-    },
-    '/api/configurations': {
-      get: {
-        tags: ['Configuration'],
-        summary: 'Show all configuration',
-        produces: ['application/json'],
-        responses: {
-          '200': {
-            description: 'OK',
-            schema: {
-              $ref: '#/definitions/Configuration',
             },
           },
         },

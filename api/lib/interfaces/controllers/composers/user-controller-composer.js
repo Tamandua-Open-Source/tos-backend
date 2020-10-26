@@ -14,7 +14,7 @@ import {
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceFixedStartPeriodUseCase,
   PatchUserPreferenceGoalUseCase,
-} from '../../../application/use-cases/users'
+} from '../../../application/use-cases/user'
 
 class UserControllerComposer {
   static compose() {

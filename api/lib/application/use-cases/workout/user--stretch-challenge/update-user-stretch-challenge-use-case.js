@@ -1,10 +1,10 @@
 class UpdateUserStretchChallengeUseCase {
-  constructor({ stretchSessionRepository }) {
-    this.stretchSessionRepository = stretchSessionRepository
+  constructor({ workoutRepository }) {
+    this.workoutRepository = workoutRepository
   }
 
   async execute(userId, stretchChallengeId, progress) {
-    return await this.stretchSessionRepository.updateUserStretchChallenge(
+    return await this.workoutRepository.updateUserStretchChallenge(
       userId,
       stretchChallengeId,
       progress

@@ -1,8 +1,7 @@
 import db from '../orm/models'
 import { Op } from 'sequelize'
-import IStretchSessionRepository from '../../application/repository-interfaces/i-stretch-session-repository'
 
-class StretchSessionRepository extends IStretchSessionRepository {
+class WorkoutRepository {
   async getAllStretchSessions() {
     return await db.StretchSession.findAll({
       attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
@@ -313,4 +312,4 @@ class StretchSessionRepository extends IStretchSessionRepository {
   }
 }
 
-export default StretchSessionRepository
+export default WorkoutRepository
