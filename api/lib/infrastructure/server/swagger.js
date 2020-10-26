@@ -14,16 +14,18 @@ export default {
     },
     {
       name: 'User',
-      description: 'API for user data',
+    },
+    {
+      name: 'User Preferences',
     },
     {
       name: 'Body Part',
     },
     {
-      name: 'Stretch Movement',
+      name: 'Stretch Movement - Body Part',
     },
     {
-      name: 'Stretch Movement - Body Part',
+      name: 'Stretch Movement',
     },
     {
       name: 'Stretch Session',
@@ -257,9 +259,11 @@ export default {
         },
       },
     },
+
+    //user preferences
     '/api/users/me/preferences': {
       get: {
-        tags: ['User'],
+        tags: ['User Preferences'],
         summary: 'Shows user preferences',
         parameters: [
           {
@@ -293,7 +297,7 @@ export default {
     },
     '/api/users/me/preferences/fcm': {
       patch: {
-        tags: ['User'],
+        tags: ['User Preferences'],
         summary: 'Updates fcmToken in user preferences',
         parameters: [
           {
@@ -339,7 +343,7 @@ export default {
     },
     '/api/users/me/preferences/wwa': {
       patch: {
-        tags: ['User'],
+        tags: ['User Preferences'],
         summary: 'Updates weekly work activity in user preferences',
         parameters: [
           {
@@ -403,7 +407,7 @@ export default {
     },
     '/api/users/me/preferences/wsa': {
       patch: {
-        tags: ['User'],
+        tags: ['User Preferences'],
         summary: 'Updates weekly stretch activity in user preferences',
         parameters: [
           {
@@ -470,7 +474,7 @@ export default {
     },
     '/api/users/me/preferences/fst': {
       patch: {
-        tags: ['User'],
+        tags: ['User Preferences'],
         summary: 'Updates to fixed start time in user preferences',
         parameters: [
           {
@@ -516,7 +520,7 @@ export default {
     },
     '/api/users/me/preferences/fsp': {
       patch: {
-        tags: ['User'],
+        tags: ['User Preferences'],
         summary: 'Updates to fixed start period in user preferences',
         parameters: [
           {
@@ -562,7 +566,7 @@ export default {
     },
     '/api/users/me/preferences/goal': {
       patch: {
-        tags: ['User'],
+        tags: ['User Preferences'],
         summary: 'Updates goals in user preferences',
         parameters: [
           {
@@ -825,6 +829,52 @@ export default {
       },
     },
 
+    //stretch movement - body part
+    '/api/bodyParts/{bodyPartId}/stretchMovements': {
+      get: {
+        tags: ['Stretch Movement - Body Part'],
+        summary: 'Show stretch movements that have body part id',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'bodyPartId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Movement',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
     //stretch movement
     '/api/stretchMovements': {
       get: {
@@ -1061,52 +1111,6 @@ export default {
       },
     },
 
-    //stretch movement - body part
-    '/api/bodyParts/{bodyPartId}/stretchMovements': {
-      get: {
-        tags: ['Stretch Movement - Body Part'],
-        summary: 'Show stretch movements that have body part id',
-        parameters: [
-          {
-            in: 'header',
-            name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
-            schema: {
-              type: 'string',
-            },
-          },
-          {
-            in: 'path',
-            name: 'bodyPartId',
-            schema: {
-              type: 'integer',
-              minimum: 1,
-            },
-          },
-        ],
-        produces: ['application/json'],
-        responses: {
-          '200': {
-            description: 'OK',
-            schema: {
-              properties: {
-                message: {
-                  type: 'string',
-                },
-                stretchMovements: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Movement',
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-
     //stretch session
     '/api/stretchSessions': {
       get: {
@@ -1267,7 +1271,7 @@ export default {
       },
     },
 
-    //user - stretch Challenge
+    //user - stretch challenge
     '/api/users/me/stretchChallenges': {
       get: {
         tags: ['User - Stretch Challenge'],
