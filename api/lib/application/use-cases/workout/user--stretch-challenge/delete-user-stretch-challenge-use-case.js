@@ -1,10 +1,10 @@
 class DeleteUserStretchChallengeUseCase {
-  constructor({ stretchSessionRepository }) {
-    this.stretchSessionRepository = stretchSessionRepository
+  constructor({ workoutRepository }) {
+    this.workoutRepository = workoutRepository
   }
 
   async execute(userId, stretchChallengeId) {
-    return await this.stretchSessionRepository.deleteUserStretchChallenge(
+    return await this.workoutRepository.deleteUserStretchChallenge(
       userId,
       stretchChallengeId
     )

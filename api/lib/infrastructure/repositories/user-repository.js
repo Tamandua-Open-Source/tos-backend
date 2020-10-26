@@ -1,7 +1,6 @@
 import db from '../orm/models'
-import IUserRepository from '../../application/repository-interfaces/i-user-repository'
 
-class UserRepository extends IUserRepository {
+class UserRepository {
   async getAllUsers() {
     return await db.User.findAll()
   }
