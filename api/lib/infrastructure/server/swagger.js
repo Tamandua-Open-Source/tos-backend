@@ -23,6 +23,9 @@ export default {
       name: 'Stretch Movement',
     },
     {
+      name: 'Stretch Movement - Body Part',
+    },
+    {
       name: 'Stretch Session',
     },
     {
@@ -823,9 +826,245 @@ export default {
     },
 
     //stretch movement
-    '/api/bodyParts/{bodyPartId}/stretchMovements': {
+    '/api/stretchMovements': {
       get: {
         tags: ['Stretch Movement'],
+        summary: 'Show all stretch movements',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Movement',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      post: {
+        tags: ['Stretch Movement'],
+        summary: 'Add stretch movement',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                description: {
+                  type: 'string',
+                },
+                duration: {
+                  type: 'integer',
+                },
+                imageFileUrl: {
+                  type: 'string',
+                },
+                videoFileUrl: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovement: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Movement',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/stretchMovements/{stretchMovementId}': {
+      get: {
+        tags: ['Stretch Movement'],
+        summary: 'Show stretch movement by id',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovement: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Movement',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Stretch Movement'],
+        summary: 'Update stretch movement',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                description: {
+                  type: 'string',
+                },
+                duration: {
+                  type: 'integer',
+                },
+                imageFileUrl: {
+                  type: 'string',
+                },
+                videoFileUrl: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovement: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Movement',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Stretch Movement'],
+        summary: 'Delete stretch movement',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: true,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    //stretch movement - body part
+    '/api/bodyParts/{bodyPartId}/stretchMovements': {
+      get: {
+        tags: ['Stretch Movement - Body Part'],
         summary: 'Show stretch movements that have body part id',
         parameters: [
           {

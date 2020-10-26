@@ -96,9 +96,9 @@ class WorkoutController {
 
     try {
       const { deleteBodyPartUseCase } = this.useCases
-      const bodyPart = await deleteBodyPartUseCase.execute(bodyPartId)
+      const success = await deleteBodyPartUseCase.execute(bodyPartId)
 
-      if (!bodyPart) {
+      if (!success) {
         return HttpResponse.ok({ message: 'Cannot delete body part' })
       } else {
         return HttpResponse.ok({ message: 'Body part deleted' })
@@ -110,7 +110,127 @@ class WorkoutController {
   }
 
   //stretch movement
+  async getAllStretchMovements(_req) {
+    try {
+      const { getAllStretchMovementsUseCase } = this.useCases
+      const stretchMovements = await getAllStretchMovementsUseCase.execute()
 
+      if (!stretchMovements) {
+        return HttpResponse.ok({ message: 'Cannot find stretch movements' })
+      } else {
+        return HttpResponse.ok({
+          message: 'stretch movements retrieved',
+          stretchMovements,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async getStretchMovementById(req) {
+    const { stretchMovementId } = req.params
+
+    try {
+      const { getStretchMovementByIdUseCase } = this.useCases
+      const stretchMovement = await getStretchMovementByIdUseCase.execute(
+        stretchMovementId
+      )
+
+      if (!stretchMovement) {
+        return HttpResponse.ok({ message: 'Cannot find stretch movement' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch movement retrieved',
+          stretchMovement,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async addStretchMovement(req) {
+    const { name, description, duration, imageFileUrl, videoFileUrl } = req.body
+
+    try {
+      const { addStretchMovementUseCase } = this.useCases
+      const stretchMovement = await addStretchMovementUseCase.execute({
+        name,
+        description,
+        duration,
+        imageFileUrl,
+        videoFileUrl,
+      })
+
+      if (!stretchMovement) {
+        return HttpResponse.ok({ message: 'Cannot create stretch movement' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch movement created',
+          stretchMovement,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async updateStretchMovement(req) {
+    const { stretchMovementId } = req.params
+    const { name, description, duration, imageFileUrl, videoFileUrl } = req.body
+
+    try {
+      const { updateStretchMovementUseCase } = this.useCases
+      const stretchMovement = await updateStretchMovementUseCase.execute(
+        stretchMovementId,
+        {
+          name,
+          description,
+          duration,
+          imageFileUrl,
+          videoFileUrl,
+        }
+      )
+
+      if (!stretchMovement) {
+        return HttpResponse.ok({ message: 'Cannot update stretch movement' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch movement updated',
+          stretchMovement,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async deleteStretchMovement(req) {
+    const { stretchMovementId } = req.params
+
+    try {
+      const { deleteStretchMovementUseCase } = this.useCases
+      const success = await deleteStretchMovementUseCase.execute(
+        stretchMovementId
+      )
+
+      if (!success) {
+        return HttpResponse.ok({ message: 'Cannot delete stretch movement' })
+      } else {
+        return HttpResponse.ok({ message: 'Stretch movement deleted' })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  //others
   async getAllStretchSessions(_req) {
     try {
       const { getAllStretchSessionsUseCase } = this.useCases
