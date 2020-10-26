@@ -34,6 +34,16 @@ class WorkoutRepository {
 
     if (!bodyPart) return null
 
+    const relations = await db.StretchMovementBodyPart.findAll({
+      where: {
+        BodyPartId: bodyPartId,
+      },
+    })
+
+    relations.forEach((relation) => {
+      relation.destroy()
+    })
+
     return await bodyPart.destroy()
   }
 
