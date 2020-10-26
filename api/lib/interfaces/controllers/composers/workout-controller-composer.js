@@ -1,10 +1,16 @@
 import WorkoutRepository from '../../../infrastructure/repositories/workout-repository'
 import WorkoutController from '../workout-controller'
 import {
+  //body part
+  GetAllBodyPartsUseCase,
+  GetBodyPartByIdUseCase,
+  AddBodyPartUseCase,
+  UpdateBodyPartUseCase,
+  DeleteBodyPartUseCase,
+  //stretch movement
   GetAllStretchSessionsUseCase,
   GetStretchSessionByIdUseCase,
   GetStretchMovementByBodyPartIdUseCase,
-  GetAllBodyPartsUseCase,
   GetAllStretchChallengesUseCase,
   GetStretchChallengeByIdUseCase,
   GetStretchChallengesByUserIdUseCase,
@@ -17,6 +23,24 @@ class WorkoutControllerComposer {
   static compose() {
     const workoutRepository = new WorkoutRepository()
 
+    //body part
+    const getAllBodyPartsUseCase = new GetAllBodyPartsUseCase({
+      workoutRepository,
+    })
+    const getBodyPartByIdUseCase = new GetBodyPartByIdUseCase({
+      workoutRepository,
+    })
+    const addBodyPartUseCase = new AddBodyPartUseCase({
+      workoutRepository,
+    })
+    const updateBodyPartUseCase = new UpdateBodyPartUseCase({
+      workoutRepository,
+    })
+    const deleteBodyPartUseCase = new DeleteBodyPartUseCase({
+      workoutRepository,
+    })
+
+    //stretch movement
     const getAllStretchSessionsUseCase = new GetAllStretchSessionsUseCase({
       workoutRepository,
     })
@@ -30,10 +54,6 @@ class WorkoutControllerComposer {
         workoutRepository,
       }
     )
-
-    const getAllBodyPartsUseCase = new GetAllBodyPartsUseCase({
-      workoutRepository,
-    })
 
     const getAllStretchChallengesUseCase = new GetAllStretchChallengesUseCase({
       workoutRepository,
@@ -66,10 +86,16 @@ class WorkoutControllerComposer {
     )
 
     return new WorkoutController({
+      //body part
+      getAllBodyPartsUseCase,
+      getBodyPartByIdUseCase,
+      addBodyPartUseCase,
+      updateBodyPartUseCase,
+      deleteBodyPartUseCase,
+      //stretch movement
       getAllStretchSessionsUseCase,
       getStretchSessionByIdUseCase,
       getStretchMovementByBodyPartIdUseCase,
-      getAllBodyPartsUseCase,
       getAllStretchChallengesUseCase,
       getStretchChallengeByIdUseCase,
       getStretchChallengesByUserIdUseCase,

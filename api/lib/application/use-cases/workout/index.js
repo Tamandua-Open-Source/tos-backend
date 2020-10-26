@@ -1,5 +1,9 @@
 //body parts
 import GetAllBodyPartsUseCase from './body-part/get-all-body-parts-use-case'
+import GetBodyPartByIdUseCase from './body-part/get-body-part-by-id-use-case'
+import AddBodyPartUseCase from './body-part/add-body-part-use-case'
+import UpdateBodyPartUseCase from './body-part/update-body-part-use-case'
+import DeleteBodyPartUseCase from './body-part/delete-body-part-use-case'
 
 //stretch movement
 import GetStretchMovementByBodyPartIdUseCase from './stretch-movement/get-stretch-movement-by-body-part-id-use-case'
@@ -19,10 +23,16 @@ import DeleteUserStretchChallengeUseCase from './user--stretch-challenge/delete-
 import UpdateUserStretchChallengeUseCase from './user--stretch-challenge/update-user-stretch-challenge-use-case'
 
 export {
+  //body part
+  GetAllBodyPartsUseCase,
+  GetBodyPartByIdUseCase,
+  AddBodyPartUseCase,
+  UpdateBodyPartUseCase,
+  DeleteBodyPartUseCase,
+  //stretch movement
   GetAllStretchSessionsUseCase,
   GetStretchSessionByIdUseCase,
   GetStretchMovementByBodyPartIdUseCase,
-  GetAllBodyPartsUseCase,
   GetAllStretchChallengesUseCase,
   GetStretchChallengeByIdUseCase,
   GetStretchChallengesByUserIdUseCase,

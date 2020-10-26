@@ -5,6 +5,112 @@ class WorkoutController {
     this.useCases = useCases
   }
 
+  //body part
+  async getAllBodyParts(_req) {
+    try {
+      const { getAllBodyPartsUseCase } = this.useCases
+      const bodyParts = await getAllBodyPartsUseCase.execute()
+
+      if (!bodyParts) {
+        return HttpResponse.ok({ message: 'Cannot find body parts' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Body parts retrieved',
+          bodyParts,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async getBodyPartById(req) {
+    const { bodyPartId } = req.params
+
+    try {
+      const { getBodyPartByIdUseCase } = this.useCases
+      const bodyPart = await getBodyPartByIdUseCase.execute(bodyPartId)
+
+      if (!bodyPart) {
+        return HttpResponse.ok({ message: 'Cannot find body part' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Body part retrieved',
+          bodyPart,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async addBodyPart(req) {
+    const { name } = req.body
+
+    try {
+      const { addBodyPartUseCase } = this.useCases
+      const bodyPart = await addBodyPartUseCase.execute(name)
+
+      if (!bodyPart) {
+        return HttpResponse.ok({ message: 'Cannot create body part' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Body part created',
+          bodyPart,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async updateBodyPart(req) {
+    const { bodyPartId } = req.params
+    const { name } = req.body
+
+    try {
+      const { updateBodyPartUseCase } = this.useCases
+      const bodyPart = await updateBodyPartUseCase.execute(bodyPartId, {
+        name,
+      })
+
+      if (!bodyPart) {
+        return HttpResponse.ok({ message: 'Cannot update body part' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Body part updated',
+          bodyPart,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  async deleteBodyPart(req) {
+    const { bodyPartId } = req.params
+
+    try {
+      const { deleteBodyPartUseCase } = this.useCases
+      const bodyPart = await deleteBodyPartUseCase.execute(bodyPartId)
+
+      if (!bodyPart) {
+        return HttpResponse.ok({ message: 'Cannot delete body part' })
+      } else {
+        return HttpResponse.ok({ message: 'Body part deleted' })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  //stretch movement
+
   async getAllStretchSessions(_req) {
     try {
       const { getAllStretchSessionsUseCase } = this.useCases
@@ -72,25 +178,6 @@ class WorkoutController {
         return HttpResponse.ok({
           message: 'Stretch movements retrieved',
           stretchMovements,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
-  }
-
-  async getAllBodyParts(_req) {
-    try {
-      const { getAllBodyPartsUseCase } = this.useCases
-      const bodyParts = await getAllBodyPartsUseCase.execute()
-
-      if (!bodyParts) {
-        return HttpResponse.ok({ message: 'Cannot find body parts' })
-      } else {
-        return HttpResponse.ok({
-          message: 'Body parts retrieved',
-          bodyParts,
         })
       }
     } catch (error) {

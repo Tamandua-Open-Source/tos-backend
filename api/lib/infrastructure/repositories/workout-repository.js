@@ -2,6 +2,41 @@ import db from '../orm/models'
 import { Op } from 'sequelize'
 
 class WorkoutRepository {
+  async getAllBodyParts() {
+    return await db.BodyPart.findAll({
+      attributes: ['id', 'name'],
+    })
+  }
+
+  async getBodyPartById(bodyPartId) {
+    return await db.BodyPart.findOne({
+      where: {
+        id: bodyPartId,
+      },
+      attributes: ['id', 'name'],
+    })
+  }
+
+  async createBodyPart(bodyPart) {
+    return await db.BodyPart.create(bodyPart)
+  }
+
+  async updateBodyPart(bodyPartId, updatedFields) {
+    const bodyPart = await this.getBodyPartById(bodyPartId)
+
+    if (!bodyPart) return null
+
+    return await bodyPart.update(updatedFields)
+  }
+
+  async deleteBodyPart(bodyPartId) {
+    const bodyPart = await this.getBodyPartById(bodyPartId)
+
+    if (!bodyPart) return null
+
+    return await bodyPart.destroy()
+  }
+
   async getAllStretchSessions() {
     return await db.StretchSession.findAll({
       attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
@@ -101,12 +136,6 @@ class WorkoutRepository {
           },
         },
       ],
-    })
-  }
-
-  async getAllBodyParts() {
-    return await db.BodyPart.findAll({
-      attributes: ['id', 'name'],
     })
   }
 
@@ -245,14 +274,6 @@ class WorkoutRepository {
           ],
         },
       ],
-    })
-  }
-
-  async getUserStretchChallengesByUserId(userId) {
-    return await db.UserStretchChallenge.findAll({
-      where: {
-        UserId: userId,
-      },
     })
   }
 

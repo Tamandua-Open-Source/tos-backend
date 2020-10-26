@@ -10,6 +10,35 @@ const authMiddleware = AuthMiddlewareComposer.compose()
 
 const router = Router()
 
+//body part
+router.get(
+  '/bodyParts/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => workoutController.getAllBodyParts(req))
+)
+router.get(
+  '/bodyParts/:bodyPartId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => workoutController.getBodyPartById(req))
+)
+router.post(
+  '/bodyParts/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => workoutController.addBodyPart(req))
+)
+router.patch(
+  '/bodyParts/:bodyPartId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => workoutController.updateBodyPart(req))
+)
+router.delete(
+  '/bodyParts/:bodyPartId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => workoutController.deleteBodyPart(req))
+)
+
+//stretch movement
+
 router.get(
   '/stretchSessions/',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
@@ -30,12 +59,6 @@ router.get(
   ExpressRouterAdapter.adapt((req) =>
     workoutController.getStretchMovementByBodyPartId(req)
   )
-)
-
-router.get(
-  '/bodyParts/',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) => workoutController.getAllBodyParts(req))
 )
 
 router.get(

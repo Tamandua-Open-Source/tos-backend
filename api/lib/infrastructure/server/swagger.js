@@ -646,6 +646,180 @@ export default {
           },
         },
       },
+      post: {
+        tags: ['Body Part'],
+        summary: 'Add body part',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                bodyPart: {
+                  type: 'object',
+                  $ref: '#/definitions/Body Part',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/bodyParts/{bodyPartId}': {
+      get: {
+        tags: ['Body Part'],
+        summary: 'Show body part by id',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'bodyPartId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                bodyPart: {
+                  type: 'object',
+                  $ref: '#/definitions/Body Part',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Body Part'],
+        summary: 'Update body part',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'bodyPartId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                bodyPart: {
+                  type: 'object',
+                  $ref: '#/definitions/Body Part',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Body Part'],
+        summary: 'Delete body part',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'bodyPartId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
     },
 
     //stretch movement
