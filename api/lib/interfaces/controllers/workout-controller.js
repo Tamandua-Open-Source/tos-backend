@@ -24,7 +24,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async getBodyPartById(req) {
     const { bodyPartId } = req.params
 
@@ -45,7 +44,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async addBodyPart(req) {
     const { name } = req.body
 
@@ -66,7 +64,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async updateBodyPart(req) {
     const { bodyPartId } = req.params
     const { name } = req.body
@@ -90,7 +87,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async deleteBodyPart(req) {
     const { bodyPartId } = req.params
 
@@ -128,7 +124,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async getStretchMovementById(req) {
     const { stretchMovementId } = req.params
 
@@ -151,7 +146,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async addStretchMovement(req) {
     const { name, description, duration, imageFileUrl, videoFileUrl } = req.body
 
@@ -178,7 +172,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async updateStretchMovement(req) {
     const { stretchMovementId } = req.params
     const { name, description, duration, imageFileUrl, videoFileUrl } = req.body
@@ -209,7 +202,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async deleteStretchMovement(req) {
     const { stretchMovementId } = req.params
 
@@ -230,13 +222,13 @@ class WorkoutController {
     }
   }
 
-  //others
+  //stretch session
   async getAllStretchSessions(_req) {
     try {
       const { getAllStretchSessionsUseCase } = this.useCases
       const stretchSessions = await getAllStretchSessionsUseCase.execute()
 
-      if (stretchSessions.length == 0) {
+      if (!stretchSessions) {
         return HttpResponse.ok({ message: 'No stretch sessions found' })
       } else {
         return HttpResponse.ok({
@@ -249,17 +241,10 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
-  async getStretchSession(req) {
+  async getStretchSessionById(req) {
     const { stretchSessionId } = req.params
 
     try {
-      if (!stretchSessionId || !Number(stretchSessionId)) {
-        return HttpResponse.badRequest(
-          'Please provide a valid stretch session ID'
-        )
-      }
-
       const { getStretchSessionByIdUseCase } = this.useCases
       const stretchSession = await getStretchSessionByIdUseCase.execute(
         stretchSessionId
@@ -278,7 +263,192 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
+  async addStretchSession(req) {
+    const { name, description, duration, imageFileUrl } = req.body
 
+    try {
+      const { addStretchSessionUseCase } = this.useCases
+      const stretchSession = await addStretchSessionUseCase.execute({
+        name,
+        description,
+        duration,
+        imageFileUrl,
+      })
+
+      if (!stretchSession) {
+        return HttpResponse.ok({ message: 'Cannot create stretch session' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch session created',
+          stretchSession,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async updateStretchSession(req) {
+    const { stretchSessionId } = req.params
+    const { name, description, duration, imageFileUrl } = req.body
+
+    try {
+      const { updateStretchSessionUseCase } = this.useCases
+      const stretchSession = await updateStretchSessionUseCase.execute(
+        stretchSessionId,
+        {
+          name,
+          description,
+          duration,
+          imageFileUrl,
+        }
+      )
+
+      if (!stretchSession) {
+        return HttpResponse.ok({ message: 'Cannot update stretch session' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch session updated',
+          stretchSession,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteStretchSession(req) {
+    const { stretchSessionId } = req.params
+
+    try {
+      const { deleteStretchSessionUseCase } = this.useCases
+      const success = await deleteStretchSessionUseCase.execute(
+        stretchSessionId
+      )
+
+      if (!success) {
+        return HttpResponse.ok({ message: 'Cannot delete stretch session' })
+      } else {
+        return HttpResponse.ok({ message: 'Stretch session deleted' })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  //stretch challenge
+  async getAllStretchChallenges(_req) {
+    try {
+      const { getAllStretchChallengesUseCase } = this.useCases
+      const stretchChallenges = await getAllStretchChallengesUseCase.execute()
+
+      if (!stretchChallenges) {
+        return HttpResponse.ok({ message: 'Cannot find stretch challenge' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch challenges retrieved',
+          stretchChallenges,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async getStretchChallengeById(req) {
+    const { stretchChallengeId } = req.params
+
+    try {
+      const { getStretchChallengeByIdUseCase } = this.useCases
+      const stretchChallenge = await getStretchChallengeByIdUseCase.execute(
+        stretchChallengeId
+      )
+
+      if (!stretchChallenge) {
+        return HttpResponse.ok({ message: 'Cannot find stretch challenge' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch challenge retrieved',
+          stretchChallenge,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async addStretchChallenge(req) {
+    const { name, description } = req.body
+
+    try {
+      const { addStretchChallengeUseCase } = this.useCases
+      const stretchChallenge = await addStretchChallengeUseCase.execute({
+        name,
+        description,
+      })
+
+      if (!stretchChallenge) {
+        return HttpResponse.ok({ message: 'Cannot create stretch challenge' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch challenge created',
+          stretchChallenge,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async updateStretchChallenge(req) {
+    const { stretchChallengeId } = req.params
+    const { name, description } = req.body
+
+    try {
+      const { updateStretchChallengeUseCase } = this.useCases
+      const stretchChallenge = await updateStretchChallengeUseCase.execute(
+        stretchChallengeId,
+        {
+          name,
+          description,
+        }
+      )
+
+      if (!stretchChallenge) {
+        return HttpResponse.ok({ message: 'Cannot update stretch challenge' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch challenge updated',
+          stretchChallenge,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteStretchChallenge(req) {
+    const { stretchChallengeId } = req.params
+
+    try {
+      const { deleteStretchChallengeUseCase } = this.useCases
+      const success = await deleteStretchChallengeUseCase.execute(
+        stretchChallengeId
+      )
+
+      if (!success) {
+        return HttpResponse.ok({ message: 'Cannot delete stretch challenge' })
+      } else {
+        return HttpResponse.ok({ message: 'Stretch challenge deleted' })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  //others
   async getStretchMovementByBodyPartId(req) {
     const { bodyPartId } = req.params
 
@@ -305,55 +475,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
-  async getAllStretchChallenges(_req) {
-    try {
-      const { getAllStretchChallengesUseCase } = this.useCases
-      const stretchChallenges = await getAllStretchChallengesUseCase.execute()
-
-      if (!stretchChallenges) {
-        return HttpResponse.ok({ message: 'Cannot find stretch challenge' })
-      } else {
-        return HttpResponse.ok({
-          message: 'Stretch challenges retrieved',
-          stretchChallenges,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
-  }
-
-  async getStretchChallengeById(req) {
-    const { stretchChallengeId } = req.params
-
-    try {
-      if (!stretchChallengeId || !Number(stretchChallengeId)) {
-        return HttpResponse.badRequest(
-          'Please provide a valid stretch challenge ID'
-        )
-      }
-
-      const { getStretchChallengeByIdUseCase } = this.useCases
-      const stretchChallenge = await getStretchChallengeByIdUseCase.execute(
-        stretchChallengeId
-      )
-
-      if (!stretchChallenge) {
-        return HttpResponse.ok({ message: 'Cannot find stretch challenge' })
-      } else {
-        return HttpResponse.ok({
-          message: 'Stretch challenge retrieved',
-          stretchChallenge,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
-  }
-
   async getStretchChallengesByUserId(req) {
     const { userId } = req.props
 
@@ -375,7 +496,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async addUserStretchChallenge(req) {
     const { userId } = req.props
     const { stretchChallengeId } = req.params
@@ -401,7 +521,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async deleteUserStretchChallenge(req) {
     const { userId } = req.props
     const { stretchChallengeId } = req.params
@@ -427,7 +546,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-
   async updateUserStretchChallenge(req) {
     const { userId } = req.props
     const { stretchChallengeId } = req.params
