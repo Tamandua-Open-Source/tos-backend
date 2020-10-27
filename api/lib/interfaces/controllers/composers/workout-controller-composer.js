@@ -7,6 +7,10 @@ import {
   AddBodyPartUseCase,
   UpdateBodyPartUseCase,
   DeleteBodyPartUseCase,
+  //stretch movement - body part
+  GetStretchMovementByBodyPartIdUseCase,
+  AddStretchMovementBodyPartUseCase,
+  DeleteStretchMovementBodyPartUseCase,
   //stretch movement
   GetAllStretchMovementsUseCase,
   GetStretchMovementByIdUseCase,
@@ -26,7 +30,6 @@ import {
   UpdateStretchChallengeUseCase,
   DeleteStretchChallengeUseCase,
   //others
-  GetStretchMovementByBodyPartIdUseCase,
   GetStretchChallengesByUserIdUseCase,
   AddUserStretchChallengeUseCase,
   DeleteUserStretchChallengeUseCase,
@@ -53,6 +56,23 @@ class WorkoutControllerComposer {
     const deleteBodyPartUseCase = new DeleteBodyPartUseCase({
       workoutRepository,
     })
+
+    //stretch movement - body part
+    const getStretchMovementByBodyPartIdUseCase = new GetStretchMovementByBodyPartIdUseCase(
+      {
+        workoutRepository,
+      }
+    )
+    const addStretchMovementBodyPartUseCase = new AddStretchMovementBodyPartUseCase(
+      {
+        workoutRepository,
+      }
+    )
+    const deleteStretchMovementBodyPartUseCase = new DeleteStretchMovementBodyPartUseCase(
+      {
+        workoutRepository,
+      }
+    )
 
     //stretch movement
     const getAllStretchMovementsUseCase = new GetAllStretchMovementsUseCase({
@@ -106,11 +126,6 @@ class WorkoutControllerComposer {
     })
 
     //others
-    const getStretchMovementByBodyPartIdUseCase = new GetStretchMovementByBodyPartIdUseCase(
-      {
-        workoutRepository,
-      }
-    )
     const getStretchChallengesByUserIdUseCase = new GetStretchChallengesByUserIdUseCase(
       {
         workoutRepository,
@@ -137,6 +152,10 @@ class WorkoutControllerComposer {
       addBodyPartUseCase,
       updateBodyPartUseCase,
       deleteBodyPartUseCase,
+      //stretch movement - body part
+      getStretchMovementByBodyPartIdUseCase,
+      addStretchMovementBodyPartUseCase,
+      deleteStretchMovementBodyPartUseCase,
       //stretch movement
       getAllStretchMovementsUseCase,
       getStretchMovementByIdUseCase,
@@ -156,7 +175,6 @@ class WorkoutControllerComposer {
       updateStretchChallengeUseCase,
       deleteStretchChallengeUseCase,
       //others
-      getStretchMovementByBodyPartIdUseCase,
       getStretchChallengesByUserIdUseCase,
       addUserStretchChallengeUseCase,
       deleteUserStretchChallengeUseCase,

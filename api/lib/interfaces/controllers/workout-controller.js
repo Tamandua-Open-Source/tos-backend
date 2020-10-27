@@ -105,6 +105,78 @@ class WorkoutController {
     }
   }
 
+  //stretch movement - body part
+  async getStretchMovementByBodyPartId(req) {
+    const { bodyPartId } = req.params
+
+    try {
+      const { getStretchMovementByBodyPartIdUseCase } = this.useCases
+      const stretchMovements = await getStretchMovementByBodyPartIdUseCase.execute(
+        bodyPartId
+      )
+
+      if (!stretchMovements) {
+        return HttpResponse.ok({ message: 'Cannot find stretch movements' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch movements retrieved',
+          stretchMovements,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async addStretchMovementBodyPart(req) {
+    const { stretchMovementId, bodyPartId } = req.params
+
+    try {
+      const { addStretchMovementBodyPartUseCase } = this.useCases
+      const relation = await addStretchMovementBodyPartUseCase.execute(
+        stretchMovementId,
+        bodyPartId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot link stretch movement and body part',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'stretch movement linked with body part',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteStretchMovementBodyPart(req) {
+    const { stretchMovementId, bodyPartId } = req.params
+
+    try {
+      const { deleteStretchMovementBodyPartUseCase } = this.useCases
+      const relation = await deleteStretchMovementBodyPartUseCase.execute(
+        stretchMovementId,
+        bodyPartId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot unlink stretch movement from body part',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch movement unlinked from body part',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
   //stretch movement
   async getAllStretchMovements(_req) {
     try {
@@ -449,32 +521,6 @@ class WorkoutController {
   }
 
   //others
-  async getStretchMovementByBodyPartId(req) {
-    const { bodyPartId } = req.params
-
-    try {
-      if (!bodyPartId || !Number(bodyPartId)) {
-        return HttpResponse.badRequest('Please provide a valid body part ID')
-      }
-
-      const { getStretchMovementByBodyPartIdUseCase } = this.useCases
-      const stretchMovements = await getStretchMovementByBodyPartIdUseCase.execute(
-        bodyPartId
-      )
-
-      if (!stretchMovements) {
-        return HttpResponse.ok({ message: 'Cannot find stretch movements' })
-      } else {
-        return HttpResponse.ok({
-          message: 'Stretch movements retrieved',
-          stretchMovements,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
-  }
   async getStretchChallengesByUserId(req) {
     const { userId } = req.props
 

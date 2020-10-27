@@ -1,6 +1,5 @@
 import db from '../orm/models'
 import { Op } from 'sequelize'
-import { relative } from 'path'
 
 class WorkoutRepository {
   //body part
@@ -371,7 +370,88 @@ class WorkoutRepository {
     return await stretchChallenge.destroy()
   }
 
-  //others
+  //stretch movement - body part
+  async getStretchMovementByBodyPartId(bodyPartId) {
+    const relations = await db.StretchMovementBodyPart.findAll({
+      where: {
+        BodyPartId: bodyPartId,
+      },
+    })
+
+    const stretchMovementIdList = relations.map(
+      (relation) => relation.StretchMovementId
+    )
+
+    return await db.StretchMovement.findAll({
+      where: {
+        id: {
+          [Op.in]: stretchMovementIdList,
+        },
+      },
+      attributes: [
+        'id',
+        'name',
+        'description',
+        'duration',
+        'imageFileUrl',
+        'videoFileUrl',
+      ],
+      include: [
+        {
+          model: db.BodyPart,
+          attributes: ['id', 'name'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    })
+  }
+  async addSretchMovementBodyPart(stretchMovementId, bodyPartId) {
+    const stretchMovement = await db.StretchMovement.findOne({
+      where: {
+        id: stretchMovementId,
+      },
+    })
+
+    if (!stretchMovement) return null
+
+    const bodyPart = await db.BodyPart.findOne({
+      where: {
+        id: bodyPartId,
+      },
+    })
+
+    if (!bodyPart) return null
+
+    const relation = await db.StretchMovementBodyPart.findOne({
+      where: {
+        StretchMovementId: stretchMovementId,
+        BodyPartId: bodyPartId,
+      },
+    })
+
+    if (relation) return null
+
+    return await db.StretchMovementBodyPart.create({
+      StretchMovementId: stretchMovementId,
+      BodyPartId: bodyPartId,
+    })
+  }
+  async deleteStretchMovementBodyPart(stretchMovementId, bodyPartId) {
+    const relation = await db.StretchMovementBodyPart.findOne({
+      where: {
+        StretchMovementId: stretchMovementId,
+        BodyPartId: bodyPartId,
+      },
+    })
+
+    if (!relation) return null
+
+    return await relation.destroy()
+  }
+
+  //user - stretch challenge
   async getStretchChallengesByUserId(userId) {
     const relations = await db.UserStretchChallenge.findAll({
       where: {
@@ -426,44 +506,6 @@ class WorkoutRepository {
       ],
     })
   }
-
-  async getStretchMovementByBodyPartId(bodyPartId) {
-    const relations = await db.StretchMovementBodyPart.findAll({
-      where: {
-        BodyPartId: bodyPartId,
-      },
-    })
-
-    const stretchMovementIdList = relations.map(
-      (relation) => relation.StretchMovementId
-    )
-
-    return await db.StretchMovement.findAll({
-      where: {
-        id: {
-          [Op.in]: stretchMovementIdList,
-        },
-      },
-      attributes: [
-        'id',
-        'name',
-        'description',
-        'duration',
-        'imageFileUrl',
-        'videoFileUrl',
-      ],
-      include: [
-        {
-          model: db.BodyPart,
-          attributes: ['id', 'name'],
-          through: {
-            attributes: [],
-          },
-        },
-      ],
-    })
-  }
-
   async addUserStretchChallenge(userId, stretchChallengeId) {
     const user = await db.User.findOne({
       where: {
@@ -481,14 +523,14 @@ class WorkoutRepository {
 
     if (!stretchChallenge) return null
 
-    const currentUserStretchChallenge = await db.UserStretchChallenge.findOne({
+    const relation = await db.UserStretchChallenge.findOne({
       where: {
         UserId: userId,
         StretchChallengeId: stretchChallengeId,
       },
     })
 
-    if (currentUserStretchChallenge) return null
+    if (relation) return null
 
     return await db.UserStretchChallenge.create({
       UserId: userId,
@@ -496,7 +538,6 @@ class WorkoutRepository {
       progress: 0,
     })
   }
-
   async deleteUserStretchChallenge(userId, stretchChallengeId) {
     const relation = await db.UserStretchChallenge.findOne({
       UserId: userId,
@@ -507,7 +548,6 @@ class WorkoutRepository {
 
     return await relation.destroy()
   }
-
   async updateUserStretchChallenge(userId, stretchChallengeId, progress) {
     const relation = await db.UserStretchChallenge.findOne({
       UserId: userId,
