@@ -833,7 +833,7 @@ export default {
     '/api/bodyParts/{bodyPartId}/stretchMovements': {
       get: {
         tags: ['Stretch Movement - Body Part'],
-        summary: 'Show stretch movements that have body part id',
+        summary: 'Show all stretch movements that contains the body part',
         parameters: [
           {
             in: 'header',
@@ -867,6 +867,96 @@ export default {
                   items: {
                     $ref: '#/definitions/Stretch Movement',
                   },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/bodyParts/{bodyPartId}/stretchMovements/{stretchMovementId}': {
+      post: {
+        tags: ['Stretch Movement - Body Part'],
+        summary: 'Add stretch movement body part relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'bodyPartId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Stretch Movement - Body Part'],
+        summary: 'Delete stretch movement body part relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'bodyPartId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
                 },
               },
             },

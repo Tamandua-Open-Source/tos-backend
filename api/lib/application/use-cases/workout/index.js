@@ -7,6 +7,8 @@ import DeleteBodyPartUseCase from './body-part/delete-body-part-use-case'
 
 //stretch movement - body part
 import GetStretchMovementByBodyPartIdUseCase from './stretch-movement--body-part/get-stretch-movement-by-body-part-id-use-case'
+import AddStretchMovementBodyPartUseCase from './stretch-movement--body-part/add-stretch-movement-body-part-use-case'
+import DeleteStretchMovementBodyPartUseCase from './stretch-movement--body-part/delete-stretch-movement-body-part-use-case'
 
 //stretch movement
 import GetAllStretchMovementsUseCase from './stretch-movement/get-all-stretch-movements-use-case'
@@ -42,6 +44,10 @@ export {
   AddBodyPartUseCase,
   UpdateBodyPartUseCase,
   DeleteBodyPartUseCase,
+  //stretch movement - body part
+  GetStretchMovementByBodyPartIdUseCase,
+  AddStretchMovementBodyPartUseCase,
+  DeleteStretchMovementBodyPartUseCase,
   //stretch movement
   GetAllStretchMovementsUseCase,
   GetStretchMovementByIdUseCase,
@@ -61,7 +67,6 @@ export {
   UpdateStretchChallengeUseCase,
   DeleteStretchChallengeUseCase,
   //others
-  GetStretchMovementByBodyPartIdUseCase,
   GetStretchChallengesByUserIdUseCase,
   AddUserStretchChallengeUseCase,
   DeleteUserStretchChallengeUseCase,
