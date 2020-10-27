@@ -1147,6 +1147,59 @@ export default {
           },
         },
       },
+      post: {
+        tags: ['Stretch Session'],
+        summary: 'Add stretch session',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                description: {
+                  type: 'string',
+                },
+                duration: {
+                  type: 'integer',
+                },
+                imageFileUrl: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchSession: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Session',
+                },
+              },
+            },
+          },
+        },
+      },
     },
     '/api/stretchSessions/{stretchSessionId}': {
       get: {
@@ -1183,6 +1236,103 @@ export default {
                 stretchSession: {
                   type: 'object',
                   $ref: '#/definitions/Stretch Session',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Stretch Session'],
+        summary: 'Update stretch session',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                description: {
+                  type: 'string',
+                },
+                duration: {
+                  type: 'integer',
+                },
+                imageFileUrl: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchSession: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Session',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Stretch Session'],
+        summary: 'Delete stretch session',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: true,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
                 },
               },
             },
@@ -1227,6 +1377,53 @@ export default {
           },
         },
       },
+      post: {
+        tags: ['Stretch Challenge'],
+        summary: 'Add stretch challenge',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                description: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenge: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Challenge',
+                },
+              },
+            },
+          },
+        },
+      },
     },
     '/api/stretchChallenges/{stretchChallengeId}': {
       get: {
@@ -1263,6 +1460,97 @@ export default {
                 stretchChallenge: {
                   type: 'object',
                   $ref: '#/definitions/Stretch Challenge',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Stretch Challenge'],
+        summary: 'Update stretch challenge',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                description: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenge: {
+                  type: 'object',
+                  $ref: '#/definitions/Stretch Challenge',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Stretch Challenge'],
+        summary: 'Delete stretch challenge',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: true,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
                 },
               },
             },

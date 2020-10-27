@@ -1,5 +1,6 @@
 import db from '../orm/models'
 import { Op } from 'sequelize'
+import { relative } from 'path'
 
 class WorkoutRepository {
   //body part
@@ -142,7 +143,7 @@ class WorkoutRepository {
     return await stretchMovement.destroy()
   }
 
-  //others
+  //stretch session
   async getAllStretchSessions() {
     return await db.StretchSession.findAll({
       attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
@@ -208,43 +209,45 @@ class WorkoutRepository {
     })
   }
 
-  async getStretchMovementByBodyPartId(bodyPartId) {
-    const relations = await db.StretchMovementBodyPart.findAll({
-      where: {
-        BodyPartId: bodyPartId,
-      },
-    })
-
-    const stretchMovementIdList = relations.map(
-      (relation) => relation.StretchMovementId
-    )
-
-    return await db.StretchMovement.findAll({
-      where: {
-        id: {
-          [Op.in]: stretchMovementIdList,
-        },
-      },
-      attributes: [
-        'id',
-        'name',
-        'description',
-        'duration',
-        'imageFileUrl',
-        'videoFileUrl',
-      ],
-      include: [
-        {
-          model: db.BodyPart,
-          attributes: ['id', 'name'],
-          through: {
-            attributes: [],
-          },
-        },
-      ],
-    })
+  async createStretchSession(stretchSession) {
+    return await db.StretchSession.create(stretchSession)
   }
 
+  async updateStretchSession(stretchSessionId, updatedFields) {
+    const stretchSession = await this.getStretchSessionById(stretchSessionId)
+
+    if (!stretchSession) return null
+
+    return await stretchSession.update(updatedFields)
+  }
+
+  async deleteStretchSession(stretchSessionId) {
+    const stretchSession = await this.getStretchSessionById(stretchSessionId)
+
+    if (!stretchSession) return null
+
+    const stretchMovementRelations = await db.StretchSessionStretchMovement.findAll(
+      {
+        where: {
+          StretchSessionId: stretchSessionId,
+        },
+      }
+    )
+    stretchMovementRelations.forEach((relation) => relation.destroy())
+
+    const stretchChallengeRelations = await db.StretchChallengeStretchSession.findAll(
+      {
+        where: {
+          StretchSessionId: stretchSessionId,
+        },
+      }
+    )
+    stretchChallengeRelations.forEach((relation) => relation.destroy())
+
+    return await stretchSession.destroy()
+  }
+
+  //stretch challenge
   async getAllStretchChallenges() {
     return await db.StretchChallenge.findAll({
       attributes: ['id', 'name', 'description'],
@@ -328,6 +331,47 @@ class WorkoutRepository {
     })
   }
 
+  async createStretchChallenge(stretchChallenge) {
+    return await db.StretchChallenge.create(stretchChallenge)
+  }
+
+  async updateStretchChallenge(stretchChallengeId, updatedFields) {
+    const stretchChallenge = await this.getStretchChallengeById(
+      stretchChallengeId
+    )
+
+    if (!stretchChallenge) return null
+
+    return await stretchChallenge.update(updatedFields)
+  }
+
+  async deleteStretchChallenge(stretchChallengeId) {
+    const stretchChallenge = await this.getStretchChallengeById(
+      stretchChallengeId
+    )
+
+    if (!stretchChallenge) return null
+
+    const stretchSessionRelations = await db.StretchChallengeStretchSession.findAll(
+      {
+        where: {
+          StretchChallengeId: stretchChallengeId,
+        },
+      }
+    )
+    stretchSessionRelations.forEach((relation) => relation.destroy())
+
+    const userRelations = await db.UserStretchChallenge.findAll({
+      where: {
+        StretchChallengeId: stretchChallengeId,
+      },
+    })
+    userRelations.forEach((relation) => relation.destroy())
+
+    return await stretchChallenge.destroy()
+  }
+
+  //others
   async getStretchChallengesByUserId(userId) {
     const relations = await db.UserStretchChallenge.findAll({
       where: {
@@ -378,6 +422,43 @@ class WorkoutRepository {
               ],
             },
           ],
+        },
+      ],
+    })
+  }
+
+  async getStretchMovementByBodyPartId(bodyPartId) {
+    const relations = await db.StretchMovementBodyPart.findAll({
+      where: {
+        BodyPartId: bodyPartId,
+      },
+    })
+
+    const stretchMovementIdList = relations.map(
+      (relation) => relation.StretchMovementId
+    )
+
+    return await db.StretchMovement.findAll({
+      where: {
+        id: {
+          [Op.in]: stretchMovementIdList,
+        },
+      },
+      attributes: [
+        'id',
+        'name',
+        'description',
+        'duration',
+        'imageFileUrl',
+        'videoFileUrl',
+      ],
+      include: [
+        {
+          model: db.BodyPart,
+          attributes: ['id', 'name'],
+          through: {
+            attributes: [],
+          },
         },
       ],
     })
