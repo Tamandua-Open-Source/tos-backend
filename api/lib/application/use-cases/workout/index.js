@@ -29,6 +29,11 @@ import AddStretchSessionUseCase from './stretch-session/add-stretch-session-use-
 import UpdateStretchSessionUseCase from './stretch-session/update-stretch-session-use-case'
 import DeleteStretchSessionUseCase from './stretch-session/delete-stretch-session-use-case'
 
+//stretch challenge - stretch session
+import GetStretchChallengesByStretchSessionIdUseCase from './stretch-challenge--stretch-session/get-stretch-challenges-by-stretch-session-id-use-case'
+import AddStretchChallengeStretchSessionUseCase from './stretch-challenge--stretch-session/add-stretch-challenge-stretch-session-use-case'
+import DeleteStretchChallengeStretchSessionUseCase from './stretch-challenge--stretch-session/delete-stretch-challenge-stretch-session-use-case'
+
 //stretch challenge
 import GetAllStretchChallengesUseCase from './stretch-challenge/get-all-stretch-challenges-use-case'
 import GetStretchChallengeByIdUseCase from './stretch-challenge/get-stretch-challenge-by-id-use-case'
@@ -69,6 +74,10 @@ export {
   AddStretchSessionUseCase,
   UpdateStretchSessionUseCase,
   DeleteStretchSessionUseCase,
+  //stretch challenge - stretch session
+  GetStretchChallengesByStretchSessionIdUseCase,
+  AddStretchChallengeStretchSessionUseCase,
+  DeleteStretchChallengeStretchSessionUseCase,
   //stretch challenge
   GetAllStretchChallengesUseCase,
   GetStretchChallengeByIdUseCase,

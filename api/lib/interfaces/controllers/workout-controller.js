@@ -481,6 +481,78 @@ class WorkoutController {
     }
   }
 
+  //stretch challenge - stretch session
+  async getStretchChallengesByStretchSessionId(req) {
+    const { stretchSessionId } = req.params
+
+    try {
+      const { getStretchChallengesByStretchSessionIdUseCase } = this.useCases
+      const stretchChallenges = await getStretchChallengesByStretchSessionIdUseCase.execute(
+        stretchSessionId
+      )
+
+      if (!stretchChallenges) {
+        return HttpResponse.ok({ message: 'Cannot find stretch challenges' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch challenges retrieved',
+          stretchChallenges,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async addStretchChallengeStretchSession(req) {
+    const { stretchChallengeId, stretchSessionId } = req.params
+
+    try {
+      const { addStretchChallengeStretchSessionUseCase } = this.useCases
+      const relation = await addStretchChallengeStretchSessionUseCase.execute(
+        stretchChallengeId,
+        stretchSessionId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot link stretch challenge and stretch session',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch challenge linked with stretch session',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteStretchChallengeStretchSession(req) {
+    const { stretchChallengeId, stretchSessionId } = req.params
+
+    try {
+      const { deleteStretchChallengeStretchSessionUseCase } = this.useCases
+      const relation = await deleteStretchChallengeStretchSessionUseCase.execute(
+        stretchChallengeId,
+        stretchSessionId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot unlink stretch challenge from stretch session',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch challenge unlinked from stretch session',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
   //stretch challenge
   async getAllStretchChallenges(_req) {
     try {

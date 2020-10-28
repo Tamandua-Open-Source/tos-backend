@@ -97,21 +97,21 @@ router.delete(
 
 //stretch session - stretch movement
 router.get(
-  '/stretchMovement/:stretchMovementId/stretchSessions/',
+  '/stretchMovements/:stretchMovementId/stretchSessions/',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     workoutController.getStretchSessionByStretchMovementId(req)
   )
 )
 router.post(
-  '/stretchMovement/:stretchMovementId/stretchSessions/:stretchSessionId',
+  '/stretchMovements/:stretchMovementId/stretchSessions/:stretchSessionId',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     workoutController.addStretchSessionStretchMovement(req)
   )
 )
 router.delete(
-  '/stretchMovement/:stretchMovementId/stretchSessions/:stretchSessionId',
+  '/stretchMovements/:stretchMovementId/stretchSessions/:stretchSessionId',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     workoutController.deleteStretchSessionStretchMovement(req)
@@ -150,6 +150,29 @@ router.delete(
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     workoutController.deleteStretchSession(req)
+  )
+)
+
+//stretch challenge - stretch session
+router.get(
+  '/stretchSessions/:stretchSessionId/stretchChallenges/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.getStretchChallengesByStretchSessionId(req)
+  )
+)
+router.post(
+  '/stretchSessions/:stretchSessionId/stretchChallenges/:stretchChallengeId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.addStretchChallengeStretchSession(req)
+  )
+)
+router.delete(
+  '/stretchSessions/:stretchSessionId/stretchChallenges/:stretchChallengeId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.deleteStretchChallengeStretchSession(req)
   )
 )
 

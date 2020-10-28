@@ -34,6 +34,9 @@ export default {
       name: 'Stretch Session',
     },
     {
+      name: 'Stretch Challenge - Stretch Session',
+    },
+    {
       name: 'Stretch Challenge',
     },
     {
@@ -1205,7 +1208,7 @@ export default {
     },
 
     //stretch session - stretch movement
-    '/api/stretchMovement/{stretchMovementId}/stretchSessions/': {
+    '/api/stretchMovements/{stretchMovementId}/stretchSessions/': {
       get: {
         tags: ['Stretch Session - Stretch Movement'],
         summary: 'Show all stretch sessions that contains the stretch movement',
@@ -1249,7 +1252,7 @@ export default {
         },
       },
     },
-    '/api/stretchMovement/{stretchMovementId}/stretchSessions/{stretchSessionId}': {
+    '/api/stretchMovements/{stretchMovementId}/stretchSessions/{stretchSessionId}': {
       post: {
         tags: ['Stretch Session - Stretch Movement'],
         summary: 'Add stretch session stretch movement relation',
@@ -1548,6 +1551,143 @@ export default {
           {
             in: 'path',
             name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    //stretch challenge - stretch session
+    '/api/stretchSessions/{stretchSessionId}/stretchChallenges/': {
+      get: {
+        tags: ['Stretch Challenge - Stretch Session'],
+        summary:
+          'Show all stretch challenges that contains the stretch session',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenges: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Challenge',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/stretchSessions/{stretchSessionId}/stretchChallenges/{stretchChallengeId}': {
+      post: {
+        tags: ['Stretch Challenge - Stretch Session'],
+        summary: 'Add stretch challenge stretch session relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Stretch Challenge - Stretch Session'],
+        summary: 'Delete stretch challenge stretch session relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchChallengeId',
             schema: {
               type: 'integer',
               minimum: 1,
