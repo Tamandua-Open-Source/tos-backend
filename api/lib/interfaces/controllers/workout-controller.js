@@ -727,7 +727,9 @@ class WorkoutController {
       const relation = await updateUserStretchChallengeUseCase.execute(
         userId,
         stretchChallengeId,
-        progress
+        {
+          progress,
+        }
       )
 
       if (!relation) {

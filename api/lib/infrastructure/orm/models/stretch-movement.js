@@ -8,9 +8,11 @@ module.exports = (sequelize, DataTypes) => {
       StretchMovement.belongsToMany(models.BodyPart, {
         through: models.StretchMovementBodyPart,
       })
-
       StretchMovement.belongsToMany(models.StretchSession, {
         through: models.StretchSessionStretchMovement,
+      })
+      StretchMovement.belongsToMany(models.User, {
+        through: models.UserStretchMovement,
       })
     }
   }
