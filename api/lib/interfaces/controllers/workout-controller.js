@@ -106,12 +106,12 @@ class WorkoutController {
   }
 
   //stretch movement - body part
-  async getStretchMovementByBodyPartId(req) {
+  async getStretchMovementsByBodyPartId(req) {
     const { bodyPartId } = req.params
 
     try {
-      const { getStretchMovementByBodyPartIdUseCase } = this.useCases
-      const stretchMovements = await getStretchMovementByBodyPartIdUseCase.execute(
+      const { getStretchMovementsByBodyPartIdUseCase } = this.useCases
+      const stretchMovements = await getStretchMovementsByBodyPartIdUseCase.execute(
         bodyPartId
       )
 
@@ -287,6 +287,78 @@ class WorkoutController {
         return HttpResponse.ok({ message: 'Cannot delete stretch movement' })
       } else {
         return HttpResponse.ok({ message: 'Stretch movement deleted' })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  //stretch session - stretch movement
+  async getStretchSessionByStretchMovementId(req) {
+    const { stretchMovementId } = req.params
+
+    try {
+      const { getStretchSessionsByStretchMovementIdUseCase } = this.useCases
+      const stretchSessions = await getStretchSessionsByStretchMovementIdUseCase.execute(
+        stretchMovementId
+      )
+
+      if (!stretchSessions) {
+        return HttpResponse.ok({ message: 'Cannot find stretch sessions' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch sessions retrieved',
+          stretchSessions,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async addStretchSessionStretchMovement(req) {
+    const { stretchSessionId, stretchMovementId } = req.params
+
+    try {
+      const { addStretchSessionStretchMovementUseCase } = this.useCases
+      const relation = await addStretchSessionStretchMovementUseCase.execute(
+        stretchSessionId,
+        stretchMovementId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot link stretch session and stretch movement',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch session linked with stretch movement',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteStretchSessionStretchMovement(req) {
+    const { stretchSessionId, stretchMovementId } = req.params
+
+    try {
+      const { deleteStretchSessionStretchMovementUseCase } = this.useCases
+      const relation = await deleteStretchSessionStretchMovementUseCase.execute(
+        stretchSessionId,
+        stretchMovementId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot unlink stretch session from stretch movement',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch session unlinked from stretch movement',
+        })
       }
     } catch (error) {
       console.log(error)

@@ -8,7 +8,6 @@ class WorkoutRepository {
       attributes: ['id', 'name'],
     })
   }
-
   async getBodyPartById(bodyPartId) {
     return await db.BodyPart.findOne({
       where: {
@@ -17,11 +16,9 @@ class WorkoutRepository {
       attributes: ['id', 'name'],
     })
   }
-
   async createBodyPart(bodyPart) {
     return await db.BodyPart.create(bodyPart)
   }
-
   async updateBodyPart(bodyPartId, updatedFields) {
     const bodyPart = await this.getBodyPartById(bodyPartId)
 
@@ -29,7 +26,6 @@ class WorkoutRepository {
 
     return await bodyPart.update(updatedFields)
   }
-
   async deleteBodyPart(bodyPartId) {
     const bodyPart = await this.getBodyPartById(bodyPartId)
 
@@ -48,330 +44,8 @@ class WorkoutRepository {
     return await bodyPart.destroy()
   }
 
-  //stretch movement
-  async getAllStretchMovements() {
-    return await db.StretchMovement.findAll({
-      attributes: [
-        'id',
-        'name',
-        'description',
-        'duration',
-        'imageFileUrl',
-        'videoFileUrl',
-      ],
-      through: {
-        attributes: [],
-      },
-      include: [
-        {
-          model: db.BodyPart,
-          attributes: ['id', 'name'],
-          through: {
-            attributes: [],
-          },
-        },
-      ],
-    })
-  }
-
-  async getStretchMovementById(stretchMovementId) {
-    return await db.StretchMovement.findOne({
-      where: {
-        id: stretchMovementId,
-      },
-      attributes: [
-        'id',
-        'name',
-        'description',
-        'duration',
-        'imageFileUrl',
-        'videoFileUrl',
-      ],
-      through: {
-        attributes: [],
-      },
-      include: [
-        {
-          model: db.BodyPart,
-          attributes: ['id', 'name'],
-          through: {
-            attributes: [],
-          },
-        },
-      ],
-    })
-  }
-
-  async createStretchMovement(stretchMovement) {
-    return await db.StretchMovement.create(stretchMovement)
-  }
-
-  async updateStretchMovement(stretchMovementId, updatedFields) {
-    const stretchMovement = await this.getStretchMovementById(stretchMovementId)
-
-    if (!stretchMovement) return null
-
-    return await stretchMovement.update(updatedFields)
-  }
-
-  async deleteStretchMovement(stretchMovementId) {
-    const stretchMovement = await this.getStretchMovementById(stretchMovementId)
-
-    if (!stretchMovement) return null
-
-    const BodyPartRelations = await db.StretchMovementBodyPart.findAll({
-      where: {
-        StretchMovementId: stretchMovementId,
-      },
-    })
-    BodyPartRelations.forEach((relation) => {
-      relation.destroy()
-    })
-
-    const stretchSessionRelations = await db.StretchSessionStretchMovement.findAll(
-      {
-        where: {
-          StretchMovementId: stretchMovementId,
-        },
-      }
-    )
-    stretchSessionRelations.forEach((relation) => {
-      relation.destroy()
-    })
-
-    return await stretchMovement.destroy()
-  }
-
-  //stretch session
-  async getAllStretchSessions() {
-    return await db.StretchSession.findAll({
-      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
-      include: [
-        {
-          model: db.StretchMovement,
-          attributes: [
-            'id',
-            'name',
-            'description',
-            'duration',
-            'imageFileUrl',
-            'videoFileUrl',
-          ],
-          through: {
-            attributes: [],
-          },
-          include: [
-            {
-              model: db.BodyPart,
-              attributes: ['id', 'name'],
-              through: {
-                attributes: [],
-              },
-            },
-          ],
-        },
-      ],
-    })
-  }
-
-  async getStretchSessionById(stretchSessionId) {
-    return await db.StretchSession.findOne({
-      where: {
-        id: stretchSessionId,
-      },
-      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
-      include: [
-        {
-          model: db.StretchMovement,
-          attributes: [
-            'id',
-            'name',
-            'description',
-            'duration',
-            'imageFileUrl',
-            'videoFileUrl',
-          ],
-          through: {
-            attributes: [],
-          },
-          include: [
-            {
-              model: db.BodyPart,
-              attributes: ['id', 'name'],
-              through: {
-                attributes: [],
-              },
-            },
-          ],
-        },
-      ],
-    })
-  }
-
-  async createStretchSession(stretchSession) {
-    return await db.StretchSession.create(stretchSession)
-  }
-
-  async updateStretchSession(stretchSessionId, updatedFields) {
-    const stretchSession = await this.getStretchSessionById(stretchSessionId)
-
-    if (!stretchSession) return null
-
-    return await stretchSession.update(updatedFields)
-  }
-
-  async deleteStretchSession(stretchSessionId) {
-    const stretchSession = await this.getStretchSessionById(stretchSessionId)
-
-    if (!stretchSession) return null
-
-    const stretchMovementRelations = await db.StretchSessionStretchMovement.findAll(
-      {
-        where: {
-          StretchSessionId: stretchSessionId,
-        },
-      }
-    )
-    stretchMovementRelations.forEach((relation) => relation.destroy())
-
-    const stretchChallengeRelations = await db.StretchChallengeStretchSession.findAll(
-      {
-        where: {
-          StretchSessionId: stretchSessionId,
-        },
-      }
-    )
-    stretchChallengeRelations.forEach((relation) => relation.destroy())
-
-    return await stretchSession.destroy()
-  }
-
-  //stretch challenge
-  async getAllStretchChallenges() {
-    return await db.StretchChallenge.findAll({
-      attributes: ['id', 'name', 'description'],
-      include: [
-        {
-          model: db.StretchSession,
-          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
-          through: {
-            attributes: [],
-          },
-          include: [
-            {
-              model: db.StretchMovement,
-              attributes: [
-                'id',
-                'name',
-                'description',
-                'duration',
-                'imageFileUrl',
-                'videoFileUrl',
-              ],
-              through: {
-                attributes: [],
-              },
-              include: [
-                {
-                  model: db.BodyPart,
-                  attributes: ['id', 'name'],
-                  through: {
-                    attributes: [],
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    })
-  }
-
-  async getStretchChallengeById(stretchChallengeId) {
-    return await db.StretchChallenge.findOne({
-      where: {
-        id: stretchChallengeId,
-      },
-      attributes: ['id', 'name', 'description'],
-      include: [
-        {
-          model: db.StretchSession,
-          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
-          through: {
-            attributes: [],
-          },
-          include: [
-            {
-              model: db.StretchMovement,
-              attributes: [
-                'id',
-                'name',
-                'description',
-                'duration',
-                'imageFileUrl',
-                'videoFileUrl',
-              ],
-              through: {
-                attributes: [],
-              },
-              include: [
-                {
-                  model: db.BodyPart,
-                  attributes: ['id', 'name'],
-                  through: {
-                    attributes: [],
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    })
-  }
-
-  async createStretchChallenge(stretchChallenge) {
-    return await db.StretchChallenge.create(stretchChallenge)
-  }
-
-  async updateStretchChallenge(stretchChallengeId, updatedFields) {
-    const stretchChallenge = await this.getStretchChallengeById(
-      stretchChallengeId
-    )
-
-    if (!stretchChallenge) return null
-
-    return await stretchChallenge.update(updatedFields)
-  }
-
-  async deleteStretchChallenge(stretchChallengeId) {
-    const stretchChallenge = await this.getStretchChallengeById(
-      stretchChallengeId
-    )
-
-    if (!stretchChallenge) return null
-
-    const stretchSessionRelations = await db.StretchChallengeStretchSession.findAll(
-      {
-        where: {
-          StretchChallengeId: stretchChallengeId,
-        },
-      }
-    )
-    stretchSessionRelations.forEach((relation) => relation.destroy())
-
-    const userRelations = await db.UserStretchChallenge.findAll({
-      where: {
-        StretchChallengeId: stretchChallengeId,
-      },
-    })
-    userRelations.forEach((relation) => relation.destroy())
-
-    return await stretchChallenge.destroy()
-  }
-
   //stretch movement - body part
-  async getStretchMovementByBodyPartId(bodyPartId) {
+  async getStretchMovementsByBodyPartId(bodyPartId) {
     const relations = await db.StretchMovementBodyPart.findAll({
       where: {
         BodyPartId: bodyPartId,
@@ -449,6 +123,514 @@ class WorkoutRepository {
     if (!relation) return null
 
     return await relation.destroy()
+  }
+
+  //stretch movement
+  async getAllStretchMovements() {
+    return await db.StretchMovement.findAll({
+      attributes: [
+        'id',
+        'name',
+        'description',
+        'duration',
+        'imageFileUrl',
+        'videoFileUrl',
+      ],
+      through: {
+        attributes: [],
+      },
+      include: [
+        {
+          model: db.BodyPart,
+          attributes: ['id', 'name'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    })
+  }
+  async getStretchMovementById(stretchMovementId) {
+    return await db.StretchMovement.findOne({
+      where: {
+        id: stretchMovementId,
+      },
+      attributes: [
+        'id',
+        'name',
+        'description',
+        'duration',
+        'imageFileUrl',
+        'videoFileUrl',
+      ],
+      through: {
+        attributes: [],
+      },
+      include: [
+        {
+          model: db.BodyPart,
+          attributes: ['id', 'name'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    })
+  }
+  async createStretchMovement(stretchMovement) {
+    return await db.StretchMovement.create(stretchMovement)
+  }
+  async updateStretchMovement(stretchMovementId, updatedFields) {
+    const stretchMovement = await this.getStretchMovementById(stretchMovementId)
+
+    if (!stretchMovement) return null
+
+    return await stretchMovement.update(updatedFields)
+  }
+  async deleteStretchMovement(stretchMovementId) {
+    const stretchMovement = await this.getStretchMovementById(stretchMovementId)
+
+    if (!stretchMovement) return null
+
+    const BodyPartRelations = await db.StretchMovementBodyPart.findAll({
+      where: {
+        StretchMovementId: stretchMovementId,
+      },
+    })
+    BodyPartRelations.forEach((relation) => {
+      relation.destroy()
+    })
+
+    const stretchSessionRelations = await db.StretchSessionStretchMovement.findAll(
+      {
+        where: {
+          StretchMovementId: stretchMovementId,
+        },
+      }
+    )
+    stretchSessionRelations.forEach((relation) => {
+      relation.destroy()
+    })
+
+    return await stretchMovement.destroy()
+  }
+
+  //stretch session - stretch movement
+  async getStretchSessionsByStretchMovementId(stretchMovementId) {
+    const relations = await db.StretchSessionStretchMovement.findAll({
+      where: {
+        StretchMovementId: stretchMovementId,
+      },
+    })
+
+    const stretchSessionIdList = relations.map(
+      (relation) => relation.StretchSessionId
+    )
+
+    return await db.StretchSession.findAll({
+      where: {
+        id: {
+          [Op.in]: stretchSessionIdList,
+        },
+      },
+      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+      include: [
+        {
+          model: db.StretchMovement,
+          attributes: [
+            'id',
+            'name',
+            'description',
+            'duration',
+            'imageFileUrl',
+            'videoFileUrl',
+          ],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.BodyPart,
+              attributes: ['id', 'name'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+        },
+      ],
+    })
+  }
+  async addStretchSessionStretchMovement(stretchSessionId, stretchMovementId) {
+    const stretchSession = await db.StretchSession.findOne({
+      where: {
+        id: stretchSessionId,
+      },
+    })
+
+    if (!stretchSession) return null
+
+    const stretchMovement = await db.StretchMovement.findOne({
+      where: {
+        id: stretchMovementId,
+      },
+    })
+
+    if (!stretchMovement) return null
+
+    const relation = await db.StretchSessionStretchMovement.findOne({
+      where: {
+        StretchSessionId: stretchSessionId,
+        StretchMovementId: stretchMovementId,
+      },
+    })
+
+    if (relation) return null
+
+    return await db.StretchSessionStretchMovement.create({
+      StretchSessionId: stretchSessionId,
+      StretchMovementId: stretchMovementId,
+    })
+  }
+  async deleteStretchSessionStretchMovement(
+    stretchSessionId,
+    stretchMovementId
+  ) {
+    const relation = await db.StretchSessionStretchMovement.findOne({
+      where: {
+        StretchSessionId: stretchSessionId,
+        StretchMovementId: stretchMovementId,
+      },
+    })
+
+    if (!relation) return null
+
+    return await relation.destroy()
+  }
+
+  //stretch session
+  async getAllStretchSessions() {
+    return await db.StretchSession.findAll({
+      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+      include: [
+        {
+          model: db.StretchMovement,
+          attributes: [
+            'id',
+            'name',
+            'description',
+            'duration',
+            'imageFileUrl',
+            'videoFileUrl',
+          ],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.BodyPart,
+              attributes: ['id', 'name'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+        },
+      ],
+    })
+  }
+  async getStretchSessionById(stretchSessionId) {
+    return await db.StretchSession.findOne({
+      where: {
+        id: stretchSessionId,
+      },
+      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+      include: [
+        {
+          model: db.StretchMovement,
+          attributes: [
+            'id',
+            'name',
+            'description',
+            'duration',
+            'imageFileUrl',
+            'videoFileUrl',
+          ],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.BodyPart,
+              attributes: ['id', 'name'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+        },
+      ],
+    })
+  }
+  async createStretchSession(stretchSession) {
+    return await db.StretchSession.create(stretchSession)
+  }
+  async updateStretchSession(stretchSessionId, updatedFields) {
+    const stretchSession = await this.getStretchSessionById(stretchSessionId)
+
+    if (!stretchSession) return null
+
+    return await stretchSession.update(updatedFields)
+  }
+  async deleteStretchSession(stretchSessionId) {
+    const stretchSession = await this.getStretchSessionById(stretchSessionId)
+
+    if (!stretchSession) return null
+
+    const stretchMovementRelations = await db.StretchSessionStretchMovement.findAll(
+      {
+        where: {
+          StretchSessionId: stretchSessionId,
+        },
+      }
+    )
+    stretchMovementRelations.forEach((relation) => relation.destroy())
+
+    const stretchChallengeRelations = await db.StretchChallengeStretchSession.findAll(
+      {
+        where: {
+          StretchSessionId: stretchSessionId,
+        },
+      }
+    )
+    stretchChallengeRelations.forEach((relation) => relation.destroy())
+
+    return await stretchSession.destroy()
+  }
+
+  //stretch challenge - stretch session
+  async getStretchChallengeByStretchSessionId(stretchSessionId) {
+    const relations = await db.StretchChallengeStretchSession.findAll({
+      where: {
+        StretchSessionId: stretchSessionId,
+      },
+    })
+
+    const stretchChallengeIdList = relations.map(
+      (relation) => relation.StretchChallengeId
+    )
+
+    return await db.StretchChallenge.findAll({
+      where: {
+        id: {
+          [Op.in]: stretchChallengeIdList,
+        },
+      },
+      attributes: ['id', 'name', 'description'],
+      include: [
+        {
+          model: db.StretchSession,
+          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.StretchMovement,
+              attributes: [
+                'id',
+                'name',
+                'description',
+                'duration',
+                'imageFileUrl',
+                'videoFileUrl',
+              ],
+              through: {
+                attributes: [],
+              },
+              include: [
+                {
+                  model: db.BodyPart,
+                  attributes: ['id', 'name'],
+                  through: {
+                    attributes: [],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    })
+  }
+  async addStretchChallengeStretchSession(
+    stretchChallengeId,
+    stretchSessionId
+  ) {
+    const stretchChallenge = await db.StretchChallenge.findOne({
+      where: {
+        id: stretchChallengeId,
+      },
+    })
+
+    if (!stretchChallenge) return null
+
+    const stretchSession = await db.StretchSession.findOne({
+      where: {
+        id: stretchSessionId,
+      },
+    })
+
+    if (!stretchSession) return null
+
+    const relation = await db.StretchChallengeStretchSession.findOne({
+      where: {
+        StretchChallengeId: stretchChallengeId,
+        StretchSessionId: stretchSessionId,
+      },
+    })
+
+    if (relation) return null
+
+    return await db.StretchChallengeStretchSession.create({
+      StretchChallengeId: stretchChallengeId,
+      StretchSessionId: stretchSessionId,
+    })
+  }
+  async deleteStretchChallengeStretchSession(
+    stretchChallengeId,
+    stretchSessionId
+  ) {
+    const relation = await db.StretchChallengeStretchSession.findOne({
+      where: {
+        StretchChallengeId: stretchChallengeId,
+        StretchSessionId: stretchSessionId,
+      },
+    })
+
+    if (!relation) return null
+
+    return await relation.destroy()
+  }
+
+  //stretch challenge
+  async getAllStretchChallenges() {
+    return await db.StretchChallenge.findAll({
+      attributes: ['id', 'name', 'description'],
+      include: [
+        {
+          model: db.StretchSession,
+          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.StretchMovement,
+              attributes: [
+                'id',
+                'name',
+                'description',
+                'duration',
+                'imageFileUrl',
+                'videoFileUrl',
+              ],
+              through: {
+                attributes: [],
+              },
+              include: [
+                {
+                  model: db.BodyPart,
+                  attributes: ['id', 'name'],
+                  through: {
+                    attributes: [],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    })
+  }
+  async getStretchChallengeById(stretchChallengeId) {
+    return await db.StretchChallenge.findOne({
+      where: {
+        id: stretchChallengeId,
+      },
+      attributes: ['id', 'name', 'description'],
+      include: [
+        {
+          model: db.StretchSession,
+          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.StretchMovement,
+              attributes: [
+                'id',
+                'name',
+                'description',
+                'duration',
+                'imageFileUrl',
+                'videoFileUrl',
+              ],
+              through: {
+                attributes: [],
+              },
+              include: [
+                {
+                  model: db.BodyPart,
+                  attributes: ['id', 'name'],
+                  through: {
+                    attributes: [],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    })
+  }
+  async createStretchChallenge(stretchChallenge) {
+    return await db.StretchChallenge.create(stretchChallenge)
+  }
+  async updateStretchChallenge(stretchChallengeId, updatedFields) {
+    const stretchChallenge = await this.getStretchChallengeById(
+      stretchChallengeId
+    )
+
+    if (!stretchChallenge) return null
+
+    return await stretchChallenge.update(updatedFields)
+  }
+  async deleteStretchChallenge(stretchChallengeId) {
+    const stretchChallenge = await this.getStretchChallengeById(
+      stretchChallengeId
+    )
+
+    if (!stretchChallenge) return null
+
+    const stretchSessionRelations = await db.StretchChallengeStretchSession.findAll(
+      {
+        where: {
+          StretchChallengeId: stretchChallengeId,
+        },
+      }
+    )
+    stretchSessionRelations.forEach((relation) => relation.destroy())
+
+    const userRelations = await db.UserStretchChallenge.findAll({
+      where: {
+        StretchChallengeId: stretchChallengeId,
+      },
+    })
+    userRelations.forEach((relation) => relation.destroy())
+
+    return await stretchChallenge.destroy()
   }
 
   //user - stretch challenge
