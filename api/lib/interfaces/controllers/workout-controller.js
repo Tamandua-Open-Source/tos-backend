@@ -664,7 +664,7 @@ class WorkoutController {
     }
   }
 
-  //others
+  //user - stretch challenge
   async getStretchChallengesByUserId(req) {
     const { userId } = req.props
 
@@ -711,31 +711,6 @@ class WorkoutController {
       return HttpResponse.serverError()
     }
   }
-  async deleteUserStretchChallenge(req) {
-    const { userId } = req.props
-    const { stretchChallengeId } = req.params
-
-    try {
-      const { deleteUserStretchChallengeUseCase } = this.useCases
-      const relation = await deleteUserStretchChallengeUseCase.execute(
-        userId,
-        stretchChallengeId
-      )
-
-      if (!relation) {
-        return HttpResponse.ok({
-          message: 'Cannot unlink user and Stretch Challenge',
-        })
-      } else {
-        return HttpResponse.ok({
-          message: 'User unlinked from Stretch Challenge',
-        })
-      }
-    } catch (error) {
-      console.error(error)
-      return HttpResponse.serverError()
-    }
-  }
   async updateUserStretchChallenge(req) {
     const { userId } = req.props
     const { stretchChallengeId } = req.params
@@ -762,6 +737,31 @@ class WorkoutController {
       } else {
         return HttpResponse.ok({
           message: 'User Stretch Challenge updated',
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteUserStretchChallenge(req) {
+    const { userId } = req.props
+    const { stretchChallengeId } = req.params
+
+    try {
+      const { deleteUserStretchChallengeUseCase } = this.useCases
+      const relation = await deleteUserStretchChallengeUseCase.execute(
+        userId,
+        stretchChallengeId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot unlink user and Stretch Challenge',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User unlinked from Stretch Challenge',
         })
       }
     } catch (error) {

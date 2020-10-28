@@ -19,6 +19,9 @@ export default {
       name: 'User Preferences',
     },
     {
+      name: 'User - Stretch Challenge',
+    },
+    {
       name: 'Body Part',
     },
     {
@@ -38,9 +41,6 @@ export default {
     },
     {
       name: 'Stretch Challenge',
-    },
-    {
-      name: 'User - Stretch Challenge',
     },
   ],
 
@@ -1932,7 +1932,7 @@ export default {
     '/api/users/me/stretchChallenges': {
       get: {
         tags: ['User - Stretch Challenge'],
-        summary: 'Show all users stretch challenges',
+        summary: 'Show all stretch challenges that the user is doing',
         parameters: [
           {
             in: 'header',

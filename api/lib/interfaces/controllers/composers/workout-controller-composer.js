@@ -37,11 +37,11 @@ import {
   AddStretchChallengeUseCase,
   UpdateStretchChallengeUseCase,
   DeleteStretchChallengeUseCase,
-  //others
+  //user - stretch challenge
   GetStretchChallengesByUserIdUseCase,
   AddUserStretchChallengeUseCase,
-  DeleteUserStretchChallengeUseCase,
   UpdateUserStretchChallengeUseCase,
+  DeleteUserStretchChallengeUseCase,
 } from '../../../application/use-cases/workout'
 
 class WorkoutControllerComposer {
@@ -161,7 +161,7 @@ class WorkoutControllerComposer {
       workoutRepository,
     })
 
-    //others
+    //user - stretch challenge
     const getStretchChallengesByUserIdUseCase = new GetStretchChallengesByUserIdUseCase(
       {
         workoutRepository,
@@ -170,12 +170,12 @@ class WorkoutControllerComposer {
     const addUserStretchChallengeUseCase = new AddUserStretchChallengeUseCase({
       workoutRepository,
     })
-    const deleteUserStretchChallengeUseCase = new DeleteUserStretchChallengeUseCase(
+    const updateUserStretchChallengeUseCase = new UpdateUserStretchChallengeUseCase(
       {
         workoutRepository,
       }
     )
-    const updateUserStretchChallengeUseCase = new UpdateUserStretchChallengeUseCase(
+    const deleteUserStretchChallengeUseCase = new DeleteUserStretchChallengeUseCase(
       {
         workoutRepository,
       }
@@ -218,11 +218,11 @@ class WorkoutControllerComposer {
       addStretchChallengeUseCase,
       updateStretchChallengeUseCase,
       deleteStretchChallengeUseCase,
-      //others
+      //user - stretch challenge
       getStretchChallengesByUserIdUseCase,
       addUserStretchChallengeUseCase,
-      deleteUserStretchChallengeUseCase,
       updateUserStretchChallengeUseCase,
+      deleteUserStretchChallengeUseCase,
     })
   }
 }

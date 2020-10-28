@@ -405,6 +405,13 @@ class WorkoutRepository {
     )
     stretchChallengeRelations.forEach((relation) => relation.destroy())
 
+    const userRelations = await db.UserStretchSession.findAll({
+      where: {
+        StretchSessionId: stretchSessionId,
+      },
+    })
+    userRelations.forEach((relation) => relation.destroy())
+
     return await stretchSession.destroy()
   }
 
@@ -633,6 +640,118 @@ class WorkoutRepository {
     return await stretchChallenge.destroy()
   }
 
+  //user - stretch movement
+
+  //user - stretch session
+  async getStretchSessionsByUserId(userId) {
+    const relations = await db.UserStretchSession.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    const stretchSessionsIdList = relations.map(
+      (relation) => relation.StretchSessionId
+    )
+
+    return await db.StretchSession.findAll({
+      where: {
+        id: {
+          [Op.in]: stretchSessionsIdList,
+        },
+      },
+      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+      include: [
+        {
+          model: db.StretchMovement,
+          attributes: [
+            'id',
+            'name',
+            'description',
+            'duration',
+            'imageFileUrl',
+            'videoFileUrl',
+          ],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.BodyPart,
+              attributes: ['id', 'name'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+        },
+      ],
+    })
+  }
+  async getUserStretchSessionsByUserId(userId) {
+    return await db.UserStretchSession.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+  }
+  async addUserStretchSession(userId, stretchSessionId) {
+    const user = await db.User.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) return null
+
+    const stretchSession = await db.StretchSession.findOne({
+      where: {
+        id: stretchSessionId,
+      },
+    })
+
+    if (!stretchSession) return null
+
+    const relation = await db.UserStretchSession.findOne({
+      where: {
+        UserId: userId,
+        StretchSessionId: stretchSessionId,
+      },
+    })
+
+    if (relation) return null
+
+    return await db.UserStretchSession.create({
+      UserId: userId,
+      StretchSessionId: stretchSessionId,
+      progress: 0,
+    })
+  }
+  async updateUserStretchSession(userId, stretchSessionId, updatedFields) {
+    const relation = await db.UserStretchSession.findOne({
+      where: {
+        UserId: userId,
+        StretchSessionId: stretchSessionId,
+      },
+    })
+
+    if (!relation) return null
+
+    return await relation.update(updatedFields)
+  }
+  async deleteUserStretchSession(userId, stretchSessionId) {
+    const relation = await db.UserStretchSession.findOne({
+      where: {
+        UserId: userId,
+        StretchSessionId: stretchSessionId,
+      },
+    })
+
+    if (!relation) return null
+
+    return await relation.destroy()
+  }
+
   //user - stretch challenge
   async getStretchChallengesByUserId(userId) {
     const relations = await db.UserStretchChallenge.findAll({
@@ -688,6 +807,13 @@ class WorkoutRepository {
       ],
     })
   }
+  async getUserStretchChallengesByUserId(userId) {
+    return await db.UserStretchChallenge.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+  }
   async addUserStretchChallenge(userId, stretchChallengeId) {
     const user = await db.User.findOne({
       where: {
@@ -720,16 +846,6 @@ class WorkoutRepository {
       progress: 0,
     })
   }
-  async deleteUserStretchChallenge(userId, stretchChallengeId) {
-    const relation = await db.UserStretchChallenge.findOne({
-      UserId: userId,
-      StretchChallengeId: stretchChallengeId,
-    })
-
-    if (!relation) return null
-
-    return await relation.destroy()
-  }
   async updateUserStretchChallenge(userId, stretchChallengeId, progress) {
     const relation = await db.UserStretchChallenge.findOne({
       UserId: userId,
@@ -739,6 +855,16 @@ class WorkoutRepository {
     if (!relation) return null
 
     return await relation.update({ progress })
+  }
+  async deleteUserStretchChallenge(userId, stretchChallengeId) {
+    const relation = await db.UserStretchChallenge.findOne({
+      UserId: userId,
+      StretchChallengeId: stretchChallengeId,
+    })
+
+    if (!relation) return null
+
+    return await relation.destroy()
   }
 }
 

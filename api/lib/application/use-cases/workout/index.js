@@ -84,9 +84,9 @@ export {
   AddStretchChallengeUseCase,
   UpdateStretchChallengeUseCase,
   DeleteStretchChallengeUseCase,
-  //others
+  //user - stretch challenge
   GetStretchChallengesByUserIdUseCase,
   AddUserStretchChallengeUseCase,
-  DeleteUserStretchChallengeUseCase,
   UpdateUserStretchChallengeUseCase,
+  DeleteUserStretchChallengeUseCase,
 }
