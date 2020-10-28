@@ -409,7 +409,7 @@ class WorkoutRepository {
   }
 
   //stretch challenge - stretch session
-  async getStretchChallengeByStretchSessionId(stretchSessionId) {
+  async getStretchChallengesByStretchSessionId(stretchSessionId) {
     const relations = await db.StretchChallengeStretchSession.findAll({
       where: {
         StretchSessionId: stretchSessionId,
