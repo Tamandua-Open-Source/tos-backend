@@ -42,7 +42,7 @@ router.get(
   '/bodyParts/:bodyPartId/stretchMovements/',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
-    workoutController.getStretchMovementByBodyPartId(req)
+    workoutController.getStretchMovementsByBodyPartId(req)
   )
 )
 router.post(
@@ -92,6 +92,29 @@ router.delete(
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     workoutController.deleteStretchMovement(req)
+  )
+)
+
+//stretch session - stretch movement
+router.get(
+  '/stretchMovement/:stretchMovementId/stretchSessions/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.getStretchSessionByStretchMovementId(req)
+  )
+)
+router.post(
+  '/stretchMovement/:stretchMovementId/stretchSessions/:stretchSessionId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.addStretchSessionStretchMovement(req)
+  )
+)
+router.delete(
+  '/stretchMovement/:stretchMovementId/stretchSessions/:stretchSessionId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.deleteStretchSessionStretchMovement(req)
   )
 )
 

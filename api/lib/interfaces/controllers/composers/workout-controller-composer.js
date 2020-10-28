@@ -8,7 +8,7 @@ import {
   UpdateBodyPartUseCase,
   DeleteBodyPartUseCase,
   //stretch movement - body part
-  GetStretchMovementByBodyPartIdUseCase,
+  GetStretchMovementsByBodyPartIdUseCase,
   AddStretchMovementBodyPartUseCase,
   DeleteStretchMovementBodyPartUseCase,
   //stretch movement
@@ -17,6 +17,10 @@ import {
   AddStretchMovementUseCase,
   UpdateStretchMovementUseCase,
   DeleteStretchMovementUseCase,
+  //stretch session - stretch movement
+  GetStretchSessionsByStretchMovementIdUseCase,
+  AddStretchSessionStretchMovementUseCase,
+  DeleteStretchSessionStretchMovementUseCase,
   //stretch session
   GetAllStretchSessionsUseCase,
   GetStretchSessionByIdUseCase,
@@ -58,7 +62,7 @@ class WorkoutControllerComposer {
     })
 
     //stretch movement - body part
-    const getStretchMovementByBodyPartIdUseCase = new GetStretchMovementByBodyPartIdUseCase(
+    const getStretchMovementsByBodyPartIdUseCase = new GetStretchMovementsByBodyPartIdUseCase(
       {
         workoutRepository,
       }
@@ -90,6 +94,22 @@ class WorkoutControllerComposer {
     const deleteStretchMovementUseCase = new DeleteStretchMovementUseCase({
       workoutRepository,
     })
+
+    const getStretchSessionsByStretchMovementIdUseCase = new GetStretchSessionsByStretchMovementIdUseCase(
+      {
+        workoutRepository,
+      }
+    )
+    const addStretchSessionStretchMovementUseCase = new AddStretchSessionStretchMovementUseCase(
+      {
+        workoutRepository,
+      }
+    )
+    const deleteStretchSessionStretchMovementUseCase = new DeleteStretchSessionStretchMovementUseCase(
+      {
+        workoutRepository,
+      }
+    )
 
     //stretch session
     const getAllStretchSessionsUseCase = new GetAllStretchSessionsUseCase({
@@ -153,7 +173,7 @@ class WorkoutControllerComposer {
       updateBodyPartUseCase,
       deleteBodyPartUseCase,
       //stretch movement - body part
-      getStretchMovementByBodyPartIdUseCase,
+      getStretchMovementsByBodyPartIdUseCase,
       addStretchMovementBodyPartUseCase,
       deleteStretchMovementBodyPartUseCase,
       //stretch movement
@@ -162,6 +182,10 @@ class WorkoutControllerComposer {
       addStretchMovementUseCase,
       updateStretchMovementUseCase,
       deleteStretchMovementUseCase,
+      //stretch session - stretch movement
+      getStretchSessionsByStretchMovementIdUseCase,
+      addStretchSessionStretchMovementUseCase,
+      deleteStretchSessionStretchMovementUseCase,
       //stretch session
       getAllStretchSessionsUseCase,
       getStretchSessionByIdUseCase,

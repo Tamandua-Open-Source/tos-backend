@@ -28,6 +28,9 @@ export default {
       name: 'Stretch Movement',
     },
     {
+      name: 'Stretch Session - Stretch Movement',
+    },
+    {
       name: 'Stretch Session',
     },
     {
@@ -1179,6 +1182,142 @@ export default {
           {
             in: 'path',
             name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    //stretch session - stretch movement
+    '/api/stretchMovement/{stretchMovementId}/stretchSessions/': {
+      get: {
+        tags: ['Stretch Session - Stretch Movement'],
+        summary: 'Show all stretch sessions that contains the stretch movement',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchSessions: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Session',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/stretchMovement/{stretchMovementId}/stretchSessions/{stretchSessionId}': {
+      post: {
+        tags: ['Stretch Session - Stretch Movement'],
+        summary: 'Add stretch session stretch movement relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Stretch Session - Stretch Movement'],
+        summary: 'Delete stretch session stretch movement relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
             schema: {
               type: 'integer',
               minimum: 1,

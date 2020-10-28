@@ -6,7 +6,7 @@ import UpdateBodyPartUseCase from './body-part/update-body-part-use-case'
 import DeleteBodyPartUseCase from './body-part/delete-body-part-use-case'
 
 //stretch movement - body part
-import GetStretchMovementByBodyPartIdUseCase from './stretch-movement--body-part/get-stretch-movement-by-body-part-id-use-case'
+import GetStretchMovementsByBodyPartIdUseCase from './stretch-movement--body-part/get-stretch-movements-by-body-part-id-use-case'
 import AddStretchMovementBodyPartUseCase from './stretch-movement--body-part/add-stretch-movement-body-part-use-case'
 import DeleteStretchMovementBodyPartUseCase from './stretch-movement--body-part/delete-stretch-movement-body-part-use-case'
 
@@ -16,6 +16,11 @@ import GetStretchMovementByIdUseCase from './stretch-movement/get-stretch-moveme
 import AddStretchMovementUseCase from './stretch-movement/add-stretch-movement-use-case'
 import UpdateStretchMovementUseCase from './stretch-movement/update-stretch-movement-use-case'
 import DeleteStretchMovementUseCase from './stretch-movement/delete-stretch-movement-use-case'
+
+//stretch session - stretch movement
+import GetStretchSessionsByStretchMovementIdUseCase from './stretch-session--stretch-movement/get-stretch-sessions-by-stretch-movement-id-use-case'
+import AddStretchSessionStretchMovementUseCase from './stretch-session--stretch-movement/add-stretch-session-stretch-movement-use-case'
+import DeleteStretchSessionStretchMovementUseCase from './stretch-session--stretch-movement/delete-stretch-session-stretch-movement-use-case'
 
 //stretch session
 import GetAllStretchSessionsUseCase from './stretch-session/get-all-stretch-sessions-use-case'
@@ -45,7 +50,7 @@ export {
   UpdateBodyPartUseCase,
   DeleteBodyPartUseCase,
   //stretch movement - body part
-  GetStretchMovementByBodyPartIdUseCase,
+  GetStretchMovementsByBodyPartIdUseCase,
   AddStretchMovementBodyPartUseCase,
   DeleteStretchMovementBodyPartUseCase,
   //stretch movement
@@ -54,6 +59,10 @@ export {
   AddStretchMovementUseCase,
   UpdateStretchMovementUseCase,
   DeleteStretchMovementUseCase,
+  //stretch session - stretch movement
+  GetStretchSessionsByStretchMovementIdUseCase,
+  AddStretchSessionStretchMovementUseCase,
+  DeleteStretchSessionStretchMovementUseCase,
   //stretch session
   GetAllStretchSessionsUseCase,
   GetStretchSessionByIdUseCase,
