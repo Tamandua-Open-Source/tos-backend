@@ -213,7 +213,67 @@ router.delete(
   )
 )
 
-//others
+//user - stretch movement
+router.get(
+  '/users/me/stretchMovements/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.getStretchMovementsByUserId(req)
+  )
+)
+router.post(
+  '/users/me/stretchMovements/:stretchMovementId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.addUserStretchMovement(req)
+  )
+)
+router.patch(
+  '/users/me/stretchMovements/:stretchMovementId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.updateUserStretchMovement(req)
+  )
+)
+router.delete(
+  '/users/me/stretchMovements/:stretchMovementId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.deleteUserStretchMovement(req)
+  )
+)
+
+//user - stretch session
+router.get(
+  '/users/me/stretchSessions/',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.getStretchSessionsByUserId(req)
+  )
+)
+router.post(
+  '/users/me/stretchSessions/:stretchSessionId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.addUserStretchSession(req)
+  )
+)
+router.patch(
+  '/users/me/stretchSessions/:stretchSessionId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.updateUserStretchSession(req)
+  )
+)
+router.delete(
+  '/users/me/stretchSessions/:stretchSessionId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.deleteUserStretchSession(req)
+  )
+)
+
+//user - stretch challenge
 router.get(
   '/users/me/stretchChallenges/',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
@@ -228,18 +288,18 @@ router.post(
     workoutController.addUserStretchChallenge(req)
   )
 )
-router.delete(
-  '/users/me/stretchChallenges/:stretchChallengeId',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) =>
-    workoutController.deleteUserStretchChallenge(req)
-  )
-)
 router.patch(
   '/users/me/stretchChallenges/:stretchChallengeId',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     workoutController.updateUserStretchChallenge(req)
+  )
+)
+router.delete(
+  '/users/me/stretchChallenges/:stretchChallengeId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.deleteUserStretchChallenge(req)
   )
 )
 

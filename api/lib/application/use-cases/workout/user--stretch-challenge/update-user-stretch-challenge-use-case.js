@@ -3,11 +3,11 @@ class UpdateUserStretchChallengeUseCase {
     this.workoutRepository = workoutRepository
   }
 
-  async execute(userId, stretchChallengeId, progress) {
+  async execute(userId, stretchChallengeId, updatedFields) {
     return await this.workoutRepository.updateUserStretchChallenge(
       userId,
       stretchChallengeId,
-      progress
+      updatedFields
     )
   }
 }

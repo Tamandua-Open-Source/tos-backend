@@ -14,33 +14,54 @@ export default {
     },
     {
       name: 'User',
+      description: 'Management of user',
     },
     {
       name: 'User Preferences',
+      description: 'Management of user preferences',
     },
     {
-      name: 'Body Part',
+      name: 'User - Stretch Movement',
+      description: 'Management of user progress on stretch movements',
     },
     {
-      name: 'Stretch Movement - Body Part',
-    },
-    {
-      name: 'Stretch Movement',
-    },
-    {
-      name: 'Stretch Session - Stretch Movement',
-    },
-    {
-      name: 'Stretch Session',
-    },
-    {
-      name: 'Stretch Challenge - Stretch Session',
-    },
-    {
-      name: 'Stretch Challenge',
+      name: 'User - Stretch Session',
+      description: 'Management of user progress on stretch sessions',
     },
     {
       name: 'User - Stretch Challenge',
+      description: 'Management of user progress on stretch challenges',
+    },
+    {
+      name: 'Body Part',
+      description: 'CRUD',
+    },
+    {
+      name: 'Stretch Movement - Body Part',
+      description:
+        'Management of relationship between stretch movements and body parts',
+    },
+    {
+      name: 'Stretch Movement',
+      description: 'CRUD',
+    },
+    {
+      name: 'Stretch Session - Stretch Movement',
+      description:
+        'Management of relationship between stretch sessions and stretch movements',
+    },
+    {
+      name: 'Stretch Session',
+      description: 'CRUD',
+    },
+    {
+      name: 'Stretch Challenge - Stretch Session',
+      description:
+        'Management of relationship between stretch challenges and stretch sessions',
+    },
+    {
+      name: 'Stretch Challenge',
+      description: 'CRUD',
     },
   ],
 
@@ -1928,11 +1949,347 @@ export default {
       },
     },
 
+    //user - stretch movement
+    '/api/users/me/stretchMovements': {
+      get: {
+        tags: ['User - Stretch Movement'],
+        summary: 'Show all stretch Movements that the user is doing',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Movement',
+                  },
+                },
+                relations: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/User Stretch Movement',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchMovements/{stretchMovementId}': {
+      post: {
+        tags: ['User - Stretch Movement'],
+        summary: 'Add users stretch Movement relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['User - Stretch Movement'],
+        summary: 'Delete users stretch Movement relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['User - Stretch Movement'],
+        summary: 'Update users stretch Movement progress',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchMovementId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                progress: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 100,
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    //user - stretch session
+    '/api/users/me/stretchSessions': {
+      get: {
+        tags: ['User - Stretch Session'],
+        summary: 'Show all stretch Sessions that the user is doing',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchSessions: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Session',
+                  },
+                },
+                relations: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/User Stretch Session',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchSessions/{stretchSessionId}': {
+      post: {
+        tags: ['User - Stretch Session'],
+        summary: 'Add users stretch Session relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['User - Stretch Session'],
+        summary: 'Delete users stretch Session relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['User - Stretch Session'],
+        summary: 'Update users stretch Session progress',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: false,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'stretchSessionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                progress: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 100,
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
     //user - stretch challenge
     '/api/users/me/stretchChallenges': {
       get: {
         tags: ['User - Stretch Challenge'],
-        summary: 'Show all users stretch challenges',
+        summary: 'Show all stretch challenges that the user is doing',
         parameters: [
           {
             in: 'header',

@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       StretchSession.belongsToMany(models.StretchChallenge, {
         through: models.StretchChallengeStretchSession,
       })
+      StretchSession.belongsToMany(models.User, {
+        through: models.UserStretchSession,
+      })
     }
   }
   StretchSession.init(
