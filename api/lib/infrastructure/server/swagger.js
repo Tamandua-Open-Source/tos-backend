@@ -2721,6 +2721,48 @@ export default {
       },
     },
 
+    'User Stretch Movement': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        StretchMovementId: {
+          type: 'integer',
+        },
+        progress: {
+          type: 'integer',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+        createdAt: {
+          type: 'string',
+        },
+      },
+    },
+
+    'User Stretch Session': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        StretchSessionId: {
+          type: 'integer',
+        },
+        progress: {
+          type: 'integer',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+        createdAt: {
+          type: 'string',
+        },
+      },
+    },
+
     'User Stretch Challenge': {
       type: 'object',
       properties: {
