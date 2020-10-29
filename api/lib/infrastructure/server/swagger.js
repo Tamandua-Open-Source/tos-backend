@@ -14,39 +14,54 @@ export default {
     },
     {
       name: 'User',
+      description: 'Management of user',
     },
     {
       name: 'User Preferences',
+      description: 'Management of user preferences',
     },
     {
       name: 'User - Stretch Movement',
+      description: 'Management of user progress on stretch movements',
     },
     {
       name: 'User - Stretch Session',
+      description: 'Management of user progress on stretch sessions',
     },
     {
       name: 'User - Stretch Challenge',
+      description: 'Management of user progress on stretch challenges',
     },
     {
       name: 'Body Part',
+      description: 'CRUD',
     },
     {
       name: 'Stretch Movement - Body Part',
+      description:
+        'Management of relationship between stretch movements and body parts',
     },
     {
       name: 'Stretch Movement',
+      description: 'CRUD',
     },
     {
       name: 'Stretch Session - Stretch Movement',
+      description:
+        'Management of relationship between stretch sessions and stretch movements',
     },
     {
       name: 'Stretch Session',
+      description: 'CRUD',
     },
     {
       name: 'Stretch Challenge - Stretch Session',
+      description:
+        'Management of relationship between stretch challenges and stretch sessions',
     },
     {
       name: 'Stretch Challenge',
+      description: 'CRUD',
     },
   ],
 
