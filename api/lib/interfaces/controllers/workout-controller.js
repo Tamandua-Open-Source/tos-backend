@@ -664,6 +664,222 @@ class WorkoutController {
     }
   }
 
+  //user - stretch movement
+  async getStretchMovementsByUserId(req) {
+    const { userId } = req.props
+
+    try {
+      const { getStretchMovementsByUserIdUseCase } = this.useCases
+      const response = await getStretchMovementsByUserIdUseCase.execute(userId)
+
+      if (!response) {
+        return HttpResponse.ok({ message: 'Cannot find stretch Movements' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch Movements retrieved',
+          stretchMovements: response.stretchMovements,
+          relations: response.relations,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async addUserStretchMovement(req) {
+    const { userId } = req.props
+    const { stretchMovementId } = req.params
+
+    try {
+      const { addUserStretchMovementUseCase } = this.useCases
+      const relation = await addUserStretchMovementUseCase.execute(
+        userId,
+        stretchMovementId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot link user and Stretch Movement',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User linked with Stretch Movement',
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async updateUserStretchMovement(req) {
+    const { userId } = req.props
+    const { stretchMovementId } = req.params
+    const { progress } = req.body
+
+    if (!progress || !Number(progress) || progress < 0 || progress > 100) {
+      return HttpResponse.badRequest(
+        'Please provide a valid progress field: number between 0 and 100'
+      )
+    }
+
+    try {
+      const { updateUserStretchMovementUseCase } = this.useCases
+      const relation = await updateUserStretchMovementUseCase.execute(
+        userId,
+        stretchMovementId,
+        {
+          progress,
+        }
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot update User Stretch Movement',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User Stretch Movement updated',
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteUserStretchMovement(req) {
+    const { userId } = req.props
+    const { stretchMovementId } = req.params
+
+    try {
+      const { deleteUserStretchMovementUseCase } = this.useCases
+      const relation = await deleteUserStretchMovementUseCase.execute(
+        userId,
+        stretchMovementId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot unlink user and Stretch Movement',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User unlinked from Stretch Movement',
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+
+  //user - stretch session
+  async getStretchSessionsByUserId(req) {
+    const { userId } = req.props
+
+    try {
+      const { getStretchSessionsByUserIdUseCase } = this.useCases
+      const response = await getStretchSessionsByUserIdUseCase.execute(userId)
+
+      if (!response) {
+        return HttpResponse.ok({ message: 'Cannot find stretch sessions' })
+      } else {
+        return HttpResponse.ok({
+          message: 'Stretch sessions retrieved',
+          stretchSessions: response.stretchSessions,
+          relations: response.relations,
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async addUserStretchSession(req) {
+    const { userId } = req.props
+    const { stretchSessionId } = req.params
+
+    try {
+      const { addUserStretchSessionUseCase } = this.useCases
+      const relation = await addUserStretchSessionUseCase.execute(
+        userId,
+        stretchSessionId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot link user and Stretch session',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User linked with Stretch session',
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async updateUserStretchSession(req) {
+    const { userId } = req.props
+    const { stretchSessionId } = req.params
+    const { progress } = req.body
+
+    if (!progress || !Number(progress) || progress < 0 || progress > 100) {
+      return HttpResponse.badRequest(
+        'Please provide a valid progress field: number between 0 and 100'
+      )
+    }
+
+    try {
+      const { updateUserStretchSessionUseCase } = this.useCases
+      const relation = await updateUserStretchSessionUseCase.execute(
+        userId,
+        stretchSessionId,
+        {
+          progress,
+        }
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot update User Stretch session',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User Stretch session updated',
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+  async deleteUserStretchSession(req) {
+    const { userId } = req.props
+    const { stretchSessionId } = req.params
+
+    try {
+      const { deleteUserStretchSessionUseCase } = this.useCases
+      const relation = await deleteUserStretchSessionUseCase.execute(
+        userId,
+        stretchSessionId
+      )
+
+      if (!relation) {
+        return HttpResponse.ok({
+          message: 'Cannot unlink user and Stretch Session',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'User unlinked from Stretch Session',
+        })
+      }
+    } catch (error) {
+      console.error(error)
+      return HttpResponse.serverError()
+    }
+  }
+
   //user - stretch challenge
   async getStretchChallengesByUserId(req) {
     const { userId } = req.props

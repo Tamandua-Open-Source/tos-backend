@@ -41,11 +41,23 @@ import AddStretchChallengeUseCase from './stretch-challenge/add-stretch-challeng
 import UpdateStretchChallengeUseCase from './stretch-challenge/update-stretch-challenge-use-case'
 import DeleteStretchChallengeUseCase from './stretch-challenge/delete-stretch-challenge-use-case'
 
+//user - styretch movement
+import GetStretchMovementsByUserIdUseCase from './user--stretch-movement/get-stretch-movements-by-user-id-use-case'
+import AddUserStretchMovementUseCase from './user--stretch-movement/add-user-stretch-movement-use-case'
+import UpdateUserStretchMovementUseCase from './user--stretch-movement/update-user-stretch-movement-use-case'
+import DeleteUserStretchMovementUseCase from './user--stretch-movement/delete-user-stretch-movement-use-case'
+
+//user - stretch session
+import GetStretchSessionsByUserIdUseCase from './user--stretch-session/get-stretch-sessions-by-user-id-use-case'
+import AddUserStretchSessionUseCase from './user--stretch-session/add-user-stretch-session-use-case'
+import UpdateUserStretchSessionUseCase from './user--stretch-session/update-user-stretch-session-use-case'
+import DeleteUserStretchSessionUseCase from './user--stretch-session/delete-user-stretch-session-use-case'
+
 //user - stretch challenge
 import GetStretchChallengesByUserIdUseCase from './user--stretch-challenge/get-stretch-challenges-by-user-id-use-case'
 import AddUserStretchChallengeUseCase from './user--stretch-challenge/add-user-stretch-challenge-use-case'
-import DeleteUserStretchChallengeUseCase from './user--stretch-challenge/delete-user-stretch-challenge-use-case'
 import UpdateUserStretchChallengeUseCase from './user--stretch-challenge/update-user-stretch-challenge-use-case'
+import DeleteUserStretchChallengeUseCase from './user--stretch-challenge/delete-user-stretch-challenge-use-case'
 
 export {
   //body part
@@ -84,6 +96,16 @@ export {
   AddStretchChallengeUseCase,
   UpdateStretchChallengeUseCase,
   DeleteStretchChallengeUseCase,
+  //user - stretch movement
+  GetStretchMovementsByUserIdUseCase,
+  AddUserStretchMovementUseCase,
+  UpdateUserStretchMovementUseCase,
+  DeleteUserStretchMovementUseCase,
+  //user - stretch session
+  GetStretchSessionsByUserIdUseCase,
+  AddUserStretchSessionUseCase,
+  UpdateUserStretchSessionUseCase,
+  DeleteUserStretchSessionUseCase,
   //user - stretch challenge
   GetStretchChallengesByUserIdUseCase,
   AddUserStretchChallengeUseCase,

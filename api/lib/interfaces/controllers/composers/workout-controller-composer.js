@@ -37,6 +37,16 @@ import {
   AddStretchChallengeUseCase,
   UpdateStretchChallengeUseCase,
   DeleteStretchChallengeUseCase,
+  //user - stretch movement
+  GetStretchMovementsByUserIdUseCase,
+  AddUserStretchMovementUseCase,
+  UpdateUserStretchMovementUseCase,
+  DeleteUserStretchMovementUseCase,
+  //user - stretch session
+  GetStretchSessionsByUserIdUseCase,
+  AddUserStretchSessionUseCase,
+  UpdateUserStretchSessionUseCase,
+  DeleteUserStretchSessionUseCase,
   //user - stretch challenge
   GetStretchChallengesByUserIdUseCase,
   AddUserStretchChallengeUseCase,
@@ -161,6 +171,34 @@ class WorkoutControllerComposer {
       workoutRepository,
     })
 
+    //user - stretch movement
+    const getStretchMovementsByUserIdUseCase = new GetStretchMovementsByUserIdUseCase(
+      { workoutRepository }
+    )
+    const addUserStretchMovementUseCase = new AddUserStretchMovementUseCase({
+      workoutRepository,
+    })
+    const updateUserStretchMovementUseCase = new UpdateUserStretchMovementUseCase(
+      { workoutRepository }
+    )
+    const deleteUserStretchMovementUseCase = new DeleteUserStretchMovementUseCase(
+      { workoutRepository }
+    )
+
+    //user - stretch session
+    const getStretchSessionsByUserIdUseCase = new GetStretchSessionsByUserIdUseCase(
+      { workoutRepository }
+    )
+    const addUserStretchSessionUseCase = new AddUserStretchSessionUseCase({
+      workoutRepository,
+    })
+    const updateUserStretchSessionUseCase = new UpdateUserStretchSessionUseCase(
+      { workoutRepository }
+    )
+    const deleteUserStretchSessionUseCase = new DeleteUserStretchSessionUseCase(
+      { workoutRepository }
+    )
+
     //user - stretch challenge
     const getStretchChallengesByUserIdUseCase = new GetStretchChallengesByUserIdUseCase(
       {
@@ -218,6 +256,16 @@ class WorkoutControllerComposer {
       addStretchChallengeUseCase,
       updateStretchChallengeUseCase,
       deleteStretchChallengeUseCase,
+      //user - stretch movement
+      getStretchMovementsByUserIdUseCase,
+      addUserStretchMovementUseCase,
+      updateUserStretchMovementUseCase,
+      deleteUserStretchMovementUseCase,
+      //user - stretch session
+      getStretchSessionsByUserIdUseCase,
+      addUserStretchSessionUseCase,
+      updateUserStretchSessionUseCase,
+      deleteUserStretchSessionUseCase,
       //user - stretch challenge
       getStretchChallengesByUserIdUseCase,
       addUserStretchChallengeUseCase,
