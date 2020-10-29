@@ -74,7 +74,7 @@ class UserController {
   }
 
   async deleteUser(req) {
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!userId) {
       return HttpResponse.serverError()
@@ -89,7 +89,7 @@ class UserController {
       }
 
       const { deleteUserUseCase } = this.useCases
-      const user = await deleteUserUseCase.execute(userId)
+      const user = await deleteUserUseCase.execute({ idToken, userId })
 
       if (!user) {
         return HttpResponse.serverError()
@@ -104,7 +104,7 @@ class UserController {
 
   async signInUser(req) {
     const { name, email } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!name || !email) {
       return HttpResponse.badRequest('Please provide complete details')
@@ -117,6 +117,7 @@ class UserController {
     try {
       const { signInUserUseCase } = this.useCases
       const user = await signInUserUseCase.execute({
+        idToken: idToken,
         userId: userId,
         email: email,
         name: name,
@@ -167,7 +168,7 @@ class UserController {
 
   async patchUserPreferenceFcmToken(req) {
     const { fcmToken } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!fcmToken) {
       return HttpResponse.badRequest('Please provide complete details')
@@ -186,10 +187,11 @@ class UserController {
       }
 
       const { patchUserPreferenceFcmTokenUseCase } = this.useCases
-      const preferences = await patchUserPreferenceFcmTokenUseCase.execute(
-        userId,
-        fcmToken
-      )
+      const preferences = await patchUserPreferenceFcmTokenUseCase.execute({
+        fcmToken: fcmToken,
+        userId: userId,
+        idToken: idToken,
+      })
 
       if (!preferences) {
         return HttpResponse.serverError()
@@ -230,7 +232,7 @@ class UserController {
       }
 
       const { patchUserPreferenceWeeklyWorkActivityUseCase } = this.useCases
-      const userPreferenceWeeklyWorkActivity = await patchUserPreferenceWeeklyWorkActivityUseCase.execute(
+      const preferences = await patchUserPreferenceWeeklyWorkActivityUseCase.execute(
         userId,
         {
           monday,
@@ -243,12 +245,12 @@ class UserController {
         }
       )
 
-      if (!userPreferenceWeeklyWorkActivity) {
+      if (!preferences) {
         return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference weekly work activity successfully patched',
-          userPreferenceWeeklyWorkActivity,
+          preferences,
         })
       }
     } catch (error) {
@@ -283,7 +285,7 @@ class UserController {
       }
 
       const { patchUserPreferenceWeeklyStretchActivityUseCase } = this.useCases
-      const userPreferenceWeeklyStretchActivity = await patchUserPreferenceWeeklyStretchActivityUseCase.execute(
+      const preferences = await patchUserPreferenceWeeklyStretchActivityUseCase.execute(
         userId,
         {
           startTime,
@@ -297,13 +299,13 @@ class UserController {
         }
       )
 
-      if (!userPreferenceWeeklyStretchActivity) {
+      if (!preferences) {
         return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message:
             'User preference weekly stretch activity successfully patched',
-          userPreferenceWeeklyStretchActivity,
+          preferences,
         })
       }
     } catch (error) {
@@ -329,21 +331,18 @@ class UserController {
       }
 
       const { patchUserPreferenceGoalUseCase } = this.useCases
-      const userPreferenceGoal = await patchUserPreferenceGoalUseCase.execute(
-        userId,
-        {
-          criticalPain,
-          painFromWork,
-          futurePain,
-        }
-      )
+      const preferences = await patchUserPreferenceGoalUseCase.execute(userId, {
+        criticalPain,
+        painFromWork,
+        futurePain,
+      })
 
-      if (!userPreferenceGoal) {
+      if (!preferences) {
         return HttpResponse.serverError()
       } else {
         return HttpResponse.ok({
           message: 'User preference goal successfully patched',
-          userPreferenceGoal,
+          preferences,
         })
       }
     } catch (error) {
@@ -354,7 +353,7 @@ class UserController {
 
   async patchUserPreferenceFixedStartTime(req) {
     const { startTime } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!startTime) {
       return HttpResponse.badRequest('Please provide start time')
@@ -374,8 +373,11 @@ class UserController {
 
       const { patchUserPreferenceFixedStartTimeUseCase } = this.useCases
       const preferences = await patchUserPreferenceFixedStartTimeUseCase.execute(
-        userId,
-        startTime
+        {
+          idToken: idToken,
+          userId: userId,
+          startTime: startTime,
+        }
       )
 
       if (!preferences) {
@@ -394,7 +396,7 @@ class UserController {
 
   async patchUserPreferenceFixedStartPeriod(req) {
     const { startPeriodId } = req.body
-    const { userId } = req.props
+    const { userId, idToken } = req.props
 
     if (!startPeriodId) {
       return HttpResponse.badRequest('Please provide start period id')
@@ -413,9 +415,13 @@ class UserController {
       }
 
       const { patchUserPreferenceFixedStartPeriodUseCase } = this.useCases
+
       const preferences = await patchUserPreferenceFixedStartPeriodUseCase.execute(
-        userId,
-        startPeriodId
+        {
+          idToken: idToken,
+          userId: userId,
+          startPeriodId: startPeriodId,
+        }
       )
 
       if (!preferences) {
@@ -423,43 +429,6 @@ class UserController {
       } else {
         return HttpResponse.ok({
           message: 'User preference start time type successfully patched',
-          preferences,
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
-  }
-
-  async patchUserPreferenceCycleDuration(req) {
-    const { workDuration, breakDuration } = req.body
-    const { userId } = req.props
-
-    if (!userId) {
-      return HttpResponse.serverError()
-    }
-
-    try {
-      const { getUserUseCase } = this.useCases
-      const availableUser = await getUserUseCase.execute(userId)
-
-      if (!availableUser) {
-        return HttpResponse.unauthorizedError()
-      }
-
-      const { patchUserPreferenceCycleDurationUseCase } = this.useCases
-      const preferences = await patchUserPreferenceCycleDurationUseCase.execute(
-        userId,
-        workDuration,
-        breakDuration
-      )
-
-      if (!preferences) {
-        return HttpResponse.serverError()
-      } else {
-        return HttpResponse.ok({
-          message: 'User preference cycle duration successfully patched',
           preferences,
         })
       }

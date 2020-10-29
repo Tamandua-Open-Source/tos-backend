@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import ExpressRouterAdapter from '../../../interfaces/express-adapters/express-router-adapter'
 import ExpressMiddlewareAdapter from '../../../interfaces/express-adapters/express-middleware-adapter'
-import UserControllerComposer from '../../../interfaces/controllers/composers/user-controller-composer'
 import AuthMiddlewareComposer from '../../../interfaces/middlewares/composers/auth-middleware-composer'
+
+import UserControllerComposer from '../../../interfaces/controllers/composers/user-controller-composer'
 
 const userController = UserControllerComposer.compose()
 const authMiddleware = AuthMiddlewareComposer.compose()
@@ -90,14 +91,6 @@ router.patch(
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceFixedStartPeriod(req)
-  )
-)
-
-router.patch(
-  '/me/preferences/wbd',
-  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
-  ExpressRouterAdapter.adapt((req) =>
-    userController.patchUserPreferenceCycleDuration(req)
   )
 )
 

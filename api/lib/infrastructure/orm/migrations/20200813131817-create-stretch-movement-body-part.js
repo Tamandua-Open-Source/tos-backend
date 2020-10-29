@@ -6,12 +6,10 @@ module.exports = {
       StretchMovementId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
       },
       BodyPartId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
       },
       createdAt: {
         type: Sequelize.DATE,

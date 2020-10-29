@@ -6,12 +6,10 @@ module.exports = {
       StretchSessionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
       },
       StretchMovementId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
       },
       createdAt: {
         type: Sequelize.DATE,

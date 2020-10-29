@@ -1,7 +1,6 @@
 import db from '../orm/models'
-import IUserRepository from '../../application/repository-interfaces/i-user-repository'
 
-class UserRepository extends IUserRepository {
+class UserRepository {
   async getAllUsers() {
     return await db.User.findAll()
   }
@@ -51,23 +50,7 @@ class UserRepository extends IUserRepository {
       where: {
         UserId: userId,
       },
-      attributes: [
-        'fcmToken',
-        'startTime',
-        'breakDuration',
-        'breakLimitDuration',
-        'breakIdleLimitDuration',
-        'lastBreakStartTime',
-        'workDuration',
-        'workLimitDuration',
-        'workIdleLimitDuration',
-        'lastWorkStartTime',
-        'pauseLimitDuration',
-        'pauseIdleLimitDuration',
-        'lastPauseStartTime',
-        'currentState',
-        'lastState',
-      ],
+      attributes: ['fcmToken', 'startTime'],
       include: [
         {
           model: db.UserPreferenceWeeklyStretchActivity,
@@ -117,19 +100,6 @@ class UserRepository extends IUserRepository {
       UserPreferenceStartPeriodId: 1,
       fcmToken: null,
       startTime: null,
-      breakDuration: 30000,
-      breakLimitDuration: 40000,
-      breakIdleLimitDuration: 10000,
-      lastBreakStartTime: new Date(),
-      workDuration: 60000,
-      workLimitDuration: 70000,
-      workIdleLimitDuration: 10000,
-      lastWorkStartTime: new Date(),
-      pauseLimitDuration: 120000,
-      pauseIdleLimitDuration: 10000,
-      lastPauseStartTime: new Date(),
-      currentState: 'INACTIVE',
-      lastState: 'INACTIVE',
       createdAt: new Date(),
       updatedAt: new Date(),
     })

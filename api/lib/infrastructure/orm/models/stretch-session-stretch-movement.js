@@ -11,12 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       StretchSessionId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
       },
       StretchMovementId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
       },
       createdAt: {
         type: DataTypes.DATE,
