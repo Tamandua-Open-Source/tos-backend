@@ -86,6 +86,37 @@ export default {
         },
       },
     },
+    '/api/configurations/wipeServer': {
+      post: {
+        tags: ['Configuration'],
+        summary: 'Wipe server, delete unknown users, register again users',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Api Key',
+            required: true,
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          '200': {
+            description: 'OK',
+            schema: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
 
     //user
     '/api/users': {
