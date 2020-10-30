@@ -5,6 +5,26 @@ class ConfigurationController {
     this.useCases = useCases
   }
 
+  async wipeServer(_req) {
+    try {
+      const { wipeAllRegisteredUsersUseCase } = this.useCases
+      const result = await wipeAllRegisteredUsersUseCase.execute()
+
+      if (!result) {
+        return HttpResponse.ok({
+          message: 'Any config find, please contact admin',
+        })
+      } else {
+        return HttpResponse.ok({
+          message: 'Server wiped',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      return HttpResponse.serverError()
+    }
+  }
+
   async getConfiguration(_req) {
     try {
       const { getConfigurationUseCase } = this.useCases
