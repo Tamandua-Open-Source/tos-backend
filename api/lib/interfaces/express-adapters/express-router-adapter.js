@@ -1,6 +1,6 @@
 class ExpressRouterAdapter {
   static adapt(route) {
-    return async (req, res) => {
+    return async (req, res, next) => {
       const httpRequest = {
         params: req.params,
         headers: req.headers,
@@ -9,9 +9,12 @@ class ExpressRouterAdapter {
         query: req.query,
       }
 
-      const httpResponse = await route(httpRequest)
-
-      res.status(httpResponse.statusCode).json(httpResponse.body)
+      try {
+        const httpResponse = await route(httpRequest)
+        res.status(httpResponse.statusCode).json(httpResponse.body)
+      } catch (error) {
+        next(error)
+      }
     }
   }
 }

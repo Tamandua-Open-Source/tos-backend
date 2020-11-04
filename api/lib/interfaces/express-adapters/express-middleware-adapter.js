@@ -5,14 +5,20 @@ class ExpressMiddlewareAdapter {
         headers: req.headers,
         body: req.body,
         locals: req.locals,
+        props: req.props,
       }
 
-      const { response, props, error } = await middleware(incomingRequest)
-      if (response === 'ok') {
-        req.props = props
+      try {
+        const props = await middleware(incomingRequest)
+
+        req.props = {
+          ...req.props,
+          ...props,
+        }
+
         next()
-      } else {
-        res.status(error.statusCode).json(error.body)
+      } catch (error) {
+        next(error)
       }
     }
   }

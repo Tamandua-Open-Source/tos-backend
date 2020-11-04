@@ -1,4 +1,6 @@
 import HttpResponse from '../core/http-response'
+import ServerError from '../core/server-error'
+import ClientError from '../core/client-error'
 
 class ConfigurationController {
   constructor(useCases) {
@@ -6,41 +8,29 @@ class ConfigurationController {
   }
 
   async wipeServer(_req) {
-    try {
-      const { wipeAllRegisteredUsersUseCase } = this.useCases
-      const result = await wipeAllRegisteredUsersUseCase.execute()
+    const { wipeAllRegisteredUsersUseCase } = this.useCases
+    const result = await wipeAllRegisteredUsersUseCase.execute()
 
-      if (!result) {
-        return HttpResponse.ok({
-          message: 'Any config find, please contact admin',
-        })
-      } else {
-        return HttpResponse.ok({
-          message: 'Server wiped',
-        })
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
+    if (!result)
+      return HttpResponse.accepted({
+        message: 'Server Was Not Wiped',
+      })
+
+    return HttpResponse.created({
+      message: 'Server Wiped',
+    })
   }
 
   async getConfiguration(_req) {
-    try {
-      const { getConfigurationUseCase } = this.useCases
-      const configuration = await getConfigurationUseCase.execute()
+    const { getConfigurationUseCase } = this.useCases
+    const configuration = await getConfigurationUseCase.execute()
 
-      if (!configuration || configuration.length == 0) {
-        return HttpResponse.ok({
-          message: 'Any config find, please contact admin',
-        })
-      } else {
-        return HttpResponse.ok(configuration)
-      }
-    } catch (error) {
-      console.log(error)
-      return HttpResponse.serverError()
-    }
+    if (!configuration)
+      return HttpResponse.accepted({
+        message: 'Any Config Find, Please Contact Flexibe Admin',
+      })
+
+    return HttpResponse.ok(configuration)
   }
 }
 

@@ -77,10 +77,28 @@ export default {
         summary: 'Show all configuration',
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               $ref: '#/definitions/Configuration',
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -94,8 +112,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Api Key',
-            required: true,
+            description: 'Data Service Api Key',
             schema: {
               type: 'string',
             },
@@ -103,8 +120,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               type: 'object',
               properties: {
@@ -112,6 +129,24 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -127,8 +162,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -136,7 +170,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -152,6 +186,24 @@ export default {
               },
             },
           },
+          202: {
+            description: 'Accepted',
+            schema: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -164,8 +216,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -188,8 +239,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -200,6 +251,13 @@ export default {
                   $ref: '#/definitions/User',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -213,8 +271,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -222,7 +279,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -236,6 +293,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       delete: {
@@ -245,8 +309,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -254,7 +317,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -267,6 +330,23 @@ export default {
               },
             },
           },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       put: {
@@ -276,8 +356,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -300,7 +379,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -312,6 +391,13 @@ export default {
                   $ref: '#/definitions/User',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -327,8 +413,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -336,7 +421,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -350,6 +435,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -361,8 +453,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -382,7 +473,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -394,6 +485,13 @@ export default {
                   $ref: '#/definitions/User Preferences',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -407,8 +505,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -446,7 +543,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -458,6 +555,13 @@ export default {
                   $ref: '#/definitions/User Preferences',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -471,8 +575,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -513,7 +616,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -527,6 +630,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -538,8 +648,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -559,7 +668,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -573,6 +682,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -584,8 +700,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -605,7 +720,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -619,6 +734,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -630,8 +752,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -657,7 +778,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -669,6 +790,13 @@ export default {
                   $ref: '#/definitions/User Preferences',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -684,8 +812,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -693,7 +820,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -709,6 +836,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -718,8 +852,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -739,8 +872,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -751,6 +884,23 @@ export default {
                   $ref: '#/definitions/Body Part',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -764,8 +914,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -781,7 +930,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -795,6 +944,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -804,8 +960,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -833,7 +988,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -847,6 +1002,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       delete: {
@@ -856,8 +1018,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -873,7 +1034,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -881,6 +1042,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -896,8 +1074,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -913,7 +1090,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -929,6 +1106,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -940,8 +1124,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -965,14 +1148,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -984,8 +1184,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1009,7 +1208,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1017,6 +1216,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1032,8 +1248,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1041,7 +1256,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1057,6 +1272,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -1066,8 +1288,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1099,8 +1320,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -1111,6 +1332,23 @@ export default {
                   $ref: '#/definitions/Stretch Movement',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1124,8 +1362,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1141,7 +1378,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1155,6 +1392,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -1164,8 +1408,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1205,7 +1448,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1217,6 +1460,13 @@ export default {
                   $ref: '#/definitions/Stretch Movement',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1245,7 +1495,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1253,6 +1503,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1268,8 +1535,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1285,7 +1551,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1301,6 +1567,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -1312,8 +1585,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1337,14 +1609,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1356,8 +1645,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1381,7 +1669,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1389,6 +1677,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1404,8 +1709,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1413,7 +1717,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1429,6 +1733,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -1438,8 +1749,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1468,8 +1778,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -1480,6 +1790,23 @@ export default {
                   $ref: '#/definitions/Stretch Session',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1493,8 +1820,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1510,7 +1836,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1524,6 +1850,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -1533,8 +1866,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1571,7 +1903,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1583,6 +1915,13 @@ export default {
                   $ref: '#/definitions/Stretch Session',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1611,7 +1950,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1619,6 +1958,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1635,8 +1991,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1652,7 +2007,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1668,6 +2023,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -1679,8 +2041,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1704,14 +2065,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1723,8 +2101,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1748,7 +2125,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1756,6 +2133,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1771,8 +2165,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1780,7 +2173,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1796,6 +2189,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -1805,8 +2205,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1829,8 +2228,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -1841,6 +2240,23 @@ export default {
                   $ref: '#/definitions/Stretch Challenge',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1854,8 +2270,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1871,7 +2286,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1885,6 +2300,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -1894,8 +2316,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1926,7 +2347,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1938,6 +2359,13 @@ export default {
                   $ref: '#/definitions/Stretch Challenge',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1966,7 +2394,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1974,6 +2402,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1989,8 +2434,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1998,7 +2442,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2020,6 +2464,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -2031,8 +2482,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2048,14 +2498,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2067,8 +2534,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2084,7 +2550,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2092,6 +2558,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2103,8 +2586,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2134,7 +2616,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2142,6 +2624,13 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2157,8 +2646,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2166,7 +2654,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2188,6 +2676,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -2199,8 +2694,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2216,14 +2710,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2235,8 +2746,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2252,7 +2762,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2260,6 +2770,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2271,8 +2798,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2302,7 +2828,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2310,6 +2836,13 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2325,8 +2858,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2334,7 +2866,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2356,6 +2888,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -2367,8 +2906,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2384,14 +2922,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2403,8 +2958,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2420,7 +2974,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2428,6 +2982,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2439,8 +3010,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2470,7 +3040,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2478,6 +3048,13 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2810,6 +3387,30 @@ export default {
           type: 'string',
         },
         createdAt: {
+          type: 'string',
+        },
+      },
+    },
+
+    Error: {
+      type: 'object',
+      properties: {
+        errorCode: {
+          type: 'string',
+        },
+        message: {
+          type: 'string',
+        },
+        errors: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+        },
+        method: {
+          type: 'string',
+        },
+        url: {
           type: 'string',
         },
       },
