@@ -14,15 +14,19 @@ class AuthMiddleware {
     if (idToken == 123) {
       return {
         userId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
+        name: 'Test Account',
+        email: '@test.com',
         idToken,
       }
     }
 
-    const userId = await this.verifyTokenUseCase.execute(idToken)
-    if (!userId) throw ClientError.forbidden()
+    const user = await this.verifyTokenUseCase.execute(idToken)
+    if (!user) throw ClientError.forbidden()
 
     return {
-      userId,
+      userId: user.userId,
+      name: user.name,
+      email: user.email,
       idToken,
     }
   }

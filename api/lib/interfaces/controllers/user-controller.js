@@ -68,20 +68,18 @@ class UserController {
   }
 
   async signInUser(req) {
-    const { name, email } = req.body
-    const { userId, idToken } = req.props
+    const { userId, idToken, name, email } = req.props
+    const ip = req.ip
 
     if (!userId) throw ServerError.internal()
 
-    if (!name) throw ClientError.badRequest("Missing 'name' Body Parameter")
-    if (!email) throw ClientError.badRequest("Missing 'email' Body Parameter")
-
     const { signInUserUseCase } = this.useCases
     const user = await signInUserUseCase.execute({
-      idToken: idToken,
-      userId: userId,
-      email: email,
-      name: name,
+      idToken,
+      userId,
+      email,
+      name,
+      ip,
     })
 
     if (!user) throw ServerError.internal()

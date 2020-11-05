@@ -13,6 +13,8 @@ import WorkoutRouter from './routers/workout-router'
 const app = express()
 const port = process.env.PORT || 8000
 
+app.set('trust proxy', true)
+
 app.use(logger('common'))
 app.use(compression())
 app.use(bodyParser.json())

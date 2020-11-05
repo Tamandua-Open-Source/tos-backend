@@ -221,21 +221,6 @@ export default {
               type: 'string',
             },
           },
-          {
-            in: 'body',
-            name: 'Info',
-            schema: {
-              type: 'object',
-              properties: {
-                name: {
-                  type: 'string',
-                },
-                email: {
-                  type: 'string',
-                },
-              },
-            },
-          },
         ],
         produces: ['application/json'],
         responses: {
