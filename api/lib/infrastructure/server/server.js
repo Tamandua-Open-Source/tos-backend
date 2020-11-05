@@ -5,6 +5,7 @@ import logger from 'morgan'
 import swaggerUI from 'swagger-ui-express'
 import swaggerDocument from './swagger.js'
 import ErrorHandlerMiddleware from '../../interfaces/middlewares/error-handler-middleware'
+import expressip from 'express-ip'
 
 import ConfigurationRouter from './routers/configuration-router'
 import UserRouter from './routers/user-router'
@@ -14,6 +15,8 @@ const app = express()
 const port = process.env.PORT || 8000
 
 app.set('trust proxy', true)
+
+app.use(expressip().getIpInfoMiddleware)
 
 app.use(logger('common'))
 app.use(compression())

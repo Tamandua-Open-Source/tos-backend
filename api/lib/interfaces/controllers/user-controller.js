@@ -69,7 +69,11 @@ class UserController {
 
   async signInUser(req) {
     const { userId, idToken, name, email } = req.props
-    const ip = req.ip
+    let { ip } = req.ipInfo
+
+    if (ip == '::1') {
+      ip = '192.168.0.1'
+    }
 
     if (!userId) throw ServerError.internal()
 

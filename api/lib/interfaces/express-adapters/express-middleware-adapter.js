@@ -6,6 +6,7 @@ class ExpressMiddlewareAdapter {
         body: req.body,
         locals: req.locals,
         props: req.props,
+        ipInfo: req.ipInfo,
       }
 
       try {

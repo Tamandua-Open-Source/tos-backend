@@ -7,6 +7,7 @@ class ExpressRouterAdapter {
         body: req.body,
         props: req.props,
         query: req.query,
+        ipInfo: req.ipInfo,
       }
 
       try {
