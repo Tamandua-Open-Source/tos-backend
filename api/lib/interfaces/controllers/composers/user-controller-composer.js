@@ -1,6 +1,8 @@
 import UserRepository from '../../../infrastructure/repositories/user-repository'
 import UserController from '../user-controller'
 import TimerServiceFacade from '../../../infrastructure/facades/timer-service-facade'
+import AnalyticsServiceFacade from '../../../infrastructure/facades/analytics-service-facade'
+import IpWhoIsFacade from '../../../infrastructure/facades/ip-whois-facade'
 import {
   DeleteUserUseCase,
   GetAllUsersUseCase,
@@ -21,6 +23,8 @@ class UserControllerComposer {
     const userRepository = new UserRepository()
 
     const timerServiceFacade = new TimerServiceFacade()
+    const analyticsServiceFacade = new AnalyticsServiceFacade()
+    const ipWhoIsFacade = new IpWhoIsFacade()
 
     const deleteUserUseCase = new DeleteUserUseCase({
       userRepository,
@@ -31,6 +35,8 @@ class UserControllerComposer {
     const signInUserUseCase = new SignInUserUseCase({
       userRepository,
       timerServiceFacade,
+      analyticsServiceFacade,
+      ipWhoIsFacade,
     })
     const updateUserUseCase = new UpdateUserUseCase({ userRepository })
     const getUserPreferencesUseCase = new GetUserPreferencesUseCase({

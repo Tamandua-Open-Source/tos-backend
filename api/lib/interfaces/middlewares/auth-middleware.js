@@ -1,48 +1,42 @@
-import HttpResponse from '../core/http-response'
+import ClientError from '../core/client-error'
 
 class AuthMiddleware {
-  constructor({ verifyTokenUseCase }) {
+  constructor({ verifyTokenUseCase, verifyApiKeyUseCase }) {
     this.verifyTokenUseCase = verifyTokenUseCase
+    this.verifyApiKeyUseCase = verifyApiKeyUseCase
   }
 
   async verifyToken(req) {
-    try {
-      const idToken = req.headers['authorization']
+    const idToken = req.headers['authorization']
+    if (!idToken) throw ClientError.unauthorized()
 
-      if (!idToken) {
-        return {
-          response: 'error',
-          error: HttpResponse.badRequest('Please provide user idToken'),
-        }
-      }
-
-      if (idToken == '123') {
-        //BYPASS
-        return {
-          response: 'ok',
-          props: {
-            userId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
-            idToken: '123',
-          },
-        }
-      }
-
-      const userId = await this.verifyTokenUseCase.execute(idToken)
-
+    //BYPASS
+    if (idToken == 123) {
       return {
-        response: 'ok',
-        props: {
-          userId,
-          idToken,
-        },
-      }
-    } catch (error) {
-      console.log(error)
-      return {
-        response: 'error',
-        error: HttpResponse.unauthorizedError(),
+        userId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
+        name: 'Test Account',
+        email: '@test.com',
+        idToken,
       }
     }
+
+    const user = await this.verifyTokenUseCase.execute(idToken)
+    if (!user) throw ClientError.forbidden()
+
+    return {
+      userId: user.userId,
+      name: user.name,
+      email: user.email,
+      idToken,
+    }
+  }
+
+  async verifyApiKey(req) {
+    const apiKey = req.headers['authorization']
+    if (!apiKey) throw ClientError.unauthorized()
+
+    const success = await this.verifyApiKeyUseCase.execute(apiKey)
+    if (!success) throw ClientError.forbidden()
   }
 }
 

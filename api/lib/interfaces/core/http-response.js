@@ -1,5 +1,3 @@
-import { UnauthorizedError, ServerError } from './errors'
-
 class HttpResponse {
   static ok(body) {
     return {
@@ -8,30 +6,24 @@ class HttpResponse {
     }
   }
 
-  static badRequest(message) {
+  static created(body) {
     return {
-      statusCode: 400,
-      body: {
-        error: message,
-      },
+      statusCode: 201,
+      body,
     }
   }
 
-  static unauthorizedError() {
+  static accepted(body) {
     return {
-      statusCode: 401,
-      body: {
-        error: new UnauthorizedError().message,
-      },
+      statusCode: 202,
+      body,
     }
   }
 
-  static serverError() {
+  static noContent(body) {
     return {
-      statusCode: 500,
-      body: {
-        error: new ServerError().message,
-      },
+      statusCode: 204,
+      body,
     }
   }
 }
