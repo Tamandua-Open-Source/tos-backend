@@ -59,6 +59,11 @@ import AddUserStretchChallengeUseCase from './user--stretch-challenge/add-user-s
 import UpdateUserStretchChallengeUseCase from './user--stretch-challenge/update-user-stretch-challenge-use-case'
 import DeleteUserStretchChallengeUseCase from './user--stretch-challenge/delete-user-stretch-challenge-use-case'
 
+//recommendation
+import GetRecommendedStretchMovementsUseCase from './recommendation/get-recommended-stretch-movements-use-case'
+import GetRecommendedStretchSessionsUseCase from './recommendation/get-recommended-stretch-sessions-use-case'
+import GetRecommendedStretchChallengesUseCase from './recommendation/get-recommended-stretch-challenges-use-case'
+
 export {
   //body part
   GetAllBodyPartsUseCase,
@@ -111,4 +116,8 @@ export {
   AddUserStretchChallengeUseCase,
   UpdateUserStretchChallengeUseCase,
   DeleteUserStretchChallengeUseCase,
+  //recommendation
+  GetRecommendedStretchMovementsUseCase,
+  GetRecommendedStretchSessionsUseCase,
+  GetRecommendedStretchChallengesUseCase,
 }

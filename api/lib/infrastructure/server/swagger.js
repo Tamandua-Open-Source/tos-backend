@@ -33,6 +33,10 @@ export default {
       description: 'Management of user progress on stretch challenges',
     },
     {
+      name: 'User Recommended Workout',
+      description: 'Management of user recommended workout',
+    },
+    {
       name: 'Body Part',
       description: 'CRUD',
     },
@@ -3025,6 +3029,134 @@ export default {
               properties: {
                 message: {
                   type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //recommendation
+    '/api/users/me/stretchMovements/recommended': {
+      get: {
+        tags: ['User Recommended Workout'],
+        summary: 'Show Recommended Stretch Movements For Current User',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Movement',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchSessions/recommended': {
+      get: {
+        tags: ['User Recommended Workout'],
+        summary: 'Show Recommended Stretch Sessions For Current User',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchSessions: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Session',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchChallenges/recommended': {
+      get: {
+        tags: ['User Recommended Workout'],
+        summary: 'Show Recommended Stretch Challenges For Current User',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenges: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Challenge',
+                  },
                 },
               },
             },

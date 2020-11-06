@@ -303,4 +303,27 @@ router.delete(
   )
 )
 
+//recommendation
+router.get(
+  '/users/me/stretchMovements/recommended',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.getRecommendedStretchMovementsByUserId(req)
+  )
+)
+router.get(
+  '/users/me/stretchSessions/recommended',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.getRecommendedStretchSessionsByUserId(req)
+  )
+)
+router.get(
+  '/users/me/stretchChallenges/recommended',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    workoutController.getRecommendedStretchChallengesByUserId(req)
+  )
+)
+
 export default router
