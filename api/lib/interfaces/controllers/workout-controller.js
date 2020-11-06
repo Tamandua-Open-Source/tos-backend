@@ -341,13 +341,12 @@ class WorkoutController {
     }
   }
   async addStretchSession(req) {
-    const { name, description, duration, imageFileUrl } = req.body
+    const { name, description, imageFileUrl } = req.body
 
     const { addStretchSessionUseCase } = this.useCases
     const stretchSession = await addStretchSessionUseCase.execute({
       name,
       description,
-      duration,
       imageFileUrl,
     })
 
@@ -362,7 +361,7 @@ class WorkoutController {
   }
   async updateStretchSession(req) {
     const { stretchSessionId } = req.params
-    const { name, description, duration, imageFileUrl } = req.body
+    const { name, description, imageFileUrl } = req.body
 
     const { updateStretchSessionUseCase } = this.useCases
     const stretchSession = await updateStretchSessionUseCase.execute(
@@ -370,7 +369,6 @@ class WorkoutController {
       {
         name,
         description,
-        duration,
         imageFileUrl,
       }
     )

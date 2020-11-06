@@ -1,3 +1,4 @@
+import ClientError from '../../interfaces/core/client-error'
 import db from '../orm/models'
 import { Op } from 'sequelize'
 
@@ -212,6 +213,13 @@ class WorkoutRepository {
       relation.destroy()
     })
 
+    const userRelations = await db.UserStretchMovement.findAll({
+      where: {
+        StretchMovementId: stretchMovementId,
+      },
+    })
+    userRelations.forEach((relation) => relation.destroy())
+
     return await stretchMovement.destroy()
   }
 
@@ -227,13 +235,13 @@ class WorkoutRepository {
       (relation) => relation.StretchSessionId
     )
 
-    return await db.StretchSession.findAll({
+    const stretchSessions = await db.StretchSession.findAll({
       where: {
         id: {
           [Op.in]: stretchSessionIdList,
         },
       },
-      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+      attributes: ['id', 'name', 'description', 'imageFileUrl'],
       include: [
         {
           model: db.StretchMovement,
@@ -260,6 +268,10 @@ class WorkoutRepository {
         },
       ],
     })
+
+    if (stretchSessions.length == 0) return []
+
+    return stretchSessions.map((SS) => this.buildStretchSession(SS))
   }
   async addStretchSessionStretchMovement(stretchSessionId, stretchMovementId) {
     const stretchSession = await db.StretchSession.findOne({
@@ -310,8 +322,8 @@ class WorkoutRepository {
 
   //stretch session
   async getAllStretchSessions() {
-    return await db.StretchSession.findAll({
-      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+    const stretchSessions = await db.StretchSession.findAll({
+      attributes: ['id', 'name', 'description', 'imageFileUrl'],
       include: [
         {
           model: db.StretchMovement,
@@ -338,13 +350,16 @@ class WorkoutRepository {
         },
       ],
     })
+    if (stretchSessions.length == 0) return []
+
+    return stretchSessions.map((SS) => this.buildStretchSession(SS))
   }
   async getStretchSessionById(stretchSessionId) {
-    return await db.StretchSession.findOne({
+    const stretchSession = await db.StretchSession.findOne({
       where: {
         id: stretchSessionId,
       },
-      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+      attributes: ['id', 'name', 'description', 'imageFileUrl'],
       include: [
         {
           model: db.StretchMovement,
@@ -371,6 +386,10 @@ class WorkoutRepository {
         },
       ],
     })
+
+    if (!stretchSession) throw ClientError.notFound()
+
+    return this.buildStretchSession(stretchSession)
   }
   async createStretchSession(stretchSession) {
     return await db.StretchSession.create(stretchSession)
@@ -427,7 +446,7 @@ class WorkoutRepository {
       (relation) => relation.StretchChallengeId
     )
 
-    return await db.StretchChallenge.findAll({
+    const stretchChallenges = await db.StretchChallenge.findAll({
       where: {
         id: {
           [Op.in]: stretchChallengeIdList,
@@ -437,7 +456,7 @@ class WorkoutRepository {
       include: [
         {
           model: db.StretchSession,
-          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+          attributes: ['id', 'name', 'description', 'imageFileUrl'],
           through: {
             attributes: [],
           },
@@ -469,6 +488,10 @@ class WorkoutRepository {
         },
       ],
     })
+
+    if (stretchChallenges.length == 0) return []
+
+    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
   }
   async addStretchChallengeStretchSession(
     stretchChallengeId,
@@ -522,12 +545,12 @@ class WorkoutRepository {
 
   //stretch challenge
   async getAllStretchChallenges() {
-    return await db.StretchChallenge.findAll({
+    const stretchChallenges = await db.StretchChallenge.findAll({
       attributes: ['id', 'name', 'description'],
       include: [
         {
           model: db.StretchSession,
-          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+          attributes: ['id', 'name', 'description', 'imageFileUrl'],
           through: {
             attributes: [],
           },
@@ -559,9 +582,13 @@ class WorkoutRepository {
         },
       ],
     })
+
+    if (stretchChallenges.length == 0) return []
+
+    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
   }
   async getStretchChallengeById(stretchChallengeId) {
-    return await db.StretchChallenge.findOne({
+    const stretchChallenge = await db.StretchChallenge.findOne({
       where: {
         id: stretchChallengeId,
       },
@@ -569,7 +596,7 @@ class WorkoutRepository {
       include: [
         {
           model: db.StretchSession,
-          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+          attributes: ['id', 'name', 'description', 'imageFileUrl'],
           through: {
             attributes: [],
           },
@@ -601,6 +628,10 @@ class WorkoutRepository {
         },
       ],
     })
+
+    if (!stretchChallenge) throw ClientError.notFound()
+
+    return this.buildStretchChallenge(stretchChallenge)
   }
   async createStretchChallenge(stretchChallenge) {
     return await db.StretchChallenge.create(stretchChallenge)
@@ -756,13 +787,13 @@ class WorkoutRepository {
       (relation) => relation.StretchSessionId
     )
 
-    return await db.StretchSession.findAll({
+    const stretchSessions = await db.StretchSession.findAll({
       where: {
         id: {
           [Op.in]: stretchSessionsIdList,
         },
       },
-      attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+      attributes: ['id', 'name', 'description', 'imageFileUrl'],
       include: [
         {
           model: db.StretchMovement,
@@ -789,6 +820,10 @@ class WorkoutRepository {
         },
       ],
     })
+
+    if (stretchSessions.length == 0) return []
+
+    return stretchSessions.map((SS) => this.buildStretchSession(SS))
   }
   async getUserStretchSessionsByUserId(userId) {
     return await db.UserStretchSession.findAll({
@@ -866,7 +901,7 @@ class WorkoutRepository {
       (relation) => relation.StretchChallengeId
     )
 
-    return await db.StretchChallenge.findAll({
+    const stretchChallenges = await db.StretchChallenge.findAll({
       where: {
         id: {
           [Op.in]: stretchChallengeIdList,
@@ -876,7 +911,7 @@ class WorkoutRepository {
       include: [
         {
           model: db.StretchSession,
-          attributes: ['id', 'name', 'description', 'duration', 'imageFileUrl'],
+          attributes: ['id', 'name', 'description', 'imageFileUrl'],
           through: {
             attributes: [],
           },
@@ -908,6 +943,10 @@ class WorkoutRepository {
         },
       ],
     })
+
+    if (stretchChallenges.length == 0) return []
+
+    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
   }
   async getUserStretchChallengesByUserId(userId) {
     return await db.UserStretchChallenge.findAll({
@@ -967,6 +1006,48 @@ class WorkoutRepository {
     if (!relation) return null
 
     return await relation.destroy()
+  }
+
+  //Build Functions
+  buildStretchSession(stretchSession) {
+    if (stretchSession.StretchMovements.length == 0)
+      return {
+        ...stretchSession.toJSON(),
+        ...{ duration: 0 },
+      }
+
+    let duration = 0
+    duration += stretchSession.StretchMovements.map((SM) => SM.duration).reduce(
+      (total, val) => total + val
+    )
+
+    return {
+      ...stretchSession.toJSON(),
+      ...{ duration },
+    }
+  }
+
+  buildStretchChallenge(stretchChallenge) {
+    if (stretchChallenge.StretchSessions.length == 0)
+      return {
+        ...stretchChallenge.toJSON(),
+        ...{ duration: 0 },
+      }
+
+    const StretchSessions = stretchChallenge.StretchSessions.map((SS) =>
+      this.buildStretchSession(SS)
+    )
+
+    let duration = 0
+    duration += StretchSessions.map((SS) => SS.duration).reduce(
+      (total, val) => total + val
+    )
+
+    return {
+      ...stretchChallenge.toJSON(),
+      ...{ StretchSessions },
+      ...{ duration },
+    }
   }
 }
 

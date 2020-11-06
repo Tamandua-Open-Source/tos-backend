@@ -1751,9 +1751,6 @@ export default {
                 description: {
                   type: 'string',
                 },
-                duration: {
-                  type: 'integer',
-                },
                 imageFileUrl: {
                   type: 'string',
                 },
@@ -1875,9 +1872,6 @@ export default {
                 },
                 description: {
                   type: 'string',
-                },
-                duration: {
-                  type: 'integer',
                 },
                 imageFileUrl: {
                   type: 'string',
@@ -3303,6 +3297,9 @@ export default {
           type: 'integer',
         },
         description: {
+          type: 'integer',
+        },
+        duration: {
           type: 'integer',
         },
         StretchSessions: {
