@@ -1008,6 +1008,154 @@ class WorkoutRepository {
     return await relation.destroy()
   }
 
+  //recommendation
+  async getRecommendedStretchMovementsByUserId(userId) {
+    const relations = await db.UserStretchMovement.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    const stretchMovementsIdList = relations.map(
+      (relation) => relation.StretchMovementId
+    )
+
+    return await db.StretchMovement.findAll({
+      where: {
+        id: {
+          [Op.notIn]: stretchMovementsIdList,
+        },
+      },
+      attributes: [
+        'id',
+        'name',
+        'description',
+        'duration',
+        'imageFileUrl',
+        'videoFileUrl',
+      ],
+      through: {
+        attributes: [],
+      },
+      include: [
+        {
+          model: db.BodyPart,
+          attributes: ['id', 'name'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    })
+  }
+  async getRecommendedStretchSessionsByUserId(userId) {
+    const relations = await db.UserStretchSession.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    const stretchSessionsIdList = relations.map(
+      (relation) => relation.StretchSessionId
+    )
+
+    const stretchSessions = await db.StretchSession.findAll({
+      where: {
+        id: {
+          [Op.notIn]: stretchSessionsIdList,
+        },
+      },
+      attributes: ['id', 'name', 'description', 'imageFileUrl'],
+      include: [
+        {
+          model: db.StretchMovement,
+          attributes: [
+            'id',
+            'name',
+            'description',
+            'duration',
+            'imageFileUrl',
+            'videoFileUrl',
+          ],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.BodyPart,
+              attributes: ['id', 'name'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
+        },
+      ],
+    })
+
+    if (stretchSessions.length == 0) return []
+
+    return stretchSessions.map((SS) => this.buildStretchSession(SS))
+  }
+  async getRecommendedStretchChallengesByUserId(userId) {
+    const relations = await db.UserStretchChallenge.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    const stretchChallengeIdList = relations.map(
+      (relation) => relation.StretchChallengeId
+    )
+
+    const stretchChallenges = await db.StretchChallenge.findAll({
+      where: {
+        id: {
+          [Op.notIn]: stretchChallengeIdList,
+        },
+      },
+      attributes: ['id', 'name', 'description'],
+      include: [
+        {
+          model: db.StretchSession,
+          attributes: ['id', 'name', 'description', 'imageFileUrl'],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.StretchMovement,
+              attributes: [
+                'id',
+                'name',
+                'description',
+                'duration',
+                'imageFileUrl',
+                'videoFileUrl',
+              ],
+              through: {
+                attributes: [],
+              },
+              include: [
+                {
+                  model: db.BodyPart,
+                  attributes: ['id', 'name'],
+                  through: {
+                    attributes: [],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    })
+
+    if (stretchChallenges.length == 0) return []
+
+    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
+  }
+
   //Build Functions
   buildStretchSession(stretchSession) {
     if (stretchSession.StretchMovements.length == 0)
@@ -1026,7 +1174,6 @@ class WorkoutRepository {
       ...{ duration },
     }
   }
-
   buildStretchChallenge(stretchChallenge) {
     if (stretchChallenge.StretchSessions.length == 0)
       return {

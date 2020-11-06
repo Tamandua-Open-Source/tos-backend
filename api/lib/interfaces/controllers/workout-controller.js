@@ -799,6 +799,59 @@ class WorkoutController {
       })
     }
   }
+
+  //recommendation
+  async getRecommendedStretchMovementsByUserId(req) {
+    const { userId } = req.props
+
+    const { getRecommendedStretchMovementsUseCase } = this.useCases
+    const stretchMovements = await getRecommendedStretchMovementsUseCase.execute(
+      userId
+    )
+
+    if (!stretchMovements) {
+      return HttpResponse.noContent()
+    } else {
+      return HttpResponse.ok({
+        message: 'Reccomended Stretch Movements retrieved',
+        stretchMovements,
+      })
+    }
+  }
+  async getRecommendedStretchSessionsByUserId(req) {
+    const { userId } = req.props
+
+    const { getRecommendedStretchSessionsUseCase } = this.useCases
+    const stretchSessions = await getRecommendedStretchSessionsUseCase.execute(
+      userId
+    )
+
+    if (!stretchSessions) {
+      return HttpResponse.noContent()
+    } else {
+      return HttpResponse.ok({
+        message: 'Reccomended Stretch Sessions retrieved',
+        stretchSessions,
+      })
+    }
+  }
+  async getRecommendedStretchChallengesByUserId(req) {
+    const { userId } = req.props
+
+    const { getRecommendedStretchChallengesUseCase } = this.useCases
+    const stretchChallenges = await getRecommendedStretchChallengesUseCase.execute(
+      userId
+    )
+
+    if (!stretchChallenges) {
+      return HttpResponse.noContent()
+    } else {
+      return HttpResponse.ok({
+        message: 'Reccomended Stretch Challenges retrieved',
+        stretchChallenges,
+      })
+    }
+  }
 }
 
 export default WorkoutController
