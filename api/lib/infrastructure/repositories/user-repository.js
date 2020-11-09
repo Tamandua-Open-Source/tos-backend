@@ -63,6 +63,20 @@ class UserRepository {
     })
     stretchChallengeRelations.forEach((relation) => relation.destroy())
 
+    const groupRelations = await db.UserGroup.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+    groupRelations.forEach((relation) => relation.destroy())
+
+    const groups = await db.Group.findAll({
+      where: {
+        OwnerId: userId,
+      },
+    })
+    groups.forEach((group) => this.deleteGroup(group.id))
+
     return await user.destroy()
   }
 
