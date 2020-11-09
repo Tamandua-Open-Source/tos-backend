@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use('/api/configurations', ConfigurationRouter)
-app.use('/api/users', UserRouter)
+app.use('/api', UserRouter)
 app.use('/api', WorkoutRouter)
 app.use(ErrorHandlerMiddleware.log)
 app.use(ErrorHandlerMiddleware.handle)

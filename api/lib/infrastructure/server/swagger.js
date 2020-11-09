@@ -21,6 +21,14 @@ export default {
       description: 'Management of user preferences',
     },
     {
+      name: 'Group',
+      description: 'CRUD',
+    },
+    {
+      name: 'User - Group',
+      description: 'Management of groups, composed by users',
+    },
+    {
       name: 'User - Stretch Movement',
       description: 'Management of user progress on stretch movements',
     },
@@ -393,7 +401,7 @@ export default {
       },
     },
 
-    //user preferences
+    //user - preferences
     '/api/users/me/preferences': {
       get: {
         tags: ['User Preferences'],
@@ -777,6 +785,509 @@ export default {
                 preferences: {
                   type: 'object',
                   $ref: '#/definitions/User Preferences',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //group
+    '/api/groups': {
+      get: {
+        tags: ['Group'],
+        summary: 'Show all groups',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                groups: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Group',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      post: {
+        tags: ['Group'],
+        summary: 'Add group',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                isPublic: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          201: {
+            description: 'Created',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                group: {
+                  type: 'object',
+                  $ref: '#/definitions/Group',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/groups/{groupId}': {
+      get: {
+        tags: ['Group'],
+        summary: 'Show group by id',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                group: {
+                  type: 'object',
+                  $ref: '#/definitions/Group',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Group'],
+        summary: 'Update group',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                isPublic: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovement: {
+                  type: 'object',
+                  $ref: '#/definitions/Group',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Group'],
+        summary: 'Delete group',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: true,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //user - group
+    '/api/users/me/groups': {
+      get: {
+        tags: ['User - Group'],
+        summary: 'Show all groups that the user is part of',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                groups: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Group',
+                  },
+                },
+                relations: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/User Group',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/users/{userId}/groups/{groupId}': {
+      post: {
+        tags: ['User - Group'],
+        summary: 'Add user group relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'userId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          201: {
+            description: 'Created',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['User - Group'],
+        summary: 'Delete user group relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'userId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['User - Group'],
+        summary: 'Update user group role',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'userId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                admin: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
                 },
               },
             },
@@ -3244,6 +3755,45 @@ export default {
         UserPreferenceStartPeriod: {
           type: 'object',
           $ref: '#/definitions/Start Period',
+        },
+      },
+    },
+
+    Group: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        OwnerId: {
+          type: 'string',
+        },
+        name: {
+          type: 'string',
+        },
+        isPublic: {
+          type: 'boolean',
+        },
+      },
+    },
+
+    'User Group': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        GroupId: {
+          type: 'integer',
+        },
+        admin: {
+          type: 'boolean',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+        createdAt: {
+          type: 'string',
         },
       },
     },

@@ -1,10 +1,12 @@
+import ClientError from '../../interfaces/core/client-error'
 import db from '../orm/models'
+import { Op } from 'sequelize'
 
 class UserRepository {
+  //user
   async getAllUsers() {
     return await db.User.findAll()
   }
-
   async getUserById(userId) {
     return await db.User.findOne({
       where: {
@@ -12,7 +14,6 @@ class UserRepository {
       },
     })
   }
-
   async createUser(domainUser) {
     const user = await db.User.create(domainUser)
 
@@ -23,7 +24,6 @@ class UserRepository {
     await this.createUserPreferences(user.id)
     return user
   }
-
   async updateUser(userId, updatedFields) {
     const user = await this.getUserById(userId)
 
@@ -33,7 +33,6 @@ class UserRepository {
 
     return null
   }
-
   async deleteUser(userId) {
     const user = await this.getUserById(userId)
 
@@ -42,9 +41,32 @@ class UserRepository {
     }
 
     await this.deleteUserPreferences(userId)
+
+    const stretchMovementRelations = await db.UserStretchMovement.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+    stretchMovementRelations.forEach((relation) => relation.destroy())
+
+    const stretchSessionRelations = await db.UserStretchSession.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+    stretchSessionRelations.forEach((relation) => relation.destroy())
+
+    const stretchChallengeRelations = await db.UserStretchChallenge.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+    stretchChallengeRelations.forEach((relation) => relation.destroy())
+
     return await user.destroy()
   }
 
+  //user preference
   async getUserPreferences(userId) {
     return await db.UserPreference.findOne({
       where: {
@@ -92,7 +114,6 @@ class UserRepository {
       ],
     })
   }
-
   async createUserPreferences(userId) {
     const preferences = await db.UserPreference.create({
       UserId: userId,
@@ -146,7 +167,6 @@ class UserRepository {
 
     return preferences
   }
-
   async deleteUserPreferences(userId) {
     const preferences = await db.UserPreference.findOne({
       where: {
@@ -178,7 +198,6 @@ class UserRepository {
 
     return await preferences.destroy()
   }
-
   async patchUserPreferenceFcmToken(userId, fcmToken) {
     const preference = await db.UserPreference.findOne({
       where: {
@@ -195,7 +214,6 @@ class UserRepository {
       fcmToken: fcmToken,
     })
   }
-
   async patchUserPreferenceWeeklyWorkActivity(userId, updatedFields) {
     const preference = await db.UserPreference.findOne({
       where: {
@@ -218,7 +236,6 @@ class UserRepository {
 
     return weeklyWorkActivity.update(updatedFields)
   }
-
   async patchUserPreferenceWeeklyStretchActivity(userId, updatedFields) {
     const weeklyStretchActivityId = await db.UserPreference.findOne({
       where: {
@@ -241,7 +258,6 @@ class UserRepository {
 
     return weeklyStretchActivity.update(updatedFields)
   }
-
   async patchUserPreferenceGoal(userId, updatedFields) {
     const preference = await db.UserPreference.findOne({
       where: {
@@ -262,7 +278,6 @@ class UserRepository {
 
     return goal.update(updatedFields)
   }
-
   async patchUserPreferenceFixedStartTime(userId, startTime) {
     const preference = await db.UserPreference.findOne({
       where: {
@@ -280,7 +295,6 @@ class UserRepository {
       UserPreferenceStartPeriodId: null,
     })
   }
-
   async patchUserPreferenceFixedStartPeriod(userId, startPeriodId) {
     const preference = await db.UserPreference.findOne({
       where: {
@@ -300,7 +314,6 @@ class UserRepository {
         : undefined,
     })
   }
-
   async patchUserPreferenceCycleDuration(userId, workDuration, breakDuration) {
     const preference = await db.UserPreference.findOne({
       where: {
@@ -316,6 +329,156 @@ class UserRepository {
       workDuration: workDuration ? parseInt(workDuration) : undefined,
       breakDuration: breakDuration ? parseInt(breakDuration) : undefined,
     })
+  }
+
+  //group
+  async getAllGroups() {
+    return await db.Group.findAll({
+      attributes: ['id', 'name', 'OwnerId', 'isPublic'],
+    })
+  }
+  async getGroupById(groupId) {
+    return await db.Group.findOne({
+      where: {
+        id: groupId,
+      },
+      attributes: ['id', 'name', 'OwnerId', 'isPublic'],
+    })
+  }
+  async createGroup(group) {
+    const user = await db.User.findOne({
+      where: {
+        id: group.OwnerId,
+      },
+    })
+
+    if (!user) throw ClientError.notFound('User Not Found')
+
+    const newGroup = await db.Group.create(group)
+
+    await this.addUserGroup(newGroup.OwnerId, newGroup.id, true)
+
+    return newGroup
+  }
+  async updateGroup(groupId, updatedFields) {
+    const group = await db.Group.findOne({
+      where: {
+        id: groupId,
+      },
+    })
+
+    if (!group) throw ClientError.notFound('Group Not Found')
+
+    return await group.update(updatedFields)
+  }
+  async deleteGroup(groupId) {
+    const group = await db.Group.findOne({
+      where: {
+        id: groupId,
+      },
+    })
+
+    if (!group) throw ClientError.notFound()
+
+    const userRelations = await db.UserGroup.findAll({
+      where: {
+        GroupId: groupId,
+      },
+    })
+    userRelations.forEach((relation) => relation.destroy())
+
+    return await group.destroy()
+  }
+
+  //user - group
+  async getGroupsByUserId(userId) {
+    const relations = await db.UserGroup.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    const groupIdList = relations.map((relation) => relation.GroupId)
+
+    return await db.Group.findAll({
+      where: {
+        id: {
+          [Op.in]: groupIdList,
+        },
+      },
+      attributes: ['id', 'name', 'OwnerId', 'isPublic'],
+    })
+  }
+  async getUserGroupsByUserId(userId) {
+    return await db.UserGroup.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+  }
+  async getUserGroupByUserIdAndGroupId(userId, groupId) {
+    return await db.UserGroup.findOne({
+      where: {
+        UserId: userId,
+        GroupId: groupId,
+      },
+    })
+  }
+  async addUserGroup(userId, groupId, admin = false) {
+    const user = await db.User.findOne({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) throw ClientError.notFound('User Not Found')
+
+    const group = await db.Group.findOne({
+      where: {
+        id: groupId,
+      },
+    })
+
+    if (!group) throw ClientError.notFound('Group Not Found')
+
+    const relation = await db.UserGroup.findOne({
+      where: {
+        UserId: userId,
+        GroupId: groupId,
+      },
+    })
+
+    if (relation) return null
+
+    return await db.UserGroup.create({
+      UserId: userId,
+      GroupId: groupId,
+      admin,
+    })
+  }
+  async updateUserGroup(userId, groupId, updatedFields) {
+    const relation = await db.UserGroup.findOne({
+      where: {
+        UserId: userId,
+        GroupId: groupId,
+      },
+    })
+
+    if (!relation) throw ClientError.notFound('User Group Not Found')
+
+    return await relation.update(updatedFields)
+  }
+  async deleteUserGroup(userId, groupId) {
+    const relation = await db.UserGroup.findOne({
+      where: {
+        UserId: userId,
+        GroupId: groupId,
+      },
+    })
+
+    if (!relation) return null
+
+    return await relation.destroy()
   }
 }
 

@@ -4,11 +4,13 @@ import TimerServiceFacade from '../../../infrastructure/facades/timer-service-fa
 import AnalyticsServiceFacade from '../../../infrastructure/facades/analytics-service-facade'
 import IpWhoIsFacade from '../../../infrastructure/facades/ip-whois-facade'
 import {
+  //core
   DeleteUserUseCase,
   GetAllUsersUseCase,
   GetUserUseCase,
   SignInUserUseCase,
   UpdateUserUseCase,
+  //user - preference
   GetUserPreferencesUseCase,
   PatchUserPreferenceFcmTokenUseCase,
   PatchUserPreferenceWeeklyWorkActivityUseCase,
@@ -16,20 +18,27 @@ import {
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceFixedStartPeriodUseCase,
   PatchUserPreferenceGoalUseCase,
+  //group
+  GetAllGroupsUseCase,
+  GetGroupByIdUseCase,
+  AddGroupUseCase,
+  UpdateGroupUseCase,
+  DeleteGroupUseCase,
+  //user - group
+  GetGroupsByUserIdUseCase,
+  AddUserGroupUseCase,
+  UpdateUserGroupUseCase,
+  DeleteUserGroupUseCase,
 } from '../../../application/use-cases/user'
 
 class UserControllerComposer {
   static compose() {
     const userRepository = new UserRepository()
-
     const timerServiceFacade = new TimerServiceFacade()
     const analyticsServiceFacade = new AnalyticsServiceFacade()
     const ipWhoIsFacade = new IpWhoIsFacade()
 
-    const deleteUserUseCase = new DeleteUserUseCase({
-      userRepository,
-      timerServiceFacade,
-    })
+    //core
     const getAllUsersUseCase = new GetAllUsersUseCase({ userRepository })
     const getUserUseCase = new GetUserUseCase({ userRepository })
     const signInUserUseCase = new SignInUserUseCase({
@@ -39,6 +48,12 @@ class UserControllerComposer {
       ipWhoIsFacade,
     })
     const updateUserUseCase = new UpdateUserUseCase({ userRepository })
+    const deleteUserUseCase = new DeleteUserUseCase({
+      userRepository,
+      timerServiceFacade,
+    })
+
+    //user - preference
     const getUserPreferencesUseCase = new GetUserPreferencesUseCase({
       userRepository,
     })
@@ -74,12 +89,33 @@ class UserControllerComposer {
       userRepository,
     })
 
+    //group
+    const getAllGroupsUseCase = new GetAllGroupsUseCase({ userRepository })
+    const getGroupByIdUseCase = new GetGroupByIdUseCase({ userRepository })
+    const addGroupUseCase = new AddGroupUseCase({ userRepository })
+    const updateGroupUseCase = new UpdateGroupUseCase({ userRepository })
+    const deleteGroupUseCase = new DeleteGroupUseCase({ userRepository })
+
+    //user - group
+    const getGroupsByUserIdUseCase = new GetGroupsByUserIdUseCase({
+      userRepository,
+    })
+    const addUserGroupUseCase = new AddUserGroupUseCase({ userRepository })
+    const updateUserGroupUseCase = new UpdateUserGroupUseCase({
+      userRepository,
+    })
+    const deleteUserGroupUseCase = new DeleteUserGroupUseCase({
+      userRepository,
+    })
+
     return new UserController({
-      deleteUserUseCase,
+      //core
       getAllUsersUseCase,
       getUserUseCase,
       signInUserUseCase,
       updateUserUseCase,
+      deleteUserUseCase,
+      //user - preference
       getUserPreferencesUseCase,
       patchUserPreferenceFcmTokenUseCase,
       patchUserPreferenceWeeklyWorkActivityUseCase,
@@ -87,6 +123,17 @@ class UserControllerComposer {
       patchUserPreferenceFixedStartTimeUseCase,
       patchUserPreferenceFixedStartPeriodUseCase,
       patchUserPreferenceGoalUseCase,
+      //group
+      getAllGroupsUseCase,
+      getGroupByIdUseCase,
+      addGroupUseCase,
+      updateGroupUseCase,
+      deleteGroupUseCase,
+      //user - group
+      getGroupsByUserIdUseCase,
+      addUserGroupUseCase,
+      updateUserGroupUseCase,
+      deleteUserGroupUseCase,
     })
   }
 }

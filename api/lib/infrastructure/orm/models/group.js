@@ -3,38 +3,32 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Group extends Model {
     static associate(models) {
-      User.hasOne(models.UserPreference)
-      User.belongsToMany(models.StretchChallenge, {
-        through: models.UserStretchChallenge,
-      })
-      User.belongsToMany(models.StretchSession, {
-        through: models.UserStretchSession,
-      })
-      User.belongsToMany(models.StretchMovement, {
-        through: models.UserStretchMovement,
-      })
-      User.belongsToMany(models.Group, {
+      Group.belongsToMany(models.User, {
         through: models.UserGroup,
       })
     }
   }
-  User.init(
+  Group.init(
     {
       id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      OwnerId: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+      },
+      isPublic: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -47,8 +41,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'Group',
     }
   )
-  return User
+  return Group
 }
