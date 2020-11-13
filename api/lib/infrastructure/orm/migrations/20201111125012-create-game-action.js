@@ -2,17 +2,23 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('UserGroups', {
-      UserId: {
+    await queryInterface.createTable('GameActions', {
+      id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      GroupId: {
+      GameActionTypeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      admin: {
-        type: Sequelize.BOOLEAN,
+      xp: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -26,6 +32,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UserGroups')
+    await queryInterface.dropTable('GameActions')
   },
 }

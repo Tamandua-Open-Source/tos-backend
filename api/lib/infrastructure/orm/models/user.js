@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Group, {
         through: models.UserGroup,
       })
+      User.belongsToMany(models.GameAction, {
+        through: models.UserGameAction,
+      })
     }
   }
   User.init(

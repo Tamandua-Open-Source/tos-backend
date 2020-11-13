@@ -3,21 +3,19 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class UserGroup extends Model {
+  class Level extends Model {
     static associate(models) {}
   }
-  UserGroup.init(
+  Level.init(
     {
-      UserId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      GroupId: {
+      id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
       },
-      admin: {
-        type: DataTypes.BOOLEAN,
+      xp: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -31,8 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'UserGroup',
+      modelName: 'Level',
     }
   )
-  return UserGroup
+  return Level
 }

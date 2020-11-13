@@ -3,21 +3,21 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class UserGroup extends Model {
+  class UserGameAction extends Model {
     static associate(models) {}
   }
-  UserGroup.init(
+  UserGameAction.init(
     {
       UserId: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      GroupId: {
+      GameActionId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      admin: {
-        type: DataTypes.BOOLEAN,
+      counter: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'UserGroup',
+      modelName: 'UserGameAction',
     }
   )
-  return UserGroup
+  return UserGameAction
 }

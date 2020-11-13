@@ -21,6 +21,10 @@ export default {
       description: 'Management of user preferences',
     },
     {
+      name: 'Game',
+      description: 'Management of user gamification',
+    },
+    {
       name: 'Group',
       description: 'CRUD',
     },
@@ -788,6 +792,218 @@ export default {
                 },
               },
             },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //GAME -> achievement
+    '/api/achievements': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show achievements',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                achievements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Achievement',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> core
+    '/api/users/me/game': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show user game info',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                game: {
+                  type: 'array',
+                  items: {
+                    // $ref: '#/definitions/Group',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> game action
+    '/api/gameActions': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show all game actions',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                gameActions: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Game Action',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> level
+    '/api/levels': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show all levels',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                levels: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Level',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> user - game action
+    '/api/users/me/gameActions/{gameActionId}': {
+      post: {
+        tags: ['Game'],
+        summary: 'Add User Game Action',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'gameActionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          201: {
+            description: 'Created',
+            schema: {
+              properties: {
+                gameAction: {
+                  type: 'array',
+                  items: {
+                    // $ref: '#/definitions/Group',
+                  },
+                },
+              },
+            },
+          },
+          204: {
+            description: 'No Content',
           },
           '4xx - 5xx': {
             description: 'Error',
@@ -3755,6 +3971,74 @@ export default {
         UserPreferenceStartPeriod: {
           type: 'object',
           $ref: '#/definitions/Start Period',
+        },
+      },
+    },
+
+    'Game Action Type': {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        name: {
+          type: 'string',
+        },
+      },
+    },
+
+    'Game Action': {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        name: {
+          type: 'string',
+        },
+        xp: {
+          type: 'integer',
+        },
+        GameActionType: {
+          type: 'object',
+          $ref: '#/definitions/Game Action Type',
+        },
+      },
+    },
+
+    Achievement: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        name: {
+          type: 'string',
+        },
+        requirement: {
+          type: 'integer',
+        },
+        xp: {
+          type: 'integer',
+        },
+        GameAction: {
+          type: 'object',
+          $ref: '#/definitions/Game Action',
+        },
+      },
+    },
+
+    Level: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        level: {
+          type: 'integer',
+        },
+        xp: {
+          type: 'integer',
         },
       },
     },

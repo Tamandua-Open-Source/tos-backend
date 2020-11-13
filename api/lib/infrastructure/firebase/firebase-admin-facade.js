@@ -67,6 +67,34 @@ class FirebaseAdminFacade {
       return undefined
     }
   }
+
+  async send({ title, body, category, fcmToken, references }) {
+    console.log(
+      '[FIREBASE-ADMIN-FACADE] - sending message: ' +
+        category +
+        ' - ' +
+        title +
+        ' - ' +
+        body
+    )
+    const message = {
+      notification: {
+        title: title,
+        body: body,
+      },
+      apns: {
+        payload: {
+          aps: {
+            category: category,
+            references: references,
+          },
+        },
+      },
+      token: fcmToken,
+    }
+
+    return await firebaseAdmin.messaging().send(message)
+  }
 }
 
 export default FirebaseAdminFacade

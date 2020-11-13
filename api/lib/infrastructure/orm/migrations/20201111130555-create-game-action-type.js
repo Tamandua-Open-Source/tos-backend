@@ -1,18 +1,15 @@
 'use strict'
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('UserGroups', {
-      UserId: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      GroupId: {
+    await queryInterface.createTable('GameActionTypes', {
+      id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
       },
-      admin: {
-        type: Sequelize.BOOLEAN,
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
@@ -26,6 +23,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UserGroups')
+    await queryInterface.dropTable('GameActionTypes')
   },
 }
