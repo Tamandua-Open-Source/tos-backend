@@ -10,6 +10,7 @@ import expressip from 'express-ip'
 import ConfigurationRouter from './routers/configuration-router'
 import UserRouter from './routers/user-router'
 import WorkoutRouter from './routers/workout-router'
+import GameRouter from './routers/game-router'
 
 const app = express()
 const port = process.env.PORT || 8000
@@ -27,6 +28,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 app.use('/api/configurations', ConfigurationRouter)
 app.use('/api', UserRouter)
 app.use('/api', WorkoutRouter)
+app.use('/api', GameRouter)
 app.use(ErrorHandlerMiddleware.log)
 app.use(ErrorHandlerMiddleware.handle)
 
