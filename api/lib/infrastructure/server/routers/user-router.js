@@ -85,6 +85,13 @@ router.patch(
     userController.patchUserPreferenceFixedStartPeriod(req)
   )
 )
+router.patch(
+  '/users/me/preferences/notification',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceNotification(req)
+  )
+)
 
 //group
 router.get(

@@ -803,6 +803,64 @@ export default {
         },
       },
     },
+    '/api/users/me/preferences/notification': {
+      patch: {
+        tags: ['User Preferences'],
+        summary: 'Updates notification in user preferences',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                allowTimerNotifications: {
+                  type: 'boolean',
+                },
+                allowWorkoutNotifications: {
+                  type: 'boolean',
+                },
+                allowGeneralNotifications: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                preferences: {
+                  type: 'object',
+                  $ref: '#/definitions/User Preferences',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
 
     //GAME -> achievement
     '/api/achievements': {
@@ -3930,6 +3988,9 @@ export default {
         email: {
           type: 'string',
         },
+        photoUrl: {
+          type: 'string',
+        },
         createdAt: {
           type: 'string',
         },
@@ -3947,6 +4008,15 @@ export default {
         },
         startTime: {
           type: 'string',
+        },
+        allowTimerNotifications: {
+          type: 'boolean',
+        },
+        allowWorkoutNotifications: {
+          type: 'boolean',
+        },
+        allowGeneralNotifications: {
+          type: 'boolean',
         },
         UserPreferenceWeeklyStretchActivity: {
           type: 'object',

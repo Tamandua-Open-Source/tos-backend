@@ -16,6 +16,8 @@ class AuthMiddleware {
         userId: 'vN7Kodp84zQg1KDTPd3IfwvaF1r1',
         name: 'Test Account',
         email: '@test.com',
+        photoUrl:
+          'https://lh3.googleusercontent.com/a-/AOh14GgZNZJt7y7fFdghPSn4nfyLUm4i05NIWFv6IRQRQSw=s96-c',
         idToken,
       }
     }
@@ -27,6 +29,7 @@ class AuthMiddleware {
       userId: user.userId,
       name: user.name,
       email: user.email,
+      photoUrl: user.photoUrl,
       idToken,
     }
   }

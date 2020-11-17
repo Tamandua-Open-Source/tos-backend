@@ -11,7 +11,7 @@ class SignInUserUseCase {
     this.ipWhoIsFacade = ipWhoIsFacade
   }
 
-  async execute({ idToken, userId, email, name, ip }) {
+  async execute({ idToken, userId, email, name, photoUrl, ip }) {
     const user = await this.userRepository.getUserById(userId)
 
     await this.timerServiceFacade.subscribe(idToken)
@@ -30,6 +30,7 @@ class SignInUserUseCase {
       id: userId,
       email: email,
       name: name,
+      photoUrl: photoUrl,
     })
   }
 }
