@@ -1,6 +1,5 @@
 import ClientError from '../../interfaces/core/client-error'
 import db from '../orm/models'
-import { Op } from 'sequelize'
 
 class GameRepository {
   //achievements
