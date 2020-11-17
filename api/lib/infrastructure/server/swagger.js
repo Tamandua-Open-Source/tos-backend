@@ -864,12 +864,10 @@ export default {
           200: {
             description: 'OK',
             schema: {
+              type: 'object',
               properties: {
                 game: {
-                  type: 'array',
-                  items: {
-                    // $ref: '#/definitions/Group',
-                  },
+                  $ref: '#/definitions/Game',
                 },
               },
             },
@@ -993,11 +991,9 @@ export default {
             description: 'Created',
             schema: {
               properties: {
-                gameAction: {
-                  type: 'array',
-                  items: {
-                    // $ref: '#/definitions/Group',
-                  },
+                userGameAction: {
+                  type: 'object',
+                  $ref: '#/definitions/User Game Action',
                 },
               },
             },
@@ -4006,6 +4002,107 @@ export default {
       },
     },
 
+    'User Game Action': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        GameActionId: {
+          type: 'integer',
+        },
+        counter: {
+          type: 'integer',
+        },
+        createdAt: {
+          type: 'string',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+      },
+    },
+
+    Game: {
+      type: 'object',
+      properties: {
+        xp: {
+          type: 'integer',
+        },
+        level: {
+          type: 'object',
+          properties: {
+            current: {
+              type: 'object',
+              $ref: '#/definitions/Level',
+            },
+            next: {
+              type: 'object',
+              $ref: '#/definitions/Level',
+            },
+          },
+        },
+        achievements: {
+          type: 'object',
+          properties: {
+            achieved: {
+              type: 'array',
+              items: {
+                properties: {
+                  id: {
+                    type: 'integer',
+                  },
+                  name: {
+                    type: 'string',
+                  },
+                  requirement: {
+                    type: 'integer',
+                  },
+                  xp: {
+                    type: 'integer',
+                  },
+                  badgeImageUrl: {
+                    type: 'string',
+                  },
+                  iconImageUrl: {
+                    type: 'string',
+                  },
+                },
+              },
+            },
+            incomplete: {
+              type: 'array',
+              items: {
+                properties: {
+                  id: {
+                    type: 'integer',
+                  },
+                  name: {
+                    type: 'string',
+                  },
+                  requirement: {
+                    type: 'integer',
+                  },
+                  xp: {
+                    type: 'integer',
+                  },
+                  badgeImageUrl: {
+                    type: 'string',
+                  },
+                  iconImageUrl: {
+                    type: 'string',
+                  },
+                  progress: {
+                    type: 'integer',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
     Achievement: {
       type: 'object',
       properties: {
@@ -4021,6 +4118,12 @@ export default {
         xp: {
           type: 'integer',
         },
+        badgeImageUrl: {
+          type: 'string',
+        },
+        iconImageUrl: {
+          type: 'string',
+        },
         GameAction: {
           type: 'object',
           $ref: '#/definitions/Game Action',
@@ -4032,9 +4135,6 @@ export default {
       type: 'object',
       properties: {
         id: {
-          type: 'integer',
-        },
-        level: {
           type: 'integer',
         },
         xp: {
