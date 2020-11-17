@@ -77,6 +77,13 @@ class UserRepository {
     })
     groups.forEach((group) => this.deleteGroup(group.id))
 
+    const userGameActionRelations = await db.UserGameAction.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+    userGameActionRelations.forEach((relation) => relation.destroy())
+
     return await user.destroy()
   }
 
