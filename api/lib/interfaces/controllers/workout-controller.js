@@ -547,15 +547,16 @@ class WorkoutController {
     const { userId } = req.props
 
     const { getStretchMovementsByUserIdUseCase } = this.useCases
-    const response = await getStretchMovementsByUserIdUseCase.execute(userId)
+    const stretchMovements = await getStretchMovementsByUserIdUseCase.execute(
+      userId
+    )
 
-    if (!response) {
+    if (!stretchMovements) {
       throw ServerError.internal()
     } else {
       return HttpResponse.ok({
         message: 'Stretch Movements retrieved',
-        stretchMovements: response.stretchMovements,
-        relations: response.relations,
+        stretchMovements,
       })
     }
   }
@@ -633,15 +634,16 @@ class WorkoutController {
     const { userId } = req.props
 
     const { getStretchSessionsByUserIdUseCase } = this.useCases
-    const response = await getStretchSessionsByUserIdUseCase.execute(userId)
+    const stretchSessions = await getStretchSessionsByUserIdUseCase.execute(
+      userId
+    )
 
-    if (!response) {
+    if (!stretchSessions) {
       throw ServerError.internal()
     } else {
       return HttpResponse.ok({
         message: 'Stretch sessions retrieved',
-        stretchSessions: response.stretchSessions,
-        relations: response.relations,
+        stretchSessions,
       })
     }
   }
@@ -719,15 +721,16 @@ class WorkoutController {
     const { userId } = req.props
 
     const { getStretchChallengesByUserIdUseCase } = this.useCases
-    const response = await getStretchChallengesByUserIdUseCase.execute(userId)
+    const stretchChallenges = await getStretchChallengesByUserIdUseCase.execute(
+      userId
+    )
 
-    if (!response) {
+    if (!stretchChallenges) {
       throw ServerError.internal()
     } else {
       return HttpResponse.ok({
         message: 'Stretch challenges retrieved',
-        stretchChallenges: response.stretchChallenges,
-        relations: response.relations,
+        stretchChallenges,
       })
     }
   }

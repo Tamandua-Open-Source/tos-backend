@@ -673,50 +673,41 @@ class WorkoutRepository {
 
   //user - stretch movement
   async getStretchMovementsByUserId(userId) {
-    const relations = await db.UserStretchMovement.findAll({
+    const user = await db.User.findOne({
       where: {
-        UserId: userId,
+        id: userId,
       },
-    })
-
-    const stretchMovementsIdList = relations.map(
-      (relation) => relation.StretchMovementId
-    )
-
-    return await db.StretchMovement.findAll({
-      where: {
-        id: {
-          [Op.in]: stretchMovementsIdList,
-        },
-      },
-      attributes: [
-        'id',
-        'name',
-        'description',
-        'duration',
-        'imageFileUrl',
-        'videoFileUrl',
-      ],
-      through: {
-        attributes: [],
-      },
+      attributes: [],
       include: [
         {
-          model: db.BodyPart,
-          attributes: ['id', 'name'],
+          model: db.StretchMovement,
+          attributes: [
+            'id',
+            'name',
+            'description',
+            'duration',
+            'imageFileUrl',
+            'videoFileUrl',
+          ],
           through: {
-            attributes: [],
+            attributes: ['progress'],
           },
+          include: [
+            {
+              model: db.BodyPart,
+              attributes: ['id', 'name'],
+              through: {
+                attributes: [],
+              },
+            },
+          ],
         },
       ],
     })
-  }
-  async getUserStretchMovementsByUserId(userId) {
-    return await db.UserStretchMovement.findAll({
-      where: {
-        UserId: userId,
-      },
-    })
+
+    if (!user) throw ClientError.notFound()
+    if (!user.StretchMovements) return []
+    return user.StretchMovements
   }
   async addUserStretchMovement(userId, stretchMovementId) {
     const user = await db.User.findOne({
@@ -777,60 +768,52 @@ class WorkoutRepository {
 
   //user - stretch session
   async getStretchSessionsByUserId(userId) {
-    const relations = await db.UserStretchSession.findAll({
+    const user = await db.User.findOne({
       where: {
-        UserId: userId,
+        id: userId,
       },
-    })
-
-    const stretchSessionsIdList = relations.map(
-      (relation) => relation.StretchSessionId
-    )
-
-    const stretchSessions = await db.StretchSession.findAll({
-      where: {
-        id: {
-          [Op.in]: stretchSessionsIdList,
-        },
-      },
-      attributes: ['id', 'name', 'description', 'imageFileUrl'],
+      attributes: [],
       include: [
         {
-          model: db.StretchMovement,
-          attributes: [
-            'id',
-            'name',
-            'description',
-            'duration',
-            'imageFileUrl',
-            'videoFileUrl',
-          ],
+          model: db.StretchSession,
+          attributes: ['id', 'name', 'description', 'imageFileUrl'],
           through: {
-            attributes: [],
+            attributes: ['progress'],
           },
           include: [
             {
-              model: db.BodyPart,
-              attributes: ['id', 'name'],
+              model: db.StretchMovement,
+              attributes: [
+                'id',
+                'name',
+                'description',
+                'duration',
+                'imageFileUrl',
+                'videoFileUrl',
+              ],
               through: {
                 attributes: [],
               },
+              include: [
+                {
+                  model: db.BodyPart,
+                  attributes: ['id', 'name'],
+                  through: {
+                    attributes: [],
+                  },
+                },
+              ],
             },
           ],
         },
       ],
     })
 
-    if (stretchSessions.length == 0) return []
+    if (!user) throw ClientError.notFound()
+    if (!user.StretchSessions) return []
+    if (user.StretchSessions.length == 0) return []
 
-    return stretchSessions.map((SS) => this.buildStretchSession(SS))
-  }
-  async getUserStretchSessionsByUserId(userId) {
-    return await db.UserStretchSession.findAll({
-      where: {
-        UserId: userId,
-      },
-    })
+    return user.StretchSessions.map((SS) => this.buildStretchSession(SS))
   }
   async addUserStretchSession(userId, stretchSessionId) {
     const user = await db.User.findOne({
@@ -891,51 +874,49 @@ class WorkoutRepository {
 
   //user - stretch challenge
   async getStretchChallengesByUserId(userId) {
-    const relations = await db.UserStretchChallenge.findAll({
+    const user = await db.User.findOne({
       where: {
-        UserId: userId,
+        id: userId,
       },
-    })
-
-    const stretchChallengeIdList = relations.map(
-      (relation) => relation.StretchChallengeId
-    )
-
-    const stretchChallenges = await db.StretchChallenge.findAll({
-      where: {
-        id: {
-          [Op.in]: stretchChallengeIdList,
-        },
-      },
-      attributes: ['id', 'name', 'description'],
+      attributes: [],
       include: [
         {
-          model: db.StretchSession,
-          attributes: ['id', 'name', 'description', 'imageFileUrl'],
+          model: db.StretchChallenge,
+          attributes: ['id', 'name', 'description'],
           through: {
-            attributes: [],
+            attributes: ['progress'],
           },
           include: [
             {
-              model: db.StretchMovement,
-              attributes: [
-                'id',
-                'name',
-                'description',
-                'duration',
-                'imageFileUrl',
-                'videoFileUrl',
-              ],
+              model: db.StretchSession,
+              attributes: ['id', 'name', 'description', 'imageFileUrl'],
               through: {
                 attributes: [],
               },
               include: [
                 {
-                  model: db.BodyPart,
-                  attributes: ['id', 'name'],
+                  model: db.StretchMovement,
+                  attributes: [
+                    'id',
+                    'name',
+                    'description',
+                    'duration',
+                    'imageFileUrl',
+                    'videoFileUrl',
+                  ],
                   through: {
                     attributes: [],
                   },
+                  //TODO: ERRO DE ENCADEAMENTO PROFUNDO
+                  // include: [
+                  //   {
+                  //     model: db.BodyPart,
+                  //     attributes: ['id', 'name'],
+                  //     through: {
+                  //       attributes: [],
+                  //     },
+                  //   },
+                  // ],
                 },
               ],
             },
@@ -944,9 +925,11 @@ class WorkoutRepository {
       ],
     })
 
-    if (stretchChallenges.length == 0) return []
+    if (!user) throw ClientError.notFound()
+    if (!user.StretchChallenges) return []
+    if (user.StretchChallenges.length == 0) return []
 
-    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
+    return user.StretchChallenges.map((SC) => this.buildStretchChallenge(SC))
   }
   async getUserStretchChallengesByUserId(userId) {
     return await db.UserStretchChallenge.findAll({
