@@ -4,13 +4,17 @@ class GetGameByUserIdUseCase {
   }
 
   async execute({ userId }) {
-    const [gameActions, levels] = await Promise.all([
-      this.gameRepository.getGameActionsByUserId({
-        userId,
-      }),
+    const [gameActions, defaultLevels, defaultAchievements] = await Promise.all(
+      [
+        this.gameRepository.getGameActionsByUserId({
+          userId,
+        }),
 
-      this.gameRepository.getAllLevels(),
-    ])
+        this.gameRepository.getAllLevels(),
+
+        this.gameRepository.getAllAchievements(),
+      ]
+    )
 
     let xpFromActions = 0
     let achievements = {
@@ -33,6 +37,25 @@ class GetGameByUserIdUseCase {
       })
     })
 
+    defaultAchievements
+      .filter((achievement) => {
+        return !(
+          achievements.achieved.some(
+            (achieved) => achieved.id == achievement.id
+          ) ||
+          achievements.incomplete.some(
+            (achieved) => achieved.id == achievement.id
+          )
+        )
+      })
+      .forEach((achievement) => {
+        achievements.incomplete.push({
+          ...achievement.toJSON(),
+          ...{ GameAction: undefined },
+          ...{ progress: 0 },
+        })
+      })
+
     const xpFromAchievements = achievements.achieved
       .map((achievement) => achievement.xp)
       .reduce((total, xp) => total + xp, 0)
@@ -44,13 +67,13 @@ class GetGameByUserIdUseCase {
       next: {},
     }
 
-    for (let i = 0; i < levels.length; i++) {
-      if (levels[i].xp <= xp) {
-        level.current = levels[i]
+    for (let i = 0; i < defaultLevels.length; i++) {
+      if (defaultLevels[i].xp <= xp) {
+        level.current = defaultLevels[i]
       }
 
-      if (levels[i].xp > xp) {
-        level.next = levels[i]
+      if (defaultLevels[i].xp > xp) {
+        level.next = defaultLevels[i]
         break
       }
     }
