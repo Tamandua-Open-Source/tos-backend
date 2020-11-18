@@ -18,7 +18,7 @@ class UserController {
     return HttpResponse.ok({ message: 'Users Retrieved', users })
   }
   async updateUser(req) {
-    const { name, email } = req.body
+    const { name, email, photoUrl } = req.body
     const { userId } = req.props
 
     if (!userId) throw ServerError.internal()
@@ -29,7 +29,11 @@ class UserController {
     if (!availableUser) throw ClientError.notFound('User Not Found')
 
     const { updateUserUseCase } = this.useCases
-    const user = await updateUserUseCase.execute(userId, { name, email })
+    const user = await updateUserUseCase.execute(userId, {
+      name,
+      email,
+      photoUrl,
+    })
 
     if (!user) throw ClientError.notFound('User Not Found')
 

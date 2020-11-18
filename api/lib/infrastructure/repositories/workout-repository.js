@@ -271,7 +271,7 @@ class WorkoutRepository {
 
     if (stretchSessions.length == 0) return []
 
-    return stretchSessions.map((SS) => this.buildStretchSession(SS))
+    return stretchSessions.map((SS) => this.buildStretchSession(SS.toJSON()))
   }
   async addStretchSessionStretchMovement(stretchSessionId, stretchMovementId) {
     const stretchSession = await db.StretchSession.findOne({
@@ -352,7 +352,7 @@ class WorkoutRepository {
     })
     if (stretchSessions.length == 0) return []
 
-    return stretchSessions.map((SS) => this.buildStretchSession(SS))
+    return stretchSessions.map((SS) => this.buildStretchSession(SS.toJSON()))
   }
   async getStretchSessionById(stretchSessionId) {
     const stretchSession = await db.StretchSession.findOne({
@@ -389,7 +389,7 @@ class WorkoutRepository {
 
     if (!stretchSession) throw ClientError.notFound()
 
-    return this.buildStretchSession(stretchSession)
+    return this.buildStretchSession(stretchSession.toJSON())
   }
   async createStretchSession(stretchSession) {
     return await db.StretchSession.create(stretchSession)
@@ -491,7 +491,9 @@ class WorkoutRepository {
 
     if (stretchChallenges.length == 0) return []
 
-    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
+    return stretchChallenges.map((SC) =>
+      this.buildStretchChallenge(SC.toJSON())
+    )
   }
   async addStretchChallengeStretchSession(
     stretchChallengeId,
@@ -585,7 +587,9 @@ class WorkoutRepository {
 
     if (stretchChallenges.length == 0) return []
 
-    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
+    return stretchChallenges.map((SC) =>
+      this.buildStretchChallenge(SC.toJSON())
+    )
   }
   async getStretchChallengeById(stretchChallengeId) {
     const stretchChallenge = await db.StretchChallenge.findOne({
@@ -631,7 +635,7 @@ class WorkoutRepository {
 
     if (!stretchChallenge) throw ClientError.notFound()
 
-    return this.buildStretchChallenge(stretchChallenge)
+    return this.buildStretchChallenge(stretchChallenge.toJSON())
   }
   async createStretchChallenge(stretchChallenge) {
     return await db.StretchChallenge.create(stretchChallenge)
@@ -813,7 +817,9 @@ class WorkoutRepository {
     if (!user.StretchSessions) return []
     if (user.StretchSessions.length == 0) return []
 
-    return user.StretchSessions.map((SS) => this.buildStretchSession(SS))
+    return user.StretchSessions.map((SS) =>
+      this.buildStretchSession(SS.toJSON())
+    )
   }
   async addUserStretchSession(userId, stretchSessionId) {
     const user = await db.User.findOne({
@@ -907,16 +913,6 @@ class WorkoutRepository {
                   through: {
                     attributes: [],
                   },
-                  //TODO: ERRO DE ENCADEAMENTO PROFUNDO
-                  // include: [
-                  //   {
-                  //     model: db.BodyPart,
-                  //     attributes: ['id', 'name'],
-                  //     through: {
-                  //       attributes: [],
-                  //     },
-                  //   },
-                  // ],
                 },
               ],
             },
@@ -929,7 +925,62 @@ class WorkoutRepository {
     if (!user.StretchChallenges) return []
     if (user.StretchChallenges.length == 0) return []
 
-    return user.StretchChallenges.map((SC) => this.buildStretchChallenge(SC))
+    const stretchChallengeWithBodyPart = await Promise.all(
+      user.StretchChallenges.map(async (SC) => {
+        const StretchSessions = await Promise.all(
+          SC.StretchSessions.map(async (SS) => {
+            const StretchMovements = await Promise.all(
+              SS.StretchMovements.map(async (SM) => {
+                const BodyParts = await this.getStretchMovementBodyParts(SM.id)
+                return {
+                  ...SM.toJSON(),
+                  ...{
+                    BodyParts,
+                  },
+                }
+              })
+            )
+            return {
+              ...SS.toJSON(),
+              ...{ StretchMovements },
+            }
+          })
+        )
+
+        return {
+          ...SC.toJSON(),
+          ...{ StretchSessions },
+        }
+      })
+    )
+
+    return stretchChallengeWithBodyPart.map((SC) =>
+      this.buildStretchChallenge(SC)
+    )
+  }
+  //função existe pois o sequelize não permite encadear: Stretch Challenge -> Stretch Session -> Stretch Movement -> Body Part
+  async getStretchMovementBodyParts(stretchMovementId) {
+    const stretchMovement = await db.StretchMovement.findOne({
+      where: {
+        id: stretchMovementId,
+      },
+      attributes: [],
+      include: [
+        {
+          model: db.BodyPart,
+          attributes: ['id', 'name'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    })
+
+    if (!stretchMovement) return []
+    if (!stretchMovement.BodyParts) return []
+    if (stretchMovement.BodyParts.length == 0) return []
+
+    return stretchMovement.BodyParts
   }
   async getUserStretchChallengesByUserId(userId) {
     return await db.UserStretchChallenge.findAll({
@@ -1078,7 +1129,7 @@ class WorkoutRepository {
 
     if (stretchSessions.length == 0) return []
 
-    return stretchSessions.map((SS) => this.buildStretchSession(SS))
+    return stretchSessions.map((SS) => this.buildStretchSession(SS.toJSON()))
   }
   async getRecommendedStretchChallengesByUserId(userId) {
     const relations = await db.UserStretchChallenge.findAll({
@@ -1136,14 +1187,16 @@ class WorkoutRepository {
 
     if (stretchChallenges.length == 0) return []
 
-    return stretchChallenges.map((SC) => this.buildStretchChallenge(SC))
+    return stretchChallenges.map((SC) =>
+      this.buildStretchChallenge(SC.toJSON())
+    )
   }
 
   //Build Functions
   buildStretchSession(stretchSession) {
     if (stretchSession.StretchMovements.length == 0)
       return {
-        ...stretchSession.toJSON(),
+        ...stretchSession,
         ...{ duration: 0 },
       }
 
@@ -1153,14 +1206,14 @@ class WorkoutRepository {
     )
 
     return {
-      ...stretchSession.toJSON(),
+      ...stretchSession,
       ...{ duration },
     }
   }
   buildStretchChallenge(stretchChallenge) {
     if (stretchChallenge.StretchSessions.length == 0)
       return {
-        ...stretchChallenge.toJSON(),
+        ...stretchChallenge,
         ...{ duration: 0 },
       }
 
@@ -1174,7 +1227,7 @@ class WorkoutRepository {
     )
 
     return {
-      ...stretchChallenge.toJSON(),
+      ...stretchChallenge,
       ...{ StretchSessions },
       ...{ duration },
     }

@@ -374,6 +374,9 @@ export default {
                 email: {
                   type: 'string',
                 },
+                photoUrl: {
+                  type: 'string',
+                },
               },
             },
           },
@@ -1094,12 +1097,12 @@ export default {
                 message: {
                   type: 'string',
                 },
-                groups: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Group',
-                  },
-                },
+                // groups: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Group',
+                //   },
+                // },
               },
             },
           },
@@ -1207,10 +1210,10 @@ export default {
                 message: {
                   type: 'string',
                 },
-                group: {
-                  type: 'object',
-                  $ref: '#/definitions/Group',
-                },
+                // group: {
+                //   type: 'object',
+                //   $ref: '#/definitions/Group',
+                // },
               },
             },
           },
@@ -1363,18 +1366,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                groups: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Group',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Group',
-                  },
-                },
+                // groups: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Group',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Group',
+                //   },
+                // },
               },
             },
           },
@@ -3213,18 +3216,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                stretchMovements: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Movement',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Movement',
-                  },
-                },
+                // stretchMovements: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Movement',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Movement',
+                //   },
+                // },
               },
             },
           },
@@ -3425,18 +3428,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                stretchSessions: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Session',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Session',
-                  },
-                },
+                // stretchSessions: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Session',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Session',
+                //   },
+                // },
               },
             },
           },
@@ -3637,18 +3640,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                stretchChallenges: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Challenge',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Challenge',
-                  },
-                },
+                // stretchChallenges: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Challenge',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Challenge',
+                //   },
+                // },
               },
             },
           },
