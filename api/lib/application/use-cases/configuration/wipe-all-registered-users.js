@@ -37,8 +37,10 @@ class WipeAllRegisteredUsersUseCase {
       return !user.email
     })
     await usersToDelete.forEach(async (user) => {
-      await this.firebaseAdminFacade.deleteUserById(user.id)
       await this.timerServiceFacade.unsubscribeByUserId(user.id)
+    })
+    await usersToDelete.forEach(async (user) => {
+      await this.firebaseAdminFacade.deleteUserById(user.id)
     })
 
     //register users with email

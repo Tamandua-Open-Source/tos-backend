@@ -90,10 +90,12 @@ class AddUserGameActionUseCase {
   }
 
   async getUserGameInfo({ userId }) {
-    const [gameActions] = await Promise.all([
+    const [gameActions, defaultLevels] = await Promise.all([
       this.gameRepository.getGameActionsByUserId({
         userId,
       }),
+
+      this.gameRepository.getAllLevels(),
     ])
 
     let xpFromActions = 0
@@ -117,8 +119,25 @@ class AddUserGameActionUseCase {
 
     const xp = xpFromActions + xpFromAchievements
 
+    let level = {
+      current: {},
+      next: {},
+    }
+
+    for (let i = 0; i < defaultLevels.length; i++) {
+      if (defaultLevels[i].xp <= xp) {
+        level.current = defaultLevels[i]
+      }
+
+      if (defaultLevels[i].xp > xp) {
+        level.next = defaultLevels[i]
+        break
+      }
+    }
+
     return {
       xp,
+      level,
       achievements,
     }
   }
