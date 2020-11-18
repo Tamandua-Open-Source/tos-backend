@@ -31,13 +31,17 @@ class AddUserGameActionUseCase {
       gameAfter.level.current
     ) {
       if (gameAfter.level.current.id > gameBefore.level.current.id) {
-        this.firebaseAdminFacade.send({
-          title: 'Congratulations!',
-          body: `You have reached level ${gameAfter.level.current.id}`,
-          category: 'LEVEL_UP_CATEGORY',
-          fcmToken: preferences.fcmToken,
-          references: [gameAfter.level.current.id],
-        })
+        if (preferences.allowGeneralNotifications == true) {
+          this.firebaseAdminFacade.send({
+            title: 'Congratulations!',
+            body: `You have reached level ${gameAfter.level.current.id}`,
+            category: 'LEVEL_UP_CATEGORY',
+            fcmToken: preferences.fcmToken,
+            references: [gameAfter.level.current.id],
+          })
+        } else {
+          console.log('[allowGeneralNotifications: false] - Level up')
+        }
       }
     }
 
@@ -50,46 +54,51 @@ class AddUserGameActionUseCase {
     )
 
     if (newAchievements.length == 1) {
-      this.firebaseAdminFacade.send({
-        title: 'Congratulations!',
-        body: `You unlocked achievement: '${newAchievements[0].name}'`,
-        category: 'ONE_ACHIEVEMENT_CATEGORY',
-        fcmToken: preferences.fcmToken,
-        references: [newAchievements[0].id],
-      })
+      if (preferences.allowGeneralNotifications == true) {
+        this.firebaseAdminFacade.send({
+          title: 'Congratulations!',
+          body: `You unlocked achievement: '${newAchievements[0].name}'`,
+          category: 'ONE_ACHIEVEMENT_CATEGORY',
+          fcmToken: preferences.fcmToken,
+          references: [newAchievements[0].id],
+        })
+      } else {
+        console.log('[allowGeneralNotifications: false] - One Achievement')
+      }
     } else if (newAchievements.length > 1) {
-      const achievementsName = newAchievements
-        .map((achievement) => achievement.name)
-        .reduce((allNames, name) => allNames + `${name}', '`, '')
+      if (preferences.allowGeneralNotifications == true) {
+        const achievementsName = newAchievements
+          .map((achievement) => achievement.name)
+          .reduce((allNames, name) => allNames + `${name}', '`, '')
 
-      this.firebaseAdminFacade.send({
-        title: 'Congratulations!',
-        body: `You unlocked achievements: '${achievementsName}'`.replace(
-          ", ''",
-          ''
-        ),
-        category: 'MANY_ACHIEVEMENTS_CATEGORY',
-        fcmToken: preferences.fcmToken,
-        id: newAchievements,
-      })
+        this.firebaseAdminFacade.send({
+          title: 'Congratulations!',
+          body: `You unlocked achievements: '${achievementsName}'`.replace(
+            ", ''",
+            ''
+          ),
+          category: 'MANY_ACHIEVEMENTS_CATEGORY',
+          fcmToken: preferences.fcmToken,
+          id: newAchievements,
+        })
+      } else {
+        console.log('[allowGeneralNotifications: false] - Many Achievements')
+      }
     }
 
     return userGameAction
   }
 
   async getUserGameInfo({ userId }) {
-    const [gameActions, levels] = await Promise.all([
+    const [gameActions] = await Promise.all([
       this.gameRepository.getGameActionsByUserId({
         userId,
       }),
-
-      this.gameRepository.getAllLevels(),
     ])
 
     let xpFromActions = 0
     let achievements = {
       achieved: [],
-      incomplete: [],
     }
 
     gameActions.forEach((gameAction) => {
@@ -98,11 +107,6 @@ class AddUserGameActionUseCase {
       gameAction.Achievements.forEach((achievement) => {
         if (gameAction.UserGameAction.counter >= achievement.requirement) {
           achievements.achieved.push(achievement)
-        } else {
-          achievements.incomplete.push({
-            ...achievement.toJSON(),
-            ...{ progress: gameAction.UserGameAction.counter },
-          })
         }
       })
     })
@@ -113,25 +117,8 @@ class AddUserGameActionUseCase {
 
     const xp = xpFromActions + xpFromAchievements
 
-    let level = {
-      current: {},
-      next: {},
-    }
-
-    for (let i = 0; i < levels.length; i++) {
-      if (levels[i].xp <= xp) {
-        level.current = levels[i]
-      }
-
-      if (levels[i].xp > xp) {
-        level.next = levels[i]
-        break
-      }
-    }
-
     return {
       xp,
-      level,
       achievements,
     }
   }

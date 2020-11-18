@@ -13,6 +13,7 @@ import PatchUserPreferenceWeeklyStretchActivityUseCase from './user--preference/
 import PatchUserPreferenceFixedStartPeriodUseCase from './user--preference/patch-user-preference-fixed-start-period-use-case'
 import PatchUserPreferenceFixedStartTimeUseCase from './user--preference/patch-user-preference-fixed-start-time-use-case'
 import PatchUserPreferenceGoalUseCase from './user--preference/patch-user-preference-goal-use-case'
+import PatchUserPreferenceNotificationUseCase from './user--preference/patch-user-preference-notification-use-case'
 
 //group
 import GetAllGroupsUseCase from './group/get-all-groups-use-case'
@@ -42,6 +43,7 @@ export {
   PatchUserPreferenceFixedStartPeriodUseCase,
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceGoalUseCase,
+  PatchUserPreferenceNotificationUseCase,
   //group
   GetAllGroupsUseCase,
   GetGroupByIdUseCase,

@@ -28,6 +28,18 @@ module.exports = {
       startTime: {
         type: Sequelize.DATE,
       },
+      allowTimerNotifications: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      allowWorkoutNotifications: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      allowGeneralNotifications: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

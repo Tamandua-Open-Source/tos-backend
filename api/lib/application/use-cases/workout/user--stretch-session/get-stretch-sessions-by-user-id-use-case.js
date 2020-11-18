@@ -4,18 +4,7 @@ class GetStretchSessionsByUserIdUseCase {
   }
 
   async execute(userId) {
-    const stretchSessions = await this.workoutRepository.getStretchSessionsByUserId(
-      userId
-    )
-
-    const relations = await this.workoutRepository.getUserStretchSessionsByUserId(
-      userId
-    )
-
-    return {
-      stretchSessions,
-      relations,
-    }
+    return await this.workoutRepository.getStretchSessionsByUserId(userId)
   }
 }
 

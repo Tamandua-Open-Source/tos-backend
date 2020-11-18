@@ -374,6 +374,9 @@ export default {
                 email: {
                   type: 'string',
                 },
+                photoUrl: {
+                  type: 'string',
+                },
               },
             },
           },
@@ -803,6 +806,64 @@ export default {
         },
       },
     },
+    '/api/users/me/preferences/notification': {
+      patch: {
+        tags: ['User Preferences'],
+        summary: 'Updates notification in user preferences',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                allowTimerNotifications: {
+                  type: 'boolean',
+                },
+                allowWorkoutNotifications: {
+                  type: 'boolean',
+                },
+                allowGeneralNotifications: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                preferences: {
+                  type: 'object',
+                  $ref: '#/definitions/User Preferences',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
 
     //GAME -> achievement
     '/api/achievements': {
@@ -864,12 +925,10 @@ export default {
           200: {
             description: 'OK',
             schema: {
+              type: 'object',
               properties: {
                 game: {
-                  type: 'array',
-                  items: {
-                    // $ref: '#/definitions/Group',
-                  },
+                  $ref: '#/definitions/Game',
                 },
               },
             },
@@ -993,11 +1052,9 @@ export default {
             description: 'Created',
             schema: {
               properties: {
-                gameAction: {
-                  type: 'array',
-                  items: {
-                    // $ref: '#/definitions/Group',
-                  },
+                userGameAction: {
+                  type: 'object',
+                  $ref: '#/definitions/User Game Action',
                 },
               },
             },
@@ -1040,12 +1097,12 @@ export default {
                 message: {
                   type: 'string',
                 },
-                groups: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Group',
-                  },
-                },
+                // groups: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Group',
+                //   },
+                // },
               },
             },
           },
@@ -1153,10 +1210,10 @@ export default {
                 message: {
                   type: 'string',
                 },
-                group: {
-                  type: 'object',
-                  $ref: '#/definitions/Group',
-                },
+                // group: {
+                //   type: 'object',
+                //   $ref: '#/definitions/Group',
+                // },
               },
             },
           },
@@ -1309,18 +1366,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                groups: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Group',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Group',
-                  },
-                },
+                // groups: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Group',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Group',
+                //   },
+                // },
               },
             },
           },
@@ -3159,18 +3216,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                stretchMovements: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Movement',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Movement',
-                  },
-                },
+                // stretchMovements: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Movement',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Movement',
+                //   },
+                // },
               },
             },
           },
@@ -3371,18 +3428,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                stretchSessions: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Session',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Session',
-                  },
-                },
+                // stretchSessions: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Session',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Session',
+                //   },
+                // },
               },
             },
           },
@@ -3583,18 +3640,18 @@ export default {
                 message: {
                   type: 'string',
                 },
-                stretchChallenges: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Challenge',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Challenge',
-                  },
-                },
+                // stretchChallenges: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Challenge',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Challenge',
+                //   },
+                // },
               },
             },
           },
@@ -3934,6 +3991,9 @@ export default {
         email: {
           type: 'string',
         },
+        photoUrl: {
+          type: 'string',
+        },
         createdAt: {
           type: 'string',
         },
@@ -3951,6 +4011,15 @@ export default {
         },
         startTime: {
           type: 'string',
+        },
+        allowTimerNotifications: {
+          type: 'boolean',
+        },
+        allowWorkoutNotifications: {
+          type: 'boolean',
+        },
+        allowGeneralNotifications: {
+          type: 'boolean',
         },
         UserPreferenceWeeklyStretchActivity: {
           type: 'object',
@@ -4006,6 +4075,107 @@ export default {
       },
     },
 
+    'User Game Action': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        GameActionId: {
+          type: 'integer',
+        },
+        counter: {
+          type: 'integer',
+        },
+        createdAt: {
+          type: 'string',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+      },
+    },
+
+    Game: {
+      type: 'object',
+      properties: {
+        xp: {
+          type: 'integer',
+        },
+        level: {
+          type: 'object',
+          properties: {
+            current: {
+              type: 'object',
+              $ref: '#/definitions/Level',
+            },
+            next: {
+              type: 'object',
+              $ref: '#/definitions/Level',
+            },
+          },
+        },
+        achievements: {
+          type: 'object',
+          properties: {
+            achieved: {
+              type: 'array',
+              items: {
+                properties: {
+                  id: {
+                    type: 'integer',
+                  },
+                  name: {
+                    type: 'string',
+                  },
+                  requirement: {
+                    type: 'integer',
+                  },
+                  xp: {
+                    type: 'integer',
+                  },
+                  badgeImageUrl: {
+                    type: 'string',
+                  },
+                  iconImageUrl: {
+                    type: 'string',
+                  },
+                },
+              },
+            },
+            incomplete: {
+              type: 'array',
+              items: {
+                properties: {
+                  id: {
+                    type: 'integer',
+                  },
+                  name: {
+                    type: 'string',
+                  },
+                  requirement: {
+                    type: 'integer',
+                  },
+                  xp: {
+                    type: 'integer',
+                  },
+                  badgeImageUrl: {
+                    type: 'string',
+                  },
+                  iconImageUrl: {
+                    type: 'string',
+                  },
+                  progress: {
+                    type: 'integer',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
     Achievement: {
       type: 'object',
       properties: {
@@ -4021,6 +4191,12 @@ export default {
         xp: {
           type: 'integer',
         },
+        badgeImageUrl: {
+          type: 'string',
+        },
+        iconImageUrl: {
+          type: 'string',
+        },
         GameAction: {
           type: 'object',
           $ref: '#/definitions/Game Action',
@@ -4032,9 +4208,6 @@ export default {
       type: 'object',
       properties: {
         id: {
-          type: 'integer',
-        },
-        level: {
           type: 'integer',
         },
         xp: {

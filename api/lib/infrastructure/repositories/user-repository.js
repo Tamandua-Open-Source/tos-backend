@@ -77,6 +77,13 @@ class UserRepository {
     })
     groups.forEach((group) => this.deleteGroup(group.id))
 
+    const userGameActionRelations = await db.UserGameAction.findAll({
+      where: {
+        UserId: userId,
+      },
+    })
+    userGameActionRelations.forEach((relation) => relation.destroy())
+
     return await user.destroy()
   }
 
@@ -86,7 +93,13 @@ class UserRepository {
       where: {
         UserId: userId,
       },
-      attributes: ['fcmToken', 'startTime'],
+      attributes: [
+        'fcmToken',
+        'startTime',
+        'allowTimerNotifications',
+        'allowWorkoutNotifications',
+        'allowGeneralNotifications',
+      ],
       include: [
         {
           model: db.UserPreferenceWeeklyStretchActivity,
@@ -135,6 +148,9 @@ class UserRepository {
       UserPreferenceStartPeriodId: 1,
       fcmToken: null,
       startTime: null,
+      allowTimerNotifications: true,
+      allowWorkoutNotifications: true,
+      allowGeneralNotifications: true,
       createdAt: new Date(),
       updatedAt: new Date(),
     })
@@ -344,11 +360,42 @@ class UserRepository {
       breakDuration: breakDuration ? parseInt(breakDuration) : undefined,
     })
   }
+  async patchUserPreferenceNotification({
+    userId,
+    allowTimerNotifications,
+    allowWorkoutNotifications,
+    allowGeneralNotifications,
+  }) {
+    const preference = await db.UserPreference.findOne({
+      where: {
+        UserId: userId,
+      },
+    })
+
+    if (!preference) {
+      return null
+    }
+
+    return await preference.update({
+      allowTimerNotifications: allowTimerNotifications ?? undefined,
+      allowWorkoutNotifications: allowWorkoutNotifications ?? undefined,
+      allowGeneralNotifications: allowGeneralNotifications ?? undefined,
+    })
+  }
 
   //group
   async getAllGroups() {
     return await db.Group.findAll({
       attributes: ['id', 'name', 'OwnerId', 'isPublic'],
+      include: [
+        {
+          model: db.User,
+          attributes: ['id', 'name', 'photoUrl'],
+          through: {
+            attributes: ['admin'],
+          },
+        },
+      ],
     })
   }
   async getGroupById(groupId) {
@@ -357,6 +404,15 @@ class UserRepository {
         id: groupId,
       },
       attributes: ['id', 'name', 'OwnerId', 'isPublic'],
+      include: [
+        {
+          model: db.User,
+          attributes: ['id', 'name', 'photoUrl'],
+          through: {
+            attributes: ['admin'],
+          },
+        },
+      ],
     })
   }
   async createGroup(group) {
@@ -406,29 +462,34 @@ class UserRepository {
 
   //user - group
   async getGroupsByUserId(userId) {
-    const relations = await db.UserGroup.findAll({
+    const user = await db.User.findOne({
       where: {
-        UserId: userId,
+        id: userId,
       },
-    })
-
-    const groupIdList = relations.map((relation) => relation.GroupId)
-
-    return await db.Group.findAll({
-      where: {
-        id: {
-          [Op.in]: groupIdList,
+      attributes: [],
+      include: [
+        {
+          model: db.Group,
+          attributes: ['id', 'name', 'OwnerId', 'isPublic'],
+          through: {
+            attributes: [],
+          },
+          include: [
+            {
+              model: db.User,
+              attributes: ['id', 'name', 'photoUrl'],
+              through: {
+                attributes: ['admin'],
+              },
+            },
+          ],
         },
-      },
-      attributes: ['id', 'name', 'OwnerId', 'isPublic'],
+      ],
     })
-  }
-  async getUserGroupsByUserId(userId) {
-    return await db.UserGroup.findAll({
-      where: {
-        UserId: userId,
-      },
-    })
+
+    if (!user) throw ClientError.notFound()
+    if (!user.Groups) return []
+    return user.Groups
   }
   async getUserGroupByUserIdAndGroupId(userId, groupId) {
     return await db.UserGroup.findOne({

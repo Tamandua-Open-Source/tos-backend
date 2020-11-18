@@ -1,4 +1,5 @@
 import UserRepository from '../../../infrastructure/repositories/user-repository'
+import GameRepository from '../../../infrastructure/repositories/game-repository'
 import UserController from '../user-controller'
 import TimerServiceFacade from '../../../infrastructure/facades/timer-service-facade'
 import AnalyticsServiceFacade from '../../../infrastructure/facades/analytics-service-facade'
@@ -18,6 +19,7 @@ import {
   PatchUserPreferenceFixedStartTimeUseCase,
   PatchUserPreferenceFixedStartPeriodUseCase,
   PatchUserPreferenceGoalUseCase,
+  PatchUserPreferenceNotificationUseCase,
   //group
   GetAllGroupsUseCase,
   GetGroupByIdUseCase,
@@ -34,6 +36,7 @@ import {
 class UserControllerComposer {
   static compose() {
     const userRepository = new UserRepository()
+    const gameRepository = new GameRepository()
     const timerServiceFacade = new TimerServiceFacade()
     const analyticsServiceFacade = new AnalyticsServiceFacade()
     const ipWhoIsFacade = new IpWhoIsFacade()
@@ -88,10 +91,22 @@ class UserControllerComposer {
     const patchUserPreferenceGoalUseCase = new PatchUserPreferenceGoalUseCase({
       userRepository,
     })
+    const patchUserPreferenceNotificationUseCase = new PatchUserPreferenceNotificationUseCase(
+      {
+        userRepository,
+        timerServiceFacade,
+      }
+    )
 
     //group
-    const getAllGroupsUseCase = new GetAllGroupsUseCase({ userRepository })
-    const getGroupByIdUseCase = new GetGroupByIdUseCase({ userRepository })
+    const getAllGroupsUseCase = new GetAllGroupsUseCase({
+      userRepository,
+      gameRepository,
+    })
+    const getGroupByIdUseCase = new GetGroupByIdUseCase({
+      userRepository,
+      gameRepository,
+    })
     const addGroupUseCase = new AddGroupUseCase({ userRepository })
     const updateGroupUseCase = new UpdateGroupUseCase({ userRepository })
     const deleteGroupUseCase = new DeleteGroupUseCase({ userRepository })
@@ -99,6 +114,7 @@ class UserControllerComposer {
     //user - group
     const getGroupsByUserIdUseCase = new GetGroupsByUserIdUseCase({
       userRepository,
+      gameRepository,
     })
     const addUserGroupUseCase = new AddUserGroupUseCase({ userRepository })
     const updateUserGroupUseCase = new UpdateUserGroupUseCase({
@@ -123,6 +139,7 @@ class UserControllerComposer {
       patchUserPreferenceFixedStartTimeUseCase,
       patchUserPreferenceFixedStartPeriodUseCase,
       patchUserPreferenceGoalUseCase,
+      patchUserPreferenceNotificationUseCase,
       //group
       getAllGroupsUseCase,
       getGroupByIdUseCase,

@@ -16,6 +16,10 @@ export async function up(queryInterface, Sequelize) {
       allowNull: false,
       unique: true,
     },
+    photoUrl: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
     createdAt: {
       type: Sequelize.DATE,
       allowNull: false,

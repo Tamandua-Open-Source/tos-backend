@@ -18,7 +18,7 @@ class UserController {
     return HttpResponse.ok({ message: 'Users Retrieved', users })
   }
   async updateUser(req) {
-    const { name, email } = req.body
+    const { name, email, photoUrl } = req.body
     const { userId } = req.props
 
     if (!userId) throw ServerError.internal()
@@ -29,7 +29,11 @@ class UserController {
     if (!availableUser) throw ClientError.notFound('User Not Found')
 
     const { updateUserUseCase } = this.useCases
-    const user = await updateUserUseCase.execute(userId, { name, email })
+    const user = await updateUserUseCase.execute(userId, {
+      name,
+      email,
+      photoUrl,
+    })
 
     if (!user) throw ClientError.notFound('User Not Found')
 
@@ -65,7 +69,7 @@ class UserController {
     return HttpResponse.ok({ message: 'User Deleted', userId })
   }
   async signInUser(req) {
-    const { userId, idToken, name, email } = req.props
+    const { userId, idToken, name, email, photoUrl } = req.props
     let { ip } = req.ipInfo
 
     if (ip == '::1') {
@@ -80,6 +84,7 @@ class UserController {
       userId,
       email,
       name,
+      photoUrl,
       ip,
     })
 
@@ -302,6 +307,37 @@ class UserController {
       preferences,
     })
   }
+  async patchUserPreferenceNotification(req) {
+    const {
+      allowTimerNotifications,
+      allowWorkoutNotifications,
+      allowGeneralNotifications,
+    } = req.body
+    const { userId, idToken } = req.props
+
+    if (!userId) throw ServerError.internal()
+
+    const { getUserUseCase } = this.useCases
+    const availableUser = await getUserUseCase.execute(userId)
+
+    if (!availableUser) throw ClientError.notFound('User Not Found')
+
+    const { patchUserPreferenceNotificationUseCase } = this.useCases
+    const preferences = await patchUserPreferenceNotificationUseCase.execute({
+      idToken,
+      userId,
+      allowTimerNotifications,
+      allowWorkoutNotifications,
+      allowGeneralNotifications,
+    })
+
+    if (!preferences) throw ClientError.notFound('User Preferences Not Found')
+
+    return HttpResponse.ok({
+      message: 'User Preferences Successfully Patched',
+      preferences,
+    })
+  }
 
   //group
   async getAllGroups(_req) {
@@ -400,17 +436,16 @@ class UserController {
     const { userId } = req.props
 
     const { getGroupsByUserIdUseCase } = this.useCases
-    const response = await getGroupsByUserIdUseCase.execute({
+    const groups = await getGroupsByUserIdUseCase.execute({
       userId,
     })
 
-    if (!response) {
+    if (!groups) {
       throw ServerError.internal()
     } else {
       return HttpResponse.ok({
         message: 'Groups Retrieved',
-        groups: response.groups,
-        relations: response.relations,
+        groups,
       })
     }
   }
