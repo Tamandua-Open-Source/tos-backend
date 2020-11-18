@@ -87,7 +87,7 @@ class FirebaseAdminFacade {
         payload: {
           aps: {
             category: category,
-            references: references,
+            // references: references,
           },
         },
       },
