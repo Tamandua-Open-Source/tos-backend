@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
+      rating: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

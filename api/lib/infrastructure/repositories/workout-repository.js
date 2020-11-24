@@ -694,7 +694,7 @@ class WorkoutRepository {
             'videoFileUrl',
           ],
           through: {
-            attributes: ['progress'],
+            attributes: ['progress', 'rating'],
           },
           include: [
             {
@@ -782,7 +782,7 @@ class WorkoutRepository {
           model: db.StretchSession,
           attributes: ['id', 'name', 'description', 'imageFileUrl'],
           through: {
-            attributes: ['progress'],
+            attributes: ['progress', 'rating'],
           },
           include: [
             {
@@ -890,7 +890,7 @@ class WorkoutRepository {
           model: db.StretchChallenge,
           attributes: ['id', 'name', 'description'],
           through: {
-            attributes: ['progress'],
+            attributes: ['progress', 'rating'],
           },
           include: [
             {
