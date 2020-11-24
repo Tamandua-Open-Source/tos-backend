@@ -6,8 +6,8 @@ module.exports = {
       'Configurations',
       [
         {
-          version: '1.0.0',
-          lastCompatibleVersion: '1.0.0',
+          version: '1.1.0',
+          lastCompatibleVersion: '1.1.0',
           status: 'ok',
           website: 'https://flexibe.app',
           createdAt: new Date(),

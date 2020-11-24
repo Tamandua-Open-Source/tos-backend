@@ -21,6 +21,18 @@ export default {
       description: 'Management of user preferences',
     },
     {
+      name: 'Game',
+      description: 'Management of user gamification',
+    },
+    {
+      name: 'Group',
+      description: 'CRUD',
+    },
+    {
+      name: 'User - Group',
+      description: 'Management of groups, composed by users',
+    },
+    {
       name: 'User - Stretch Movement',
       description: 'Management of user progress on stretch movements',
     },
@@ -31,6 +43,10 @@ export default {
     {
       name: 'User - Stretch Challenge',
       description: 'Management of user progress on stretch challenges',
+    },
+    {
+      name: 'User Recommended Workout',
+      description: 'Management of user recommended workout',
     },
     {
       name: 'Body Part',
@@ -77,10 +93,28 @@ export default {
         summary: 'Show all configuration',
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               $ref: '#/definitions/Configuration',
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -94,8 +128,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Api Key',
-            required: true,
+            description: 'Data Service Api Key',
             schema: {
               type: 'string',
             },
@@ -103,8 +136,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               type: 'object',
               properties: {
@@ -112,6 +145,24 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -127,8 +178,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -136,7 +186,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -152,6 +202,24 @@ export default {
               },
             },
           },
+          202: {
+            description: 'Accepted',
+            schema: {
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -164,32 +232,16 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
-            },
-          },
-          {
-            in: 'body',
-            name: 'Info',
-            schema: {
-              type: 'object',
-              properties: {
-                name: {
-                  type: 'string',
-                },
-                email: {
-                  type: 'string',
-                },
-              },
             },
           },
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -200,6 +252,13 @@ export default {
                   $ref: '#/definitions/User',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -213,8 +272,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -222,7 +280,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -236,6 +294,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       delete: {
@@ -245,8 +310,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -254,7 +318,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -267,6 +331,23 @@ export default {
               },
             },
           },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       put: {
@@ -276,8 +357,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -294,13 +374,16 @@ export default {
                 email: {
                   type: 'string',
                 },
+                photoUrl: {
+                  type: 'string',
+                },
               },
             },
           },
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -314,11 +397,18 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
 
-    //user preferences
+    //user - preferences
     '/api/users/me/preferences': {
       get: {
         tags: ['User Preferences'],
@@ -327,8 +417,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -336,7 +425,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -350,6 +439,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -361,8 +457,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -382,7 +477,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -394,6 +489,13 @@ export default {
                   $ref: '#/definitions/User Preferences',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -407,8 +509,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -446,7 +547,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -458,6 +559,13 @@ export default {
                   $ref: '#/definitions/User Preferences',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -471,8 +579,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -513,7 +620,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -527,6 +634,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -538,8 +652,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -559,7 +672,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -573,6 +686,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -584,8 +704,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -605,7 +724,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -619,6 +738,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -630,8 +756,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -657,7 +782,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -669,6 +794,782 @@ export default {
                   $ref: '#/definitions/User Preferences',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/preferences/notification': {
+      patch: {
+        tags: ['User Preferences'],
+        summary: 'Updates notification in user preferences',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                allowTimerNotifications: {
+                  type: 'boolean',
+                },
+                allowWorkoutNotifications: {
+                  type: 'boolean',
+                },
+                allowGeneralNotifications: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                preferences: {
+                  type: 'object',
+                  $ref: '#/definitions/User Preferences',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //GAME -> achievement
+    '/api/achievements': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show achievements',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                achievements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Achievement',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> core
+    '/api/users/me/game': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show user game info',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              type: 'object',
+              properties: {
+                game: {
+                  $ref: '#/definitions/Game',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> game action
+    '/api/gameActions': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show all game actions',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                gameActions: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Game Action',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> level
+    '/api/levels': {
+      get: {
+        tags: ['Game'],
+        summary: 'Show all levels',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                levels: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Level',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    //GAME -> user - game action
+    '/api/users/me/gameActions/{gameActionId}': {
+      post: {
+        tags: ['Game'],
+        summary: 'Add User Game Action',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'gameActionId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          201: {
+            description: 'Created',
+            schema: {
+              properties: {
+                userGameAction: {
+                  type: 'object',
+                  $ref: '#/definitions/User Game Action',
+                },
+              },
+            },
+          },
+          204: {
+            description: 'No Content',
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //group
+    '/api/groups': {
+      get: {
+        tags: ['Group'],
+        summary: 'Show all groups',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                // groups: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Group',
+                //   },
+                // },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      post: {
+        tags: ['Group'],
+        summary: 'Add group',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'body',
+            name: 'info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                isPublic: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          201: {
+            description: 'Created',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                group: {
+                  type: 'object',
+                  $ref: '#/definitions/Group',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/groups/{groupId}': {
+      get: {
+        tags: ['Group'],
+        summary: 'Show group by id',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                // group: {
+                //   type: 'object',
+                //   $ref: '#/definitions/Group',
+                // },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['Group'],
+        summary: 'Update group',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                name: {
+                  type: 'string',
+                },
+                isPublic: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovement: {
+                  type: 'object',
+                  $ref: '#/definitions/Group',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['Group'],
+        summary: 'Delete group',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Token used to authenticate the user',
+            required: true,
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //user - group
+    '/api/users/me/groups': {
+      get: {
+        tags: ['User - Group'],
+        summary: 'Show all groups that the user is part of',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                // groups: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Group',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Group',
+                //   },
+                // },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/users/{userId}/groups/{groupId}': {
+      post: {
+        tags: ['User - Group'],
+        summary: 'Add user group relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'userId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          201: {
+            description: 'Created',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      delete: {
+        tags: ['User - Group'],
+        summary: 'Delete user group relation',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'userId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+      patch: {
+        tags: ['User - Group'],
+        summary: 'Update user group role',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+          {
+            in: 'path',
+            name: 'userId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'path',
+            name: 'groupId',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+            },
+          },
+          {
+            in: 'body',
+            name: 'Info',
+            schema: {
+              type: 'object',
+              properties: {
+                admin: {
+                  type: 'boolean',
+                },
+              },
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -684,8 +1585,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -693,7 +1593,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -709,6 +1609,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -718,8 +1625,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -739,8 +1645,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -751,6 +1657,23 @@ export default {
                   $ref: '#/definitions/Body Part',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -764,8 +1687,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -781,7 +1703,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -795,6 +1717,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -804,8 +1733,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -833,7 +1761,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -847,6 +1775,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       delete: {
@@ -856,8 +1791,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -873,7 +1807,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -881,6 +1815,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -896,8 +1847,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -913,7 +1863,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -929,6 +1879,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -940,8 +1897,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -965,14 +1921,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -984,8 +1957,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1009,7 +1981,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1017,6 +1989,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1032,8 +2021,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1041,7 +2029,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1057,6 +2045,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -1066,8 +2061,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1099,8 +2093,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -1111,6 +2105,23 @@ export default {
                   $ref: '#/definitions/Stretch Movement',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1124,8 +2135,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1141,7 +2151,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1155,6 +2165,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -1164,8 +2181,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1205,7 +2221,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1217,6 +2233,13 @@ export default {
                   $ref: '#/definitions/Stretch Movement',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1245,7 +2268,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1253,6 +2276,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1268,8 +2308,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1285,7 +2324,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1301,6 +2340,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -1312,8 +2358,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1337,14 +2382,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1356,8 +2418,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1381,7 +2442,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1389,6 +2450,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1404,8 +2482,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1413,7 +2490,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1429,6 +2506,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -1438,8 +2522,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1456,9 +2539,6 @@ export default {
                 description: {
                   type: 'string',
                 },
-                duration: {
-                  type: 'integer',
-                },
                 imageFileUrl: {
                   type: 'string',
                 },
@@ -1468,8 +2548,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -1480,6 +2560,23 @@ export default {
                   $ref: '#/definitions/Stretch Session',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1493,8 +2590,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1510,7 +2606,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1524,6 +2620,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -1533,8 +2636,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1559,9 +2661,6 @@ export default {
                 description: {
                   type: 'string',
                 },
-                duration: {
-                  type: 'integer',
-                },
                 imageFileUrl: {
                   type: 'string',
                 },
@@ -1571,7 +2670,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1583,6 +2682,13 @@ export default {
                   $ref: '#/definitions/Stretch Session',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1611,7 +2717,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1619,6 +2725,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1635,8 +2758,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1652,7 +2774,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1668,6 +2790,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
     },
@@ -1679,8 +2808,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1704,14 +2832,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1723,8 +2868,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1748,7 +2892,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1756,6 +2900,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1771,8 +2932,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1780,7 +2940,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1796,6 +2956,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       post: {
@@ -1805,8 +2972,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1829,8 +2995,8 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
@@ -1841,6 +3007,23 @@ export default {
                   $ref: '#/definitions/Stretch Challenge',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1854,8 +3037,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1871,7 +3053,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1885,6 +3067,13 @@ export default {
               },
             },
           },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
@@ -1894,8 +3083,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1926,7 +3114,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1938,6 +3126,13 @@ export default {
                   $ref: '#/definitions/Stretch Challenge',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1966,7 +3161,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -1974,6 +3169,23 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -1989,8 +3201,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -1998,26 +3209,33 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
-                stretchMovements: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Movement',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Movement',
-                  },
-                },
+                // stretchMovements: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Movement',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Movement',
+                //   },
+                // },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2031,8 +3249,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2048,14 +3265,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2067,8 +3301,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2084,7 +3317,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2094,17 +3327,33 @@ export default {
               },
             },
           },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
         tags: ['User - Stretch Movement'],
-        summary: 'Update users stretch Movement progress',
+        summary: 'Update users stretch Movement progress and rating',
         parameters: [
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2128,13 +3377,18 @@ export default {
                   minimum: 0,
                   maximun: 100,
                 },
+                rating: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 10,
+                },
               },
             },
           },
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2142,6 +3396,13 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2157,8 +3418,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2166,26 +3426,33 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
-                stretchSessions: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Session',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Session',
-                  },
-                },
+                // stretchSessions: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Session',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Session',
+                //   },
+                // },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2199,8 +3466,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2216,14 +3482,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2235,8 +3518,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2252,7 +3534,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2262,17 +3544,33 @@ export default {
               },
             },
           },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
         tags: ['User - Stretch Session'],
-        summary: 'Update users stretch Session progress',
+        summary: 'Update users stretch Session progress and rating',
         parameters: [
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2296,13 +3594,18 @@ export default {
                   minimum: 0,
                   maximun: 100,
                 },
+                rating: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 10,
+                },
               },
             },
           },
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2310,6 +3613,13 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2325,8 +3635,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2334,26 +3643,33 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
-                stretchChallenges: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/Stretch Challenge',
-                  },
-                },
-                relations: {
-                  type: 'array',
-                  items: {
-                    $ref: '#/definitions/User Stretch Challenge',
-                  },
-                },
+                // stretchChallenges: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/Stretch Challenge',
+                //   },
+                // },
+                // relations: {
+                //   type: 'array',
+                //   items: {
+                //     $ref: '#/definitions/User Stretch Challenge',
+                //   },
+                // },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2367,8 +3683,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2384,14 +3699,31 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
-            description: 'OK',
+          201: {
+            description: 'Created',
             schema: {
               properties: {
                 message: {
                   type: 'string',
                 },
               },
+            },
+          },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2403,8 +3735,7 @@ export default {
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2420,7 +3751,7 @@ export default {
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2430,17 +3761,33 @@ export default {
               },
             },
           },
+          202: {
+            description: 'Accepted',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
         },
       },
       patch: {
         tags: ['User - Stretch Challenge'],
-        summary: 'Update users stretch challenge progress',
+        summary: 'Update users stretch challenge progress and rating',
         parameters: [
           {
             in: 'header',
             name: 'authorization',
-            description: 'Token used to authenticate the user',
-            required: false,
+            description: 'Authentication Token Id',
             schema: {
               type: 'string',
             },
@@ -2464,13 +3811,18 @@ export default {
                   minimum: 0,
                   maximun: 100,
                 },
+                rating: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 10,
+                },
               },
             },
           },
         ],
         produces: ['application/json'],
         responses: {
-          '200': {
+          200: {
             description: 'OK',
             schema: {
               properties: {
@@ -2478,6 +3830,141 @@ export default {
                   type: 'string',
                 },
               },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+
+    //recommendation
+    '/api/users/me/stretchMovements/recommended': {
+      get: {
+        tags: ['User Recommended Workout'],
+        summary: 'Show Recommended Stretch Movements For Current User',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchMovements: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Movement',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchSessions/recommended': {
+      get: {
+        tags: ['User Recommended Workout'],
+        summary: 'Show Recommended Stretch Sessions For Current User',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchSessions: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Session',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
+            },
+          },
+        },
+      },
+    },
+    '/api/users/me/stretchChallenges/recommended': {
+      get: {
+        tags: ['User Recommended Workout'],
+        summary: 'Show Recommended Stretch Challenges For Current User',
+        parameters: [
+          {
+            in: 'header',
+            name: 'authorization',
+            description: 'Authentication Token Id',
+            schema: {
+              type: 'string',
+            },
+          },
+        ],
+        produces: ['application/json'],
+        responses: {
+          200: {
+            description: 'OK',
+            schema: {
+              properties: {
+                message: {
+                  type: 'string',
+                },
+                stretchChallenges: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/definitions/Stretch Challenge',
+                  },
+                },
+              },
+            },
+          },
+          '4xx - 5xx': {
+            description: 'Error',
+            schema: {
+              type: 'object',
+              $ref: '#/definitions/Error',
             },
           },
         },
@@ -2519,6 +4006,9 @@ export default {
         email: {
           type: 'string',
         },
+        photoUrl: {
+          type: 'string',
+        },
         createdAt: {
           type: 'string',
         },
@@ -2536,6 +4026,15 @@ export default {
         },
         startTime: {
           type: 'string',
+        },
+        allowTimerNotifications: {
+          type: 'boolean',
+        },
+        allowWorkoutNotifications: {
+          type: 'boolean',
+        },
+        allowGeneralNotifications: {
+          type: 'boolean',
         },
         UserPreferenceWeeklyStretchActivity: {
           type: 'object',
@@ -2556,6 +4055,217 @@ export default {
         UserPreferenceStartPeriod: {
           type: 'object',
           $ref: '#/definitions/Start Period',
+        },
+      },
+    },
+
+    'Game Action Type': {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        name: {
+          type: 'string',
+        },
+      },
+    },
+
+    'Game Action': {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        name: {
+          type: 'string',
+        },
+        xp: {
+          type: 'integer',
+        },
+        GameActionType: {
+          type: 'object',
+          $ref: '#/definitions/Game Action Type',
+        },
+      },
+    },
+
+    'User Game Action': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        GameActionId: {
+          type: 'integer',
+        },
+        counter: {
+          type: 'integer',
+        },
+        createdAt: {
+          type: 'string',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+      },
+    },
+
+    Game: {
+      type: 'object',
+      properties: {
+        xp: {
+          type: 'integer',
+        },
+        level: {
+          type: 'object',
+          properties: {
+            current: {
+              type: 'object',
+              $ref: '#/definitions/Level',
+            },
+            next: {
+              type: 'object',
+              $ref: '#/definitions/Level',
+            },
+          },
+        },
+        achievements: {
+          type: 'object',
+          properties: {
+            achieved: {
+              type: 'array',
+              items: {
+                properties: {
+                  id: {
+                    type: 'integer',
+                  },
+                  name: {
+                    type: 'string',
+                  },
+                  requirement: {
+                    type: 'integer',
+                  },
+                  xp: {
+                    type: 'integer',
+                  },
+                  badgeImageUrl: {
+                    type: 'string',
+                  },
+                  iconImageUrl: {
+                    type: 'string',
+                  },
+                },
+              },
+            },
+            incomplete: {
+              type: 'array',
+              items: {
+                properties: {
+                  id: {
+                    type: 'integer',
+                  },
+                  name: {
+                    type: 'string',
+                  },
+                  requirement: {
+                    type: 'integer',
+                  },
+                  xp: {
+                    type: 'integer',
+                  },
+                  badgeImageUrl: {
+                    type: 'string',
+                  },
+                  iconImageUrl: {
+                    type: 'string',
+                  },
+                  progress: {
+                    type: 'integer',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+
+    Achievement: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        name: {
+          type: 'string',
+        },
+        requirement: {
+          type: 'integer',
+        },
+        xp: {
+          type: 'integer',
+        },
+        badgeImageUrl: {
+          type: 'string',
+        },
+        iconImageUrl: {
+          type: 'string',
+        },
+        GameAction: {
+          type: 'object',
+          $ref: '#/definitions/Game Action',
+        },
+      },
+    },
+
+    Level: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        xp: {
+          type: 'integer',
+        },
+      },
+    },
+
+    Group: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        OwnerId: {
+          type: 'string',
+        },
+        name: {
+          type: 'string',
+        },
+        isPublic: {
+          type: 'boolean',
+        },
+      },
+    },
+
+    'User Group': {
+      type: 'object',
+      properties: {
+        UserId: {
+          type: 'string',
+        },
+        GroupId: {
+          type: 'integer',
+        },
+        admin: {
+          type: 'boolean',
+        },
+        updatedAt: {
+          type: 'string',
+        },
+        createdAt: {
+          type: 'string',
         },
       },
     },
@@ -2743,6 +4453,9 @@ export default {
         description: {
           type: 'integer',
         },
+        duration: {
+          type: 'integer',
+        },
         StretchSessions: {
           type: 'array',
           items: {
@@ -2810,6 +4523,30 @@ export default {
           type: 'string',
         },
         createdAt: {
+          type: 'string',
+        },
+      },
+    },
+
+    Error: {
+      type: 'object',
+      properties: {
+        errorCode: {
+          type: 'string',
+        },
+        message: {
+          type: 'string',
+        },
+        errors: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+        },
+        method: {
+          type: 'string',
+        },
+        url: {
           type: 'string',
         },
       },

@@ -40,6 +40,18 @@ module.exports = (sequelize, DataTypes) => {
       startTime: {
         type: DataTypes.DATE,
       },
+      allowTimerNotifications: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      allowWorkoutNotifications: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      allowGeneralNotifications: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,

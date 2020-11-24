@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.StretchMovement, {
         through: models.UserStretchMovement,
       })
+      User.belongsToMany(models.Group, {
+        through: models.UserGroup,
+      })
+      User.belongsToMany(models.GameAction, {
+        through: models.UserGameAction,
+      })
     }
   }
   User.init(
@@ -32,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+      },
+      photoUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       createdAt: {
         type: DataTypes.DATE,

@@ -104,6 +104,24 @@ class TimerServiceFacade {
       console.log('[TIMER-SERVICE-FACADE] - service unavailable', error)
     }
   }
+
+  async patchNotification({ idToken, allowTimerNotifications }) {
+    try {
+      await axios.patch(
+        `${this.base_url}/api/timer/preferences/`,
+        {
+          allowTimerNotifications,
+        },
+        {
+          headers: {
+            Authorization: idToken,
+          },
+        }
+      )
+    } catch (error) {
+      console.log('[TIMER-SERVICE-FACADE] - service unavailable', error)
+    }
+  }
 }
 
 export default TimerServiceFacade

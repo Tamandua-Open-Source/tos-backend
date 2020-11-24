@@ -1,4 +1,5 @@
 import * as firebaseAdmin from 'firebase-admin'
+import { v4 as uuidv4 } from 'uuid'
 
 import * as dotenv from 'dotenv'
 dotenv.config()
@@ -51,8 +52,50 @@ class FirebaseAdminFacade {
   }
 
   async verifyToken(idToken) {
-    const decodedToken = await firebaseAdmin.auth().verifyIdToken(idToken)
-    return decodedToken.uid
+    try {
+      const decodedToken = await firebaseAdmin.auth().verifyIdToken(idToken)
+
+      const user = {
+        name: decodedToken.name ?? 'Flexibear',
+        email: decodedToken.email ?? uuidv4() + '@no-email.com',
+        userId: decodedToken.uid,
+        photoUrl: decodedToken.picture ?? null,
+      }
+
+      return user
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
+  }
+
+  async send({ title, body, category, fcmToken, info }) {
+    console.log(
+      '[FIREBASE-ADMIN-FACADE] - sending message: ' +
+        category +
+        ' - ' +
+        title +
+        ' - ' +
+        body
+    )
+    const message = {
+      notification: {
+        title: title,
+        body: body,
+      },
+      apns: {
+        payload: {
+          aps: {
+            category: category,
+            badge: 1,
+          },
+          info,
+        },
+      },
+      token: fcmToken,
+    }
+
+    return await firebaseAdmin.messaging().send(message)
   }
 }
 

@@ -52,6 +52,10 @@ import {
   AddUserStretchChallengeUseCase,
   UpdateUserStretchChallengeUseCase,
   DeleteUserStretchChallengeUseCase,
+  //recommendation
+  GetRecommendedStretchMovementsUseCase,
+  GetRecommendedStretchSessionsUseCase,
+  GetRecommendedStretchChallengesUseCase,
 } from '../../../application/use-cases/workout'
 
 class WorkoutControllerComposer {
@@ -219,6 +223,16 @@ class WorkoutControllerComposer {
       }
     )
 
+    const getRecommendedStretchMovementsUseCase = new GetRecommendedStretchMovementsUseCase(
+      { workoutRepository }
+    )
+    const getRecommendedStretchSessionsUseCase = new GetRecommendedStretchSessionsUseCase(
+      { workoutRepository }
+    )
+    const getRecommendedStretchChallengesUseCase = new GetRecommendedStretchChallengesUseCase(
+      { workoutRepository }
+    )
+
     return new WorkoutController({
       //body part
       getAllBodyPartsUseCase,
@@ -271,6 +285,10 @@ class WorkoutControllerComposer {
       addUserStretchChallengeUseCase,
       updateUserStretchChallengeUseCase,
       deleteUserStretchChallengeUseCase,
+      //recommendation
+      getRecommendedStretchMovementsUseCase,
+      getRecommendedStretchSessionsUseCase,
+      getRecommendedStretchChallengesUseCase,
     })
   }
 }

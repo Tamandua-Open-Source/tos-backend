@@ -10,88 +10,136 @@ const authMiddleware = AuthMiddlewareComposer.compose()
 
 const router = Router()
 
+//core
 router.get(
-  '/',
+  '/users',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.getAllUsers(req))
 )
-
 router.post(
-  '/login',
+  '/users/login',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.signInUser(req))
 )
-
 router.get(
-  '/me',
+  '/users/me',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.getUser(req))
 )
-
 router.put(
-  '/me',
+  '/users/me',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.updateUser(req))
 )
-
 router.delete(
-  '/me',
+  '/users/me',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.deleteUser(req))
 )
 
+//user - preference
 router.get(
-  '/me/preferences',
+  '/users/me/preferences',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) => userController.getUserPreferences(req))
 )
-
 router.patch(
-  '/me/preferences/fcm',
+  '/users/me/preferences/fcm',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceFcmToken(req)
   )
 )
-
 router.patch(
-  '/me/preferences/wwa',
+  '/users/me/preferences/wwa',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceWeeklyWorkActivity(req)
   )
 )
-
 router.patch(
-  '/me/preferences/wsa',
+  '/users/me/preferences/wsa',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceWeeklyStretchActivity(req)
   )
 )
-
 router.patch(
-  '/me/preferences/goal',
+  '/users/me/preferences/goal',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceGoal(req)
   )
 )
-
 router.patch(
-  '/me/preferences/fst',
+  '/users/me/preferences/fst',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceFixedStartTime(req)
   )
 )
-
 router.patch(
-  '/me/preferences/fsp',
+  '/users/me/preferences/fsp',
   ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
   ExpressRouterAdapter.adapt((req) =>
     userController.patchUserPreferenceFixedStartPeriod(req)
   )
+)
+router.patch(
+  '/users/me/preferences/notification',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) =>
+    userController.patchUserPreferenceNotification(req)
+  )
+)
+
+//group
+router.get(
+  '/groups',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.getAllGroups(req))
+)
+router.get(
+  '/groups/:groupId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.getGroupById(req))
+)
+router.post(
+  '/groups',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.addGroup(req))
+)
+router.patch(
+  '/groups/:groupId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.updateGroup(req))
+)
+router.delete(
+  '/groups/:groupId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.deleteGroup(req))
+)
+
+//user - group
+router.get(
+  '/users/me/groups',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.getGroupsByUserId(req))
+)
+router.post(
+  '/users/:userId/groups/:groupId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.addUserGroup(req))
+)
+router.patch(
+  '/users/:userId/groups/:groupId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.updateUserGroup(req))
+)
+router.delete(
+  '/users/:userId/groups/:groupId',
+  ExpressMiddlewareAdapter.adapt((req) => authMiddleware.verifyToken(req)),
+  ExpressRouterAdapter.adapt((req) => userController.deleteUserGroup(req))
 )
 
 export default router

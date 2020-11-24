@@ -25,6 +25,10 @@ class WipeAllRegisteredUsersUseCase {
           user.email ??
           (user.providerData[0] ? user.providerData[0].email : undefined) ??
           (user.providerData[1] ? user.providerData[1].email : undefined),
+        photoUrl:
+          user.photoURL ??
+          (user.providerData[0] ? user.providerData[0].photoURL : undefined) ??
+          (user.providerData[1] ? user.providerData[1].photoURL : undefined),
       }
     })
 
@@ -33,8 +37,10 @@ class WipeAllRegisteredUsersUseCase {
       return !user.email
     })
     await usersToDelete.forEach(async (user) => {
-      await this.firebaseAdminFacade.deleteUserById(user.id)
       await this.timerServiceFacade.unsubscribeByUserId(user.id)
+    })
+    await usersToDelete.forEach(async (user) => {
+      await this.firebaseAdminFacade.deleteUserById(user.id)
     })
 
     //register users with email
@@ -53,6 +59,7 @@ class WipeAllRegisteredUsersUseCase {
         id: user.id,
         email: user.email,
         name: user.name,
+        photoUrl: user.photoUrl,
       })
     })
 

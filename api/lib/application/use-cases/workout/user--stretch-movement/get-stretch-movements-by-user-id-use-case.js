@@ -4,18 +4,7 @@ class GetStretchMovementsByUserIdUseCase {
   }
 
   async execute(userId) {
-    const stretchMovements = await this.workoutRepository.getStretchMovementsByUserId(
-      userId
-    )
-
-    const relations = await this.workoutRepository.getUserStretchMovementsByUserId(
-      userId
-    )
-
-    return {
-      stretchMovements,
-      relations,
-    }
+    return await this.workoutRepository.getStretchMovementsByUserId(userId)
   }
 }
 

@@ -17,10 +17,6 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      duration: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       imageFileUrl: {
         type: Sequelize.STRING,
         allowNull: false,
