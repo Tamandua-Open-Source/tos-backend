@@ -56,7 +56,7 @@ class FirebaseAdminFacade {
       const decodedToken = await firebaseAdmin.auth().verifyIdToken(idToken)
 
       const user = {
-        name: decodedToken.name,
+        name: decodedToken.name ?? 'Flexibear',
         email: decodedToken.email ?? uuidv4() + '@no-email.com',
         userId: decodedToken.uid,
         photoUrl: decodedToken.picture ?? null,
