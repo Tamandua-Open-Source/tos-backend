@@ -69,7 +69,7 @@ class FirebaseAdminFacade {
     }
   }
 
-  async send({ title, body, category, fcmToken, references }) {
+  async send({ title, body, category, fcmToken, info }) {
     console.log(
       '[FIREBASE-ADMIN-FACADE] - sending message: ' +
         category +
@@ -87,8 +87,9 @@ class FirebaseAdminFacade {
         payload: {
           aps: {
             category: category,
-            // references: references,
+            badge: 1,
           },
+          info,
         },
       },
       token: fcmToken,

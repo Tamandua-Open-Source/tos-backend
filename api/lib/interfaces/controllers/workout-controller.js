@@ -583,13 +583,7 @@ class WorkoutController {
   async updateUserStretchMovement(req) {
     const { userId } = req.props
     const { stretchMovementId } = req.params
-    const { progress } = req.body
-
-    if (!progress || !Number(progress) || progress < 0 || progress > 100) {
-      throw ClientError.badRequest(
-        'Please provide a valid progress field: number between 0 and 100'
-      )
-    }
+    const { progress, rating } = req.body
 
     const { updateUserStretchMovementUseCase } = this.useCases
     const relation = await updateUserStretchMovementUseCase.execute(
@@ -597,6 +591,7 @@ class WorkoutController {
       stretchMovementId,
       {
         progress,
+        rating,
       }
     )
 
@@ -670,13 +665,7 @@ class WorkoutController {
   async updateUserStretchSession(req) {
     const { userId } = req.props
     const { stretchSessionId } = req.params
-    const { progress } = req.body
-
-    if (!progress || !Number(progress) || progress < 0 || progress > 100) {
-      throw ClientError.badRequest(
-        'Please provide a valid progress field: number between 0 and 100'
-      )
-    }
+    const { progress, rating } = req.body
 
     const { updateUserStretchSessionUseCase } = this.useCases
     const relation = await updateUserStretchSessionUseCase.execute(
@@ -684,6 +673,7 @@ class WorkoutController {
       stretchSessionId,
       {
         progress,
+        rating,
       }
     )
 
@@ -757,13 +747,7 @@ class WorkoutController {
   async updateUserStretchChallenge(req) {
     const { userId } = req.props
     const { stretchChallengeId } = req.params
-    const { progress } = req.body
-
-    if (!progress || !Number(progress) || progress < 0 || progress > 100) {
-      return HttpResponse.badRequest(
-        'Please provide a valid progress field: number between 0 and 100'
-      )
-    }
+    const { progress, rating } = req.body
 
     const { updateUserStretchChallengeUseCase } = this.useCases
     const relation = await updateUserStretchChallengeUseCase.execute(
@@ -771,6 +755,7 @@ class WorkoutController {
       stretchChallengeId,
       {
         progress,
+        rating,
       }
     )
 

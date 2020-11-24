@@ -3348,7 +3348,7 @@ export default {
       },
       patch: {
         tags: ['User - Stretch Movement'],
-        summary: 'Update users stretch Movement progress',
+        summary: 'Update users stretch Movement progress and rating',
         parameters: [
           {
             in: 'header',
@@ -3376,6 +3376,11 @@ export default {
                   type: 'integer',
                   minimum: 0,
                   maximun: 100,
+                },
+                rating: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 10,
                 },
               },
             },
@@ -3560,7 +3565,7 @@ export default {
       },
       patch: {
         tags: ['User - Stretch Session'],
-        summary: 'Update users stretch Session progress',
+        summary: 'Update users stretch Session progress and rating',
         parameters: [
           {
             in: 'header',
@@ -3588,6 +3593,11 @@ export default {
                   type: 'integer',
                   minimum: 0,
                   maximun: 100,
+                },
+                rating: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 10,
                 },
               },
             },
@@ -3772,7 +3782,7 @@ export default {
       },
       patch: {
         tags: ['User - Stretch Challenge'],
-        summary: 'Update users stretch challenge progress',
+        summary: 'Update users stretch challenge progress and rating',
         parameters: [
           {
             in: 'header',
@@ -3800,6 +3810,11 @@ export default {
                   type: 'integer',
                   minimum: 0,
                   maximun: 100,
+                },
+                rating: {
+                  type: 'integer',
+                  minimum: 0,
+                  maximun: 10,
                 },
               },
             },
