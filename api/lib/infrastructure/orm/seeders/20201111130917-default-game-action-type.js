@@ -17,6 +17,12 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 3,
+          name: 'WEEKLY',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     )
