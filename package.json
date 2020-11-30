@@ -35,7 +35,8 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.1.0",
     "sequelize-cli": "^6.2.0",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
