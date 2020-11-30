@@ -7,6 +7,7 @@ export const development = {
   password: process.env.DB_PASS,
   host: process.env.DB_HOST,
   dialect: 'postgres',
+  logging: false,
 }
 
 export const test = {
@@ -15,14 +16,17 @@ export const test = {
   password: process.env.DB_PASS,
   host: process.env.DB_HOST,
   dialect: 'postgres',
+  logging: false,
 }
 
 export const production = {
   url: process.env.DATABASE_URL,
   dialect: 'postgres',
+  logging: false,
 }
 
 export const staging = {
   url: process.env.DATABASE_URL,
   dialect: 'postgres',
+  logging: false,
 }
